@@ -1,0 +1,11 @@
+{
+    "name": "wb",
+    "private": true,
+    "dependencies": {
+        "bootstrap": "~3.0.3",
+        "jquery": "~1.11.0",
+        "kineticjs": "~5.1.0"
+    },
+    "devDependencies": {
+    }
+}
