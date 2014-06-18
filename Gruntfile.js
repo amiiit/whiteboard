@@ -34,6 +34,7 @@ module.exports = function(grunt) {
           '<%= vxlbrd.app %>/**/*.html',
           'example/**/*.html',
           'example/**/*.js',
+          '<%= vxlbrd.app %>/stylus/*.styl',
           '.tmp/styles/**/*.css',
           '{.tmp,<%= vxlbrd.app %>}/**/*.js',
           '<%= vxlbrd.app %>/assets/**/*.{png,jpg,jpeg,gif,webp,svg}'
