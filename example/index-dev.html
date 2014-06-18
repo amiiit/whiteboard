@@ -6,13 +6,15 @@
     <title>voxelboard [DEV]</title>
 
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href=".tmp/styles/main.css">
 </head>
 
 <body>
 
-<div class="container" ng-app="exampleApp" ng-controller="exampleCtrl">
+<div ng-app="exampleApp" ng-controller="exampleCtrl">
 
-    <vxlbrd config="{ width: '100%', height: '100%' }"></vxlbrd>
+    <vxlbrd config="{ width: 2000, height: 2000 }"></vxlbrd>
 
 </div>
 
@@ -24,8 +26,10 @@
     <!-- core -->
     <script type="text/javascript" src="app/voxelboard/vxlbrdModule.js"></script>
     <script type="text/javascript" src="app/voxelboard/vxlbrdDirective.js"></script>
+    <script type="text/javascript" src="app/voxelboard/stageDirective.js"></script>
     <!-- utils -->
     <script type="text/javascript" src="app/voxelboard/utils/Logger.js"></script>
+    <script type="text/javascript" src="app/voxelboard/utils/UUID.js"></script>
 
 <!-- example app -->
 <script type="text/javascript" src="exampleApp.js"></script>

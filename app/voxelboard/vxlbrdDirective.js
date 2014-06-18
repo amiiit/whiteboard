@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vxlbrd')
-  .directive('vxlbrd', ['Logger', function(Logger) {
+  .directive('vxlbrd', ['Logger', 'UUID', function(Logger, UUID) {
     return {
       restrict: 'EA',
       templateUrl: 'app/voxelboard/vxlbrdDirective.tpl.html',
@@ -16,7 +16,9 @@ angular.module('vxlbrd')
 
         // instance object
         var instance = scope.instance = {
-          config: {}
+          config: {
+            id: UUID.new()
+          }
         };
 
         // evaluate config attribute and set defaults
@@ -24,15 +26,6 @@ angular.module('vxlbrd')
           instance.config.width = scope.config.width || 800;
           instance.config.height = scope.config.height || 600;
         }
-
-        // create a stage and a layer
-        var stage = new Kinetic.Stage({
-          container: 'vxlbrd-stage',
-          width: instance.config.width,
-          height: instance.config.height
-        });
-        var layer = new Kinetic.Layer();
-        stage.add(layer);
       },
       controllerAs: 'vxlbrdCtrl',
       controller: ['$scope', '$element', function($scope, $element) {
