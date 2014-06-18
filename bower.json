@@ -1,11 +1,14 @@
 {
-    "name": "wb",
-    "private": true,
-    "dependencies": {
-        "bootstrap": "~3.0.3",
-        "jquery": "~1.11.0",
-        "kineticjs": "~5.1.0"
-    },
-    "devDependencies": {
-    }
+  "name": "vxlbrd",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.2.18"
+    "kineticjs": "~5.1.0",
+    "lodash": "~2.4.1",
+  },
+  "devDependencies": {
+    "bootstrap": "~3.0.3",
+    "fontawesome": "~4.1.0"
+  }
 }

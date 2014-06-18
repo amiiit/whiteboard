@@ -1,0 +1,9 @@
+{
+  "directory": "vendor",
+  "//": "fix problem with bower and circleCI https://github.com/bower/bower/issues/933",
+  "storage" : {
+    "packages" : ".bower/cache",
+    "registry" : ".bower/registry"
+  },
+  "tmp" : ".bower/tmp"
+}
