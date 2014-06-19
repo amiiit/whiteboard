@@ -1,10 +1,15 @@
 'use strict';
 
-angular.module('vxlbrd')
-  .directive('vxlbrd', ['Logger', 'UUID', function(Logger, UUID) {
+angular.module('vxlbrd', [])
+  .run(['Logger', function(Logger) {
+    // init Logger
+    Logger.setLevel(Logger.LOG);
+  }])
+
+  .directive('board', ['Logger', 'UUID', function(Logger, UUID) {
     return {
       restrict: 'EA',
-      templateUrl: 'app/voxelboard/vxlbrdDirective.tpl.html',
+      templateUrl: 'app/voxelboard/board.html',
       replace: false,
       scope: { config: '=', vxlbrdData: '=', name: '@name' },
       link: function(scope, element, attrs) {
@@ -29,7 +34,6 @@ angular.module('vxlbrd')
       },
       controllerAs: 'vxlbrdCtrl',
       controller: ['$scope', '$element', function($scope, $element) {
-
 
       }]
     };

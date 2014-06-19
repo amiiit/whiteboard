@@ -4,7 +4,7 @@ angular.module('vxlbrd')
   .directive('stage', ['Logger', '$timeout', function(Logger, $timeout) {
     return {
       restrict: 'E',
-      templateUrl: 'app/voxelboard/stageDirective.tpl.html',
+      templateUrl: 'app/voxelboard/stage.tpl.html',
       replace: false,
       scope: { config: '=' },
       link: function(scope, element, attrs) {
