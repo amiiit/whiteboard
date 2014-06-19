@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "angular": "~1.2.18"
+    "angular": "~1.2.18",
     "kineticjs": "~5.1.0",
-    "lodash": "~2.4.1",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
-    "bootstrap": "~3.0.3",
-    "fontawesome": "~4.1.0"
+    "fontawesome": "~4.1.0",
+    "normalize.css": "~3.0.1"
   }
 }

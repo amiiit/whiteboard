@@ -80,9 +80,3 @@ body {
         border-bottom: 0;
     }
 }
-
-#drawing-area {
-    background-color: skyblue;
-    width: 700px;
-    height: 500px;
-}

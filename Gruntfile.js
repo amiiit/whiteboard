@@ -34,7 +34,7 @@ module.exports = function(grunt) {
           '<%= vxlbrd.app %>/**/*.html',
           'example/**/*.html',
           'example/**/*.js',
-          '<%= vxlbrd.app %>/stylus/*.styl',
+          '<%= vxlbrd.app %>/**/*.styl',
           '.tmp/styles/**/*.css',
           '{.tmp,<%= vxlbrd.app %>}/**/*.js',
           '<%= vxlbrd.app %>/assets/**/*.{png,jpg,jpeg,gif,webp,svg}'
@@ -42,9 +42,9 @@ module.exports = function(grunt) {
       },
       stylus: {
         files: [
-          '<%= vxlbrd.app %>/stylus/{,*/}*.styl'
+          '<%= vxlbrd.app %>/**/*.styl'
         ],
-        tasks: ['stylus:compile', 'cssmin'],
+        tasks: ['stylus:compile'],
         options: { spawn: false }
       },
       ngtemplates: {
@@ -65,19 +65,18 @@ module.exports = function(grunt) {
     stylus: {
       compile: {
         options: {
+          compress: false,
           paths: [
             'node_modules/grunt-contrib-stylus/node_modules',
-            'vendor'
+            'vendor',
+             '<%= vxlbrd.app %>'
           ],
           urlfunc: 'embedurl'
         },
         files: [
           {
-            expand: true,
-            cwd: '<%= vxlbrd.app %>/stylus/',
-            src: '*.styl',
-            dest: '.tmp/styles/',
-            ext: '.css'
+            src: '<%= vxlbrd.app %>/main.styl',
+            dest: '.tmp/styles/main.css'
           }
         ]
       }
