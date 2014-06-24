@@ -28,18 +28,23 @@ module.exports = function (grunt) {
                 index: {
                     files: ['src/index.html'],
                     tasks: ['index:build'],
+                    options: {livereload: true}
                 },
                 stylus: {
                     files: config.app_files.stylus,
-                    tasks: ['stylus']
+                    tasks: ['stylus'],
+                    options: {livereload: true}
                 },
                 scripts: {
                     files: config.app_files.js,
-                    tasks: ['build']
+                    tasks: ['build'],
+                    options: {livereload: true}
+
                 },
                 templates: {
                     files: config.app_files.atpl,
-                    tasks: ['ngtemplates']
+                    tasks: ['ngtemplates'],
+                    options: {livereload: true}
                 }
             },
             stylus: {
