@@ -18,5 +18,5 @@ angular.module('nuBoard', [])
     }])
 
     .controller('MainCtrl', function ($scope) {
-        $scope.dataExample = [];
+
     });
