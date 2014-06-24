@@ -19,6 +19,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
             config: config,
             watch: {
+                options: {livereload: true},
                 livereload: {
                     options: {
                         livereload: LIVERELOAD_PORT
@@ -27,24 +28,20 @@ module.exports = function (grunt) {
                 },
                 index: {
                     files: ['src/index.html'],
-                    tasks: ['index:build'],
-                    options: {livereload: true}
+                    tasks: ['index:build']
                 },
                 stylus: {
                     files: config.app_files.stylus,
-                    tasks: ['stylus'],
-                    options: {livereload: true}
+                    tasks: ['stylus']
                 },
                 scripts: {
                     files: config.app_files.js,
-                    tasks: ['build'],
-                    options: {livereload: true}
+                    tasks: ['build']
 
                 },
                 templates: {
                     files: config.app_files.atpl,
-                    tasks: ['ngtemplates'],
-                    options: {livereload: true}
+                    tasks: ['ngtemplates']
                 }
             },
             stylus: {
