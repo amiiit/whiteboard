@@ -10,6 +10,7 @@
                         ng-repeat="option in tool.options"
                         ng-click="pickTool(tool, option)"
                         class="tool-option"
+                        style="color: {{selected.color}}"
                         >
                     <i ng-if="option.logoId" class="fa fa-{{option.logoId}}"></i>
                 </div>
@@ -23,6 +24,20 @@
                         style="color: {{option.value}}"
                         >
                     <i class="fa fa-tint"></i>
+                </div>
+            </div>
+
+            <div ng-if="tool.id === 'width'">
+                <div
+                        ng-repeat="option in tool.options"
+                        ng-click="pickTool(tool, option)"
+                        class="tool-option width"
+                        style="
+                            font-size: {{option.value}}px;
+                            color: {{selected.color}}
+                            "
+                        >
+                    <i class="fa fa-circle"></i>
                 </div>
             </div>
 

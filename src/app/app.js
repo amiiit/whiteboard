@@ -5,7 +5,7 @@ angular.module('nuBoard', [])
     .constant('AppConfig', {
         defaultToolset: {
             stylus: {id: 'pen', value: 'pen'},
-            color: {id: 'green', value: 'green'},
+            color: {id: 'skyblue', value: 'skyblue'},
             width: {id: '5', value: 5},
             lineCap: {id: 'round', value: 'round'},
             lineJoin: {id: 'round', value: 'round'}

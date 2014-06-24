@@ -3,6 +3,8 @@
 angular.module('nuBoard')
     .controller('ToolbarController', function ($scope, ToolbarService) {
 
+        $scope.selected = {};
+
         $scope.menu = {
             tools: [
                 {
@@ -23,10 +25,10 @@ angular.module('nuBoard')
                 {
                     id: 'width',
                     options: [
-                        {id: '1', value: 1},
-                        {id: '2', value: 2},
+                        {id: '10', value: 10},
                         {id: '5', value: 5},
-                        {id: '10', value: 10}
+                        {id: '2', value: 2},
+                        {id: '1', value: 1},
                     ]
                 }
             ]
@@ -34,6 +36,9 @@ angular.module('nuBoard')
 
         $scope.$watch('menu', function () {
                 ToolbarService.updateState(angular.copy($scope.menu));
+                var currentState = ToolbarService.getState();
+                $scope.selected = currentState;
+                console.log('currentState', currentState);
             }, true
         );
 
@@ -78,7 +83,6 @@ angular.module('nuBoard')
                     }
                 })
             });
-            console.log('toolbar service state updated', state);
         };
 
     });
