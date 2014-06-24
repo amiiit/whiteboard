@@ -1,0 +1,17 @@
+<div class="toolbar">
+    <div class="tools">
+        <div
+                ng-repeat="tool in menu.tools"
+                class="tool {{tool.id}}"
+                >
+            <div
+                    ng-repeat="option in tool.options"
+                    ng-click="pickTool(tool, option)"
+                    >
+                <span>{{option.id}}</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
