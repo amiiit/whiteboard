@@ -15,7 +15,7 @@ angular.module('nuBoard')
 
                 var registerEventsWithSurfaceWatcher = function () {
                     angular.forEach(
-                        SurfaceWatcherService.getSupportedEvenets(),
+                        SurfaceWatcherService.getSupportedEvents(),
                         function (supportedEvent) {
                             KineticService.getStageContainer().addEventListener(supportedEvent,
                                 function () {

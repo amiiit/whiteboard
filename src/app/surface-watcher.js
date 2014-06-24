@@ -6,7 +6,7 @@ angular.module('nuBoard')
         var isDraw = false;
         var actionId;
 
-        this.getSupportedEvenets = function () {
+        this.getSupportedEvents = function () {
             return Object.keys(eventHandlers);
         };
 
