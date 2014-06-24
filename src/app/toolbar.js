@@ -8,16 +8,16 @@ angular.module('nuBoard')
                 {
                     id: 'stylus',
                     options: [
-                        {id: 'pen'}
+                        {id: 'pen', logoId: 'pencil'}
                     ]
                 },
                 {
                     id: 'color',
                     options: [
-                        {id: 'green'},
-                        {id: 'skyblue'},
-                        {id: 'red'},
-                        {id: 'white'}
+                        {id: 'green', logoId: 'circle', value: 'green'},
+                        {id: 'skyblue', logoId: 'circle', value: 'skyblue'},
+                        {id: 'red', logoId: 'circle', value: 'red'},
+                        {id: 'white', logoId: 'circle', value: 'white'}
                     ]
                 },
                 {
@@ -31,8 +31,6 @@ angular.module('nuBoard')
                 }
             ]
         };
-
-        $scope.selected
 
         $scope.$watch('menu', function () {
                 ToolbarService.updateState(angular.copy($scope.menu));
@@ -52,7 +50,8 @@ angular.module('nuBoard')
         return {
             restrict: 'E',
             templateUrl: 'app/toolbar.tpl.html',
-            controller: 'ToolbarController'
+            controller: 'ToolbarController',
+            replace: true
         }
     })
     .service('ToolbarService', function (AppConfig) {
@@ -62,7 +61,7 @@ angular.module('nuBoard')
         this.getState = function () {
             var result = {};
             angular.forEach(state, function (value, key) {
-                if (value.value){
+                if (value.value) {
                     result[key] = value.value;
                 } else {
                     result[key] = value.id;

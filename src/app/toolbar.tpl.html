@@ -4,14 +4,29 @@
                 ng-repeat="tool in menu.tools"
                 class="tool {{tool.id}}"
                 >
-            <div
-                    ng-repeat="option in tool.options"
-                    ng-click="pickTool(tool, option)"
-                    >
-                <span>{{option.id}}</span>
+
+            <div ng-if="tool.id === 'stylus'">
+                <div
+                        ng-repeat="option in tool.options"
+                        ng-click="pickTool(tool, option)"
+                        class="tool-option"
+                        >
+                    <i ng-if="option.logoId" class="fa fa-{{option.logoId}}"></i>
+                </div>
             </div>
+
+            <div ng-if="tool.id === 'color'">
+                <div
+                        ng-repeat="option in tool.options"
+                        ng-click="pickTool(tool, option)"
+                        class="tool-option color"
+                        style="color: {{option.value}}"
+                        >
+                    <i class="fa fa-tint"></i>
+                </div>
+            </div>
+
 
         </div>
     </div>
-</div>
 </div>

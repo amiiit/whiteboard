@@ -222,11 +222,12 @@ module.exports = function (grunt) {
                 build_vendor_assets: {
                     files: [
                         {
-                            src: [ '<%= config.vendor_files.assets %>' ],
-                            dest: '<%= config.build_dir %>/assets/',
-                            cwd: '.',
-                            expand: true,
-                            flatten: true
+                            src: [
+                                '<%= config.vendor_files.css %>',
+                                '<%= config.vendor_files.assets %>',
+                            ],
+                            dest: '<%= config.build_dir %>/',
+                            cwd: '.'
                         }
                     ]
                 },
@@ -369,6 +370,7 @@ module.exports = function (grunt) {
                     dir: '<%= config.build_dir %>',
                     src: [
                         ['templates.js'],
+                        '<%= config.build_dir %>/styles/main.css',
                         '<%= config.vendor_files.js %>',
                         '<%= config.build_dir %>/src/**/*.js',
                         '<%= config.vendor_files.css %>'

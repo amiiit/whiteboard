@@ -67,8 +67,11 @@ module.exports = {
 
         ],
         css: [
+            'vendor/fontawesome/css/font-awesome.css',
+            'vendor/normalize.css/normalize.css'
         ],
         assets: [
+            'vendor/fontawesome/fonts/*'
         ]
     },
 };

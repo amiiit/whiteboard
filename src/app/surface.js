@@ -5,7 +5,7 @@ angular.module('nuBoard')
         return {
             restrict: 'E',
             templateUrl: 'app/surface.tpl.html',
-            replace: false,
+            replace: true,
             scope: {
                 width: '&',
                 height: '&',
