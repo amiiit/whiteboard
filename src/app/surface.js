@@ -11,47 +11,45 @@ angular.module('nuBoard')
                 height: '&',
                 surfaceId: '@'
             },
-            link: {
-                post: function ($scope, element, attrs) {
+            link: function ($scope, element, attrs) {
 
-                    var registerEventsWithSurfaceWatcher = function () {
-                        angular.forEach(
-                            SurfaceWatcherService.getSupportedEvenets(),
-                            function (supportedEvent) {
-                                KineticService.getStageContainer().addEventListener(supportedEvent,
-                                    function () {
-                                        SurfaceWatcherService.reportEvent(
-                                            {
-                                                event: supportedEvent,
-                                                position: KineticService.stage.getPointerPosition()
-                                            }
-                                        )
-                                    })
-                            }
-                        );
-                    }
+                var registerEventsWithSurfaceWatcher = function () {
+                    angular.forEach(
+                        SurfaceWatcherService.getSupportedEvenets(),
+                        function (supportedEvent) {
+                            KineticService.getStageContainer().addEventListener(supportedEvent,
+                                function () {
+                                    SurfaceWatcherService.reportEvent(
+                                        {
+                                            event: supportedEvent,
+                                            position: KineticService.stage.getPointerPosition()
+                                        }
+                                    )
+                                })
+                        }
+                    );
+                }
 
 
-                    var linkOnDom = function () {
+                var linkOnDom = function () {
 
-                        KineticService.buildStage({
-                            width: $scope.width(),
-                            height: $scope.height(),
-                            id: $scope.surfaceId
-                        });
-
-                        KineticService.addLayer();
-
-                        registerEventsWithSurfaceWatcher();
-
-                    };
-
-                    var unregisterWatch = $scope.$watch('surfaceId', function () {
-                        linkOnDom();
-                        unregisterWatch();
+                    KineticService.buildStage({
+                        width: $scope.width(),
+                        height: $scope.height(),
+                        id: $scope.surfaceId
                     });
 
-                }
+                    KineticService.addLayer();
+
+                    registerEventsWithSurfaceWatcher();
+
+                };
+
+                var unregisterWatch = $scope.$watch('surfaceId', function () {
+                    linkOnDom();
+                    unregisterWatch();
+                });
+
             },
             controller: 'SurfaceCtrl'
         };
