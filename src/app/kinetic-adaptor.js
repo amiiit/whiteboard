@@ -2,7 +2,7 @@
 
 angular.module('nuBoard')
 
-    .directive('kinetic', function (Logger, KineticService) {
+    .directive('nu-kinetic', function (Logger, KineticService) {
         return {
             restrict: 'A',
             replace: false,
