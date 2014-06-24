@@ -13,7 +13,6 @@ angular.module('nuBoard')
         var actionStart = function () {
             isDraw = true;
             actionId = UUID.generate();
-            console.log('action starts', actionId);
         };
 
         var actionEnd = function () {
@@ -43,6 +42,7 @@ angular.module('nuBoard')
             var dataCopy = angular.copy(data);
             delete dataCopy.event;
             dataCopy.localOrigin = true;
+            dataCopy.actionId = actionId;
             return dataCopy;
         };
 
