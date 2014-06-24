@@ -1,0 +1,25 @@
+<!doctype html>
+<html ng-app="nuBoard">
+
+<head>
+    <meta charset="utf-8">
+    <title>nuBoard</title>
+
+    <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
+    <link rel="stylesheet" type="text/css" href="<%= file %>"/>
+    <% }); %>
+
+    <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
+    <script type="text/javascript" src="<%= file %>"></script>
+    <% }); %>
+
+</head>
+
+<body>
+
+<div>
+    <surface width=2000 height=2000 surface-id='mainSurface'></surface>
+</div>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('vxlbrd')
+angular.module('nuBoard')
   .factory('Logger', [function() {
     var OFF = 0;
     var LOG = 1;
