@@ -210,8 +210,8 @@ module.exports = function (grunt) {
         tasks: ['stylus']
       },
       scripts: {
-        files: '<%= app_files.js %>',
-        tasks: ['build']
+        files: ['<%= app_files.js %>', '<%= app_files.jsunit%>'],
+        tasks: ['build', 'unit-test']
 
       },
       templates: {
@@ -294,7 +294,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', [
     'build',
-    'karma:watch',
+    'unit-test',
     'connect:server',
     'watch'
   ]);
