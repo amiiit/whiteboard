@@ -5,9 +5,10 @@
  * automatically.
  */
 describe('app', function () {
-  beforeEach(module('ngBoilerplate.home'));
 
-  it('should have a dummy test', inject(function () {
+  beforeEach(module('nuBoard'));
+
+  it('should have a dummy test', (function () {
     expect(true).toBeTruthy();
   }));
 });

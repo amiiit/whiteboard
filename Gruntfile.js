@@ -305,10 +305,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('unit-test', [
-    'clean:test',
-    'concurrent:test',
-    'concat',
-    'connect:test',
+    'karmaconfig',
     'karma'
   ]);
 
