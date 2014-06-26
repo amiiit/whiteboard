@@ -36,9 +36,7 @@ angular.module('nuBoard')
 
     $scope.$watch('menu', function () {
         ToolbarService.updateState(angular.copy($scope.menu));
-        var currentState = ToolbarService.getState();
-        $scope.selected = currentState;
-        console.log('currentState', currentState);
+        $scope.selected = ToolbarService.getState();
       }, true
     );
 

@@ -63,7 +63,7 @@ describe('test surface watcher', function () {
       { bla: 'bla',
         position: { x: 50, y: 100 },
         localOrigin: true,
-        actionId: 'fake-id-1'
+        shapeId: 'fake-id-1'
       });
 
   });
@@ -98,13 +98,13 @@ describe('test surface watcher', function () {
     expect(DistributionServiceMock.newLine).toHaveBeenCalledWith({ bla: 'bla',
       position: { x: 50, y: 100 },
       localOrigin: true,
-      actionId: 'fake-id-1'
+      shapeId: 'fake-id-1'
     });
     expect(DistributionServiceMock.draw).toHaveBeenCalledWith({
       bla: 'bla',
       position: { x: 51, y: 100 },
       localOrigin: true,
-      actionId: 'fake-id-1'
+      shapeId: 'fake-id-1'
 
     });
 
@@ -140,7 +140,7 @@ describe('test surface watcher', function () {
     expect(DistributionServiceMock.newLine.callCount).toBe(2);
 
     var callArgs = DistributionServiceMock.newLine.argsForCall;
-    expect(callArgs[0].actionId).toBe(callArgs[1].actionId);
+    expect(callArgs[0].shapeId).toBe(callArgs[1].shapeId);
 
   });
 

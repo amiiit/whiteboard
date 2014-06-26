@@ -4,7 +4,7 @@ angular.module('nuBoard')
   .service('SurfaceWatcherService', function (DistributionService, UUID) {
 
     var isDraw = false;
-    var actionId;
+    var shapeId;
 
     this.getSupportedEvents = function () {
       return Object.keys(eventHandlers);
@@ -12,24 +12,24 @@ angular.module('nuBoard')
 
     var actionStart = function (data) {
       isDraw = true;
-      actionId = UUID.generate();
-      data.actionId = actionId;
+      shapeId = UUID.generate();
+      data.shapeId = shapeId;
     };
 
-    var setActionId = function (data) {
-      if (!data.actionId){
-        actionId = UUID.generate();
+    var setShapeId = function (data) {
+      if (!data.shapeId){
+        shapeId = UUID.generate();
       }
-      data.actionId = actionId;
+      data.shapeId = shapeId;
     };
 
-    var resetActionId = function(){
-      actionId = undefined;
+    var resetShapeId = function(){
+      shapeId = undefined;
     };
 
     var actionEnd = function () {
       isDraw = false;
-      actionId = undefined;
+      shapeId = undefined;
     };
 
     var eventHandlers = {
@@ -56,7 +56,7 @@ angular.module('nuBoard')
       var dataCopy = angular.copy(data);
       delete dataCopy.event;
       dataCopy.localOrigin = true;
-      setActionId(dataCopy);
+      setShapeId(dataCopy);
       return dataCopy;
     };
 
