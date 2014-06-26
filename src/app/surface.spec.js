@@ -9,7 +9,7 @@ describe('surface-directive', function () {
     scope = $rootScope;
     element = angular.element("<nu-surface></nu-surface>");
     $compile(element)($rootScope);
-    scope.$digest();
+//    scope.$rootScope();
   }));
 
   it('element refers to kinetic', function () {
