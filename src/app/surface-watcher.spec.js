@@ -139,9 +139,8 @@ describe('test surface watcher', function () {
 
     expect(DistributionServiceMock.newLine.callCount).toBe(2);
 
-    var callArgs =  DistributionServiceMock.newLine.argsForCall;
+    var callArgs = DistributionServiceMock.newLine.argsForCall;
     expect(callArgs[0].actionId).toBe(callArgs[1].actionId);
-
 
   });
 
