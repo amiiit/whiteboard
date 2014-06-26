@@ -1,5 +1,4 @@
 module.exports = function (karma) {
-  console.log('cwd', process.cwd());
   karma.set({
     /**
      * From where to look for files, starting with the location of this file.
@@ -13,8 +12,9 @@ module.exports = function (karma) {
       <% scripts.forEach( function ( file ) { %>'<%= file %>',
         <% }); %>
       'src/**/*.js',
-    ],
-    exclude: [
+      'build/src/templates.js'
+      ],
+      exclude: [
       'src/assets/**/*.js'
     ],
     frameworks: [ 'jasmine' ],

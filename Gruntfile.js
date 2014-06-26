@@ -211,8 +211,7 @@ module.exports = function (grunt) {
       },
       scripts: {
         files: ['<%= app_files.js %>', '<%= app_files.jsunit%>'],
-        tasks: ['build', 'unit-test']
-
+        tasks: ['copy:build_appjs', 'karma:unit:run']
       },
       templates: {
         files: '<%= app_files.atpl %>',
