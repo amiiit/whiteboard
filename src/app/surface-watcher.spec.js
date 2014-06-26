@@ -109,7 +109,41 @@ describe('test surface watcher', function () {
     });
 
 
-  })
+  });
+
+  it('each mouse down new action-id', function () {
+    spyOn(DistributionServiceMock, 'newLine');
+
+
+    SurfaceWatcherService.reportEvent(
+      {
+        event: 'mousedown',
+        bla: 'bla',
+        position: {
+          x: 50,
+          y: 100
+        }
+      }
+    );
+
+    SurfaceWatcherService.reportEvent(
+      {
+        event: 'mousedown',
+        bla: 'bla',
+        position: {
+          x: 50,
+          y: 100
+        }
+      }
+    );
+
+    expect(DistributionServiceMock.newLine.callCount).toBe(2);
+
+    var callArgs =  DistributionServiceMock.newLine.argsForCall;
+    expect(callArgs[0].actionId).toBe(callArgs[1].actionId);
+
+
+  });
 
 
 })
