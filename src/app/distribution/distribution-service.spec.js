@@ -46,10 +46,26 @@ describe('distribution service', function () {
     spyOn(FirebaseServiceMock, 'newShape');
 
     service.newShape({
-      localOrigin: true
+      type: 'line',
+      localOrigin: false
     });
 
     expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
+    expect(FirebaseServiceMock.newShape).not.toHaveBeenCalled();
   });
+
+  it('local call redirects to surface service', function () {
+
+     spyOn(SurfaceServiceMock, 'newShape');
+     spyOn(FirebaseServiceMock, 'newShape');
+
+     service.newShape({
+       type: 'line',
+       localOrigin: true
+     });
+
+     expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
+     expect(FirebaseServiceMock.newShape).toHaveBeenCalled();
+   });
 
 });

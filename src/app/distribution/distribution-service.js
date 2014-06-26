@@ -1,15 +1,18 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('DistributionService', function (Logger, ToolbarService, SurfaceService) {
+  .service('DistributionService', function (Logger, SurfaceService, FirebaseService) {
 
     this.draw = function (data) {
       SurfaceService.draw(data);
     };
 
     this.newShape = function (data) {
-      data.toolbarState = ToolbarService.getState();
+      if (data.localOrigin){
+        FirebaseService.newShape(data);
+      }
       SurfaceService.newShape(data);
+
     };
 
   });
