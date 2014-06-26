@@ -16,14 +16,19 @@ describe('test surface watcher', function () {
     generate: fnc
   };
 
+  var ToolbarServiceMock = {
+    getState: fnc
+  };
+
   beforeEach(module(function ($provide) {
     $provide.value('DistributionService', DistributionServiceMock);
     $provide.value('UUID', UUIDMock);
+    $provide.value('ToolbarService', ToolbarServiceMock);
   }));
 
 
   beforeEach(function () {
-    spyOn(UUIDMock, 'generate').andCallFake(function () {
+    spyOn(UUIDMock, 'generate').and.callFake(function () {
       var i = 1;
       return 'fake-id-' + i++;
     });
@@ -59,13 +64,15 @@ describe('test surface watcher', function () {
       }
     );
 
-    expect(DistributionServiceMock.newShape).toHaveBeenCalledWith(
-      { bla: 'bla',
-        position: { x: 50, y: 100 },
-        localOrigin: true,
-        shapeId: 'fake-id-1'
-      });
 
+    expect(DistributionServiceMock.newShape.calls.mostRecent().args[0]).toEqual(
+      jasmine.objectContaining(
+        { bla: 'bla',
+          position: { x: 50, y: 100 },
+          localOrigin: true,
+          shapeId: 'fake-id-1'
+        }
+      ));
   });
 
   it('mousemove after mousedown', function () {
@@ -95,18 +102,22 @@ describe('test surface watcher', function () {
       }
     );
 
-    expect(DistributionServiceMock.newShape).toHaveBeenCalledWith({ bla: 'bla',
-      position: { x: 50, y: 100 },
-      localOrigin: true,
-      shapeId: 'fake-id-1'
-    });
-    expect(DistributionServiceMock.draw).toHaveBeenCalledWith({
-      bla: 'bla',
-      position: { x: 51, y: 100 },
-      localOrigin: true,
-      shapeId: 'fake-id-1'
+    expect(DistributionServiceMock.newShape.calls.mostRecent().args[0]).toEqual(
+      jasmine.objectContaining(
+        { bla: 'bla',
+          position: { x: 50, y: 100 },
+          localOrigin: true,
+          shapeId: 'fake-id-1'
+        }));
 
-    });
+    expect(DistributionServiceMock.draw.calls.mostRecent().args[0]).toEqual(
+      jasmine.objectContaining({
+        bla: 'bla',
+        position: { x: 51, y: 100 },
+        localOrigin: true,
+        shapeId: 'fake-id-1'
+      })
+    );
 
 
   });
@@ -137,13 +148,38 @@ describe('test surface watcher', function () {
       }
     );
 
-    expect(DistributionServiceMock.newShape.callCount).toBe(2);
+    expect(DistributionServiceMock.newShape.calls.count()).toBe(2);
 
-    var callArgs = DistributionServiceMock.newShape.argsForCall;
+    var callArgs = DistributionServiceMock.newShape.calls.allArgs();
     expect(callArgs[0].shapeId).toBe(callArgs[1].shapeId);
 
   });
 
+
+  it('watcher fetches toolbar state for new shape', function () {
+
+
+    spyOn(ToolbarServiceMock, 'getState').and.returnValue({stylus: 'brush', color: 'green'});
+
+    spyOn(DistributionServiceMock, 'newShape');
+
+    SurfaceWatcherService.reportEvent(
+      {
+        event: 'mousedown',
+        bla: 'bla',
+        position: {
+          x: 50,
+          y: 100
+        }
+      }
+    );
+
+
+    expect(ToolbarServiceMock.getState).toHaveBeenCalled();
+    expect(DistributionServiceMock.newShape).toHaveBeenCalled();
+
+
+  })
 
 })
 ;

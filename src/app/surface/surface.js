@@ -28,7 +28,7 @@ angular.module('nuBoard')
                 })
             }
           );
-        }
+        };
 
 
         var linkOnDom = function () {

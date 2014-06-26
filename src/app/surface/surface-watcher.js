@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('SurfaceWatcherService', function (DistributionService, UUID) {
+  .service('SurfaceWatcherService', function (DistributionService, UUID, ToolbarService) {
 
     var isDraw = false;
     var shapeId;
@@ -16,15 +16,12 @@ angular.module('nuBoard')
       data.shapeId = shapeId;
     };
 
-    var setShapeId = function (data) {
+    var setNewShapeMeta = function (data) {
       if (!data.shapeId){
         shapeId = UUID.generate();
       }
+      data.toolbarState = ToolbarService.getState();
       data.shapeId = shapeId;
-    };
-
-    var resetShapeId = function(){
-      shapeId = undefined;
     };
 
     var actionEnd = function () {
@@ -56,7 +53,7 @@ angular.module('nuBoard')
       var dataCopy = angular.copy(data);
       delete dataCopy.event;
       dataCopy.localOrigin = true;
-      setShapeId(dataCopy);
+      setNewShapeMeta(dataCopy);
       return dataCopy;
     };
 
