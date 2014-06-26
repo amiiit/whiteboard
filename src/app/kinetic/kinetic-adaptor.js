@@ -38,7 +38,7 @@ angular.module('nuBoard')
       activeLayer = _.last(this.layers);
     };
 
-    this.newLine = function (data) {
+    this.newShape = function (data) {
 
       var toolbarState = data.toolbarState;
 

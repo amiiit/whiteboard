@@ -5,8 +5,8 @@ angular.module('nuBoard')
       KineticService.draw(data);
     };
 
-    this.newLine = function (data) {
-      KineticService.newLine(data);
+    this.newShape = function (data) {
+      KineticService.newShape(data);
     };
 
   });

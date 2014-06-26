@@ -35,7 +35,7 @@ angular.module('nuBoard')
     var eventHandlers = {
       'mousedown': function (data) {
         actionStart(data);
-        DistributionService.newLine(data)
+        DistributionService.newShape(data)
       },
       'mouseup': function (data) {
         actionEnd(data);

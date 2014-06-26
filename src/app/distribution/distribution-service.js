@@ -7,9 +7,9 @@ angular.module('nuBoard')
       SurfaceService.draw(data);
     };
 
-    this.newLine = function (data) {
+    this.newShape = function (data) {
       data.toolbarState = ToolbarService.getState();
-      SurfaceService.newLine(data);
+      SurfaceService.newShape(data);
     };
 
   });

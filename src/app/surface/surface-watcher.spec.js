@@ -8,7 +8,7 @@ describe('test surface watcher', function () {
   var SurfaceWatcherService;
 
   var DistributionServiceMock = {
-    newLine: fnc,
+    newShape: fnc,
     draw: fnc
   };
 
@@ -45,7 +45,7 @@ describe('test surface watcher', function () {
 
   it('reporting mousedown event', function () {
 
-    spyOn(DistributionServiceMock, 'newLine');
+    spyOn(DistributionServiceMock, 'newShape');
 
 
     SurfaceWatcherService.reportEvent(
@@ -59,7 +59,7 @@ describe('test surface watcher', function () {
       }
     );
 
-    expect(DistributionServiceMock.newLine).toHaveBeenCalledWith(
+    expect(DistributionServiceMock.newShape).toHaveBeenCalledWith(
       { bla: 'bla',
         position: { x: 50, y: 100 },
         localOrigin: true,
@@ -70,7 +70,7 @@ describe('test surface watcher', function () {
 
   it('mousemove after mousedown', function () {
 
-    spyOn(DistributionServiceMock, 'newLine');
+    spyOn(DistributionServiceMock, 'newShape');
     spyOn(DistributionServiceMock, 'draw');
 
     SurfaceWatcherService.reportEvent(
@@ -95,7 +95,7 @@ describe('test surface watcher', function () {
       }
     );
 
-    expect(DistributionServiceMock.newLine).toHaveBeenCalledWith({ bla: 'bla',
+    expect(DistributionServiceMock.newShape).toHaveBeenCalledWith({ bla: 'bla',
       position: { x: 50, y: 100 },
       localOrigin: true,
       shapeId: 'fake-id-1'
@@ -112,7 +112,7 @@ describe('test surface watcher', function () {
   });
 
   it('each mouse down new action-id', function () {
-    spyOn(DistributionServiceMock, 'newLine');
+    spyOn(DistributionServiceMock, 'newShape');
 
 
     SurfaceWatcherService.reportEvent(
@@ -137,9 +137,9 @@ describe('test surface watcher', function () {
       }
     );
 
-    expect(DistributionServiceMock.newLine.callCount).toBe(2);
+    expect(DistributionServiceMock.newShape.callCount).toBe(2);
 
-    var callArgs = DistributionServiceMock.newLine.argsForCall;
+    var callArgs = DistributionServiceMock.newShape.argsForCall;
     expect(callArgs[0].shapeId).toBe(callArgs[1].shapeId);
 
   });

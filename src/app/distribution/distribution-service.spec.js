@@ -9,7 +9,7 @@ describe('distribution service', function () {
 
   var SurfaceServiceMock = {
     draw: fnc,
-    newLine: fnc
+    newShape: fnc
   };
 
   var FirebaseServiceMock = {
@@ -31,25 +31,25 @@ describe('distribution service', function () {
 
   it('local call redirects to surface service', function () {
 
-    spyOn(SurfaceServiceMock, 'newLine');
+    spyOn(SurfaceServiceMock, 'newShape');
 
-    service.newLine({
+    service.newShape({
       localOrigin: true
     });
 
-    expect(SurfaceServiceMock.newLine).toHaveBeenCalled();
+    expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
   });
 
   it('local call redirects to surface service', function () {
 
-    spyOn(SurfaceServiceMock, 'newLine');
+    spyOn(SurfaceServiceMock, 'newShape');
     spyOn(FirebaseServiceMock, 'newShape');
 
-    service.newLine({
+    service.newShape({
       localOrigin: true
     });
 
-    expect(SurfaceServiceMock.newLine).toHaveBeenCalled();
+    expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
   });
 
 });
