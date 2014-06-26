@@ -54,7 +54,7 @@ angular.module('nuBoard')
 
     return {
       restrict: 'E',
-      templateUrl: 'app/toolbar.tpl.html',
+      templateUrl: 'app/toolbar/toolbar.tpl.html',
       controller: 'ToolbarController',
       replace: true
     }
