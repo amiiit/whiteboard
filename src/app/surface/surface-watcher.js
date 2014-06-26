@@ -20,8 +20,15 @@ angular.module('nuBoard')
       if (!data.shapeId){
         shapeId = UUID.generate();
       }
-      data.toolbarState = ToolbarService.getState();
+      assignDataWithToolbarProperties(data);
       data.shapeId = shapeId;
+    };
+
+    var assignDataWithToolbarProperties = function(data){
+      var toolbarProps = ToolbarService.getState();
+      toolbarProps.type = toolbarProps.stylus;
+      delete toolbarProps.stylus;
+      return _.assign(data, toolbarProps);
     };
 
     var actionEnd = function () {
@@ -47,7 +54,6 @@ angular.module('nuBoard')
         actionEnd(data);
       }
     };
-
 
     var prepareData = function (data) {
       var dataCopy = angular.copy(data);

@@ -5,7 +5,7 @@ describe('test surface watcher', function () {
   var fnc = function () {
   };
 
-  var SurfaceWatcherService;
+  var service;
 
   var DistributionServiceMock = {
     newShape: fnc,
@@ -28,6 +28,7 @@ describe('test surface watcher', function () {
 
 
   beforeEach(function () {
+
     spyOn(UUIDMock, 'generate').and.callFake(function () {
       var i = 1;
       return 'fake-id-' + i++;
@@ -36,12 +37,12 @@ describe('test surface watcher', function () {
   });
 
   beforeEach(inject(function (_SurfaceWatcherService_) {
-    SurfaceWatcherService = _SurfaceWatcherService_;
+    service = _SurfaceWatcherService_;
   }));
 
 
   it('supported events', function () {
-    var supportedEvents = SurfaceWatcherService.getSupportedEvents();
+    var supportedEvents = service.getSupportedEvents();
     expect(supportedEvents).toContain('mousedown');
     expect(supportedEvents).toContain('mouseup');
     expect(supportedEvents).toContain('mousemove');
@@ -51,12 +52,11 @@ describe('test surface watcher', function () {
   it('reporting mousedown event', function () {
 
     spyOn(DistributionServiceMock, 'newShape');
+    spyOn(ToolbarServiceMock, 'getState').and.returnValue({stylus: 'line', color: 'green'});
 
-
-    SurfaceWatcherService.reportEvent(
+    service.reportEvent(
       {
         event: 'mousedown',
-        bla: 'bla',
         position: {
           x: 50,
           y: 100
@@ -67,7 +67,7 @@ describe('test surface watcher', function () {
 
     expect(DistributionServiceMock.newShape.calls.mostRecent().args[0]).toEqual(
       jasmine.objectContaining(
-        { bla: 'bla',
+        {
           position: { x: 50, y: 100 },
           localOrigin: true,
           shapeId: 'fake-id-1'
@@ -77,10 +77,11 @@ describe('test surface watcher', function () {
 
   it('mousemove after mousedown', function () {
 
+    spyOn(ToolbarServiceMock, 'getState').and.returnValue({stylus: 'line', color: 'green'});
     spyOn(DistributionServiceMock, 'newShape');
     spyOn(DistributionServiceMock, 'draw');
 
-    SurfaceWatcherService.reportEvent(
+    service.reportEvent(
       {
         event: 'mousedown',
         bla: 'bla',
@@ -91,7 +92,7 @@ describe('test surface watcher', function () {
       }
     );
 
-    SurfaceWatcherService.reportEvent(
+    service.reportEvent(
       {
         event: 'mousemove',
         bla: 'bla',
@@ -123,10 +124,12 @@ describe('test surface watcher', function () {
   });
 
   it('each mouse down new action-id', function () {
+
     spyOn(DistributionServiceMock, 'newShape');
+    spyOn(ToolbarServiceMock, 'getState').and.returnValue({stylus: 'line', color: 'green'});
 
 
-    SurfaceWatcherService.reportEvent(
+    service.reportEvent(
       {
         event: 'mousedown',
         bla: 'bla',
@@ -137,7 +140,7 @@ describe('test surface watcher', function () {
       }
     );
 
-    SurfaceWatcherService.reportEvent(
+    service.reportEvent(
       {
         event: 'mousedown',
         bla: 'bla',
@@ -159,11 +162,11 @@ describe('test surface watcher', function () {
   it('watcher fetches toolbar state for new shape', function () {
 
 
-    spyOn(ToolbarServiceMock, 'getState').and.returnValue({stylus: 'brush', color: 'green'});
+    spyOn(ToolbarServiceMock, 'getState').and.returnValue({stylus: 'line', color: 'green'});
 
     spyOn(DistributionServiceMock, 'newShape');
 
-    SurfaceWatcherService.reportEvent(
+    service.reportEvent(
       {
         event: 'mousedown',
         bla: 'bla',
@@ -179,7 +182,41 @@ describe('test surface watcher', function () {
     expect(DistributionServiceMock.newShape).toHaveBeenCalled();
 
 
-  })
+  });
 
-})
-;
+  it('shape meta data', function () {
+
+    spyOn(DistributionServiceMock, 'newShape');
+
+    spyOn(ToolbarServiceMock, 'getState').and.returnValue({
+        stylus: "line",
+        color: "skyblue",
+        width: 5,
+        lineCap: "round",
+        lineJoin: "round"}
+    );
+
+    service.reportEvent(
+      {
+        event: 'mousedown',
+        position: {
+          x: 50,
+          y: 100
+        }
+      }
+    );
+
+    expect(DistributionServiceMock.newShape.calls.mostRecent().args[0]).toEqual(
+      jasmine.objectContaining({
+        type: 'line',
+        color: 'skyblue',
+        width: 5,
+        lineCap: 'round',
+        lineJoin: 'round',
+        shapeId: 'fake-id-1'
+      })
+    );
+
+
+  })
+});

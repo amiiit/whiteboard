@@ -13,6 +13,10 @@ angular.module('nuBoard')
         var type = data.type;
         delete data.type;
 
+        if (!data.points && data.position) {
+          data.points = [data.position.x, data.position.y];
+        }
+
         return new typeToConstructor[type](data);
       }
     }

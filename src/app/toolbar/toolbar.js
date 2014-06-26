@@ -10,7 +10,7 @@ angular.module('nuBoard')
         {
           id: 'stylus',
           options: [
-            {id: 'pen', logoId: 'pencil'}
+            {id: 'line', logoId: 'pencil'}
           ]
         },
         {
