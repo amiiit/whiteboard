@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('DistributionService', function (Logger, SurfaceService, FirebaseService) {
+  .service('DistributionService', function (Logger, SurfaceService, SyncService) {
 
     this.draw = function (data) {
       SurfaceService.draw(data);
@@ -9,7 +9,7 @@ angular.module('nuBoard')
 
     this.newShape = function (data) {
       if (data.localOrigin){
-        FirebaseService.newShape(data);
+        SyncService.newShape(data);
       }
       SurfaceService.newShape(data);
 

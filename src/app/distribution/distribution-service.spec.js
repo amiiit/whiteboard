@@ -12,7 +12,7 @@ describe('distribution service', function () {
     newShape: fnc
   };
 
-  var FirebaseServiceMock = {
+  var SyncServiceMock = {
     newShape: fnc,
     drawExisting: fnc
   };
@@ -21,7 +21,7 @@ describe('distribution service', function () {
 
   beforeEach(module(function ($provide) {
     $provide.value('SurfaceService', SurfaceServiceMock);
-    $provide.value('FirebaseService', FirebaseServiceMock);
+    $provide.value('SyncService', SyncServiceMock);
   }));
 
 
@@ -40,10 +40,10 @@ describe('distribution service', function () {
     expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
   });
 
-  it('local call redirects to surface service', function () {
+  it('local call redirects to surface service and not to syncservice', function () {
 
     spyOn(SurfaceServiceMock, 'newShape');
-    spyOn(FirebaseServiceMock, 'newShape');
+    spyOn(SyncServiceMock, 'newShape');
 
     service.newShape({
       type: 'line',
@@ -51,13 +51,13 @@ describe('distribution service', function () {
     });
 
     expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
-    expect(FirebaseServiceMock.newShape).not.toHaveBeenCalled();
+    expect(SyncServiceMock.newShape).not.toHaveBeenCalled();
   });
 
   it('local call redirects to surface service', function () {
 
      spyOn(SurfaceServiceMock, 'newShape');
-     spyOn(FirebaseServiceMock, 'newShape');
+     spyOn(SyncServiceMock, 'newShape');
 
      service.newShape({
        type: 'line',
@@ -65,7 +65,21 @@ describe('distribution service', function () {
      });
 
      expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
-     expect(FirebaseServiceMock.newShape).toHaveBeenCalled();
+     expect(SyncServiceMock.newShape).toHaveBeenCalled();
    });
+  
+  it('local call redirects to surface service', function () {
+ 
+      spyOn(SurfaceServiceMock, 'newShape');
+      spyOn(SyncServiceMock, 'newShape');
+ 
+      service.newShape({
+        type: 'line',
+        localOrigin: true
+      });
+ 
+      expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
+      expect(SyncServiceMock.newShape).toHaveBeenCalled();
+    });
 
 });
