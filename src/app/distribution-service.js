@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('DistributionService', function (Logger, KineticService, ToolbarService) {
+  .service('DistributionService', function (Logger, KineticService, ToolbarService, SyncService) {
 
     this.draw = function (data) {
       KineticService.draw(data);
