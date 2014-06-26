@@ -1,7 +1,11 @@
-angular.module('nuBoard').service('KineticService', function () {
+'use strict';
+
+angular.module('nuBoard').service('KineticService', function (KineticShapeFactory) {
 
   var activeLayer = null;
   var activeShape;
+
+  var that = this;
 
   this.buildStage = function (config) {
     this.stage = new Kinetic.Stage({
@@ -19,20 +23,13 @@ angular.module('nuBoard').service('KineticService', function () {
   };
 
   this.newShape = function (data) {
-
-    var toolbarState = data.toolbarState;
-
-    var line = new Kinetic.Line({
-      points: [data.position.x, data.position.y],
-      stroke: toolbarState.color,
-      strokeWidth: toolbarState.width,
-      lineCap: toolbarState.lineCap,
-      lineJoin: toolbarState.lineJoin
-    });
-
-    activeLayer.add(line);
-    activeShape = line;
-    return line;
+    if (!activeLayer) {
+      that.addLayer();
+    }
+    var shape = KineticShapeFactory.fromTypeAndConfig(data);
+    activeLayer.add(shape);
+    activeShape = shape;
+    return shape;
   };
 
   this.draw = function (data) {
