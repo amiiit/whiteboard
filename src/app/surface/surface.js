@@ -55,8 +55,7 @@ angular.module('nuBoard')
     };
   }
 )
-  .
-  controller('SurfaceCtrl', function ($scope) {
+  .controller('SurfaceCtrl', function ($scope) {
 
 
     var objects = {};

@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('DistributionService', function (Logger, KineticService, ToolbarService, SyncService) {
+  .service('DistributionService', function (Logger, ToolbarService, SurfaceService) {
 
     this.draw = function (data) {
-      KineticService.draw(data);
+      SurfaceService.draw(data);
     };
 
     this.newLine = function (data) {
       data.toolbarState = ToolbarService.getState();
-      KineticService.newLine(data);
-    }
+      SurfaceService.newLine(data);
+    };
 
   });
