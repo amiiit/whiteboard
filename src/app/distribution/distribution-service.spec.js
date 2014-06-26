@@ -14,7 +14,7 @@ describe('distribution service', function () {
 
   var SyncServiceMock = {
     newShape: fnc,
-    drawExisting: fnc
+    draw: fnc
   };
 
   beforeEach(module('nuBoard'));
@@ -68,18 +68,31 @@ describe('distribution service', function () {
      expect(SyncServiceMock.newShape).toHaveBeenCalled();
    });
   
-  it('local call redirects to surface service', function () {
- 
-      spyOn(SurfaceServiceMock, 'newShape');
-      spyOn(SyncServiceMock, 'newShape');
- 
-      service.newShape({
-        type: 'line',
-        localOrigin: true
+  it('local draw to sync and surface', function () {
+
+        spyOn(SurfaceServiceMock, 'draw');
+        spyOn(SyncServiceMock, 'draw');
+
+        service.draw({
+          type: 'line',
+          localOrigin: true
+        });
+
+        expect(SurfaceServiceMock.draw).toHaveBeenCalled();
+        expect(SyncServiceMock.draw).toHaveBeenCalled();
       });
- 
-      expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
-      expect(SyncServiceMock.newShape).toHaveBeenCalled();
-    });
+
+  it('remote draw to surface only', function () {
+
+        spyOn(SurfaceServiceMock, 'draw');
+        spyOn(SyncServiceMock, 'draw');
+
+        service.draw({
+          type: 'line'
+        });
+
+        expect(SurfaceServiceMock.draw).toHaveBeenCalled();
+        expect(SyncServiceMock.draw).not.toHaveBeenCalled();
+      });
 
 });
