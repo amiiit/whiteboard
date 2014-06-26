@@ -61,7 +61,7 @@ angular.module('nuBoard')
       points.push(data.position.y);
       activeShape.setPoints(points);
       this.stage.draw();
-    }
+    };
 
     this.getStageContainer = function () {
       return this.stage.container();

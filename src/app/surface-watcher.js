@@ -10,22 +10,23 @@ angular.module('nuBoard')
       return Object.keys(eventHandlers);
     };
 
-    var actionStart = function () {
+    var actionStart = function (data) {
       isDraw = true;
       actionId = UUID.generate();
+      data.actionId = actionId;
     };
 
     var actionEnd = function () {
       isDraw = false;
-    }
+    };
 
     var eventHandlers = {
       'mousedown': function (data) {
-        actionStart()
+        actionStart(data);
         DistributionService.newLine(data)
       },
       'mouseup': function (data) {
-        actionEnd();
+        actionEnd(data);
       },
       'mousemove': function (data) {
         if (isDraw) {
@@ -33,7 +34,7 @@ angular.module('nuBoard')
         }
       },
       'mouseout': function (data) {
-        actionEnd();
+        actionEnd(data);
       }
     };
 
@@ -42,14 +43,14 @@ angular.module('nuBoard')
       var dataCopy = angular.copy(data);
       delete dataCopy.event;
       dataCopy.localOrigin = true;
-      dataCopy.actionId = actionId;
       return dataCopy;
     };
 
     this.reportEvent = function (data) {
       var handler = eventHandlers[data.event];
       if (handler) {
-        handler(prepareData(data))
+        var preparedData = prepareData(data);
+        handler(preparedData);
       } else {
         console.log('event not supported', data.event);
       }
