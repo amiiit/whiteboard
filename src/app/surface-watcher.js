@@ -16,8 +16,20 @@ angular.module('nuBoard')
       data.actionId = actionId;
     };
 
+    var setActionId = function (data) {
+      if (!data.actionId){
+        actionId = UUID.generate();
+      }
+      data.actionId = actionId;
+    };
+
+    var resetActionId = function(){
+      actionId = undefined;
+    };
+
     var actionEnd = function () {
       isDraw = false;
+      actionId = undefined;
     };
 
     var eventHandlers = {
@@ -30,7 +42,8 @@ angular.module('nuBoard')
       },
       'mousemove': function (data) {
         if (isDraw) {
-          DistributionService.draw(data);
+          var preparedData = prepareData(data);
+          DistributionService.draw(preparedData);
         }
       },
       'mouseout': function (data) {
@@ -43,6 +56,7 @@ angular.module('nuBoard')
       var dataCopy = angular.copy(data);
       delete dataCopy.event;
       dataCopy.localOrigin = true;
+      setActionId(dataCopy);
       return dataCopy;
     };
 
