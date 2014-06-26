@@ -28,7 +28,7 @@ angular.module('nuBoard')
             {id: '10', value: 10},
             {id: '5', value: 5},
             {id: '2', value: 2},
-            {id: '1', value: 1},
+            {id: '1', value: 1}
           ]
         }
       ]
