@@ -33,10 +33,11 @@ angular.module('nuBoard').service('KineticService', function (KineticShapeFactor
   };
 
   this.draw = function (data) {
-    var points = activeShape.points();
+    var shape = shapes.get(data.shapeId);
+    var points = shape.points();
     points.push(data.position.x);
     points.push(data.position.y);
-    activeShape.setPoints(points);
+    shape.setPoints(points);
     that.stage.draw();
   };
 

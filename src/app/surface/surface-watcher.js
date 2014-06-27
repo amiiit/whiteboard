@@ -4,27 +4,28 @@ angular.module('nuBoard')
   .service('SurfaceWatcherService', function (DistributionService, UUID, ToolbarService) {
 
     var isDraw = false;
-    var shapeId;
+    var localShapeId;
 
     this.getSupportedEvents = function () {
       return Object.keys(eventHandlers);
     };
 
     var actionStart = function (data) {
+      setNewShapeMeta(data);
       isDraw = true;
-      shapeId = UUID.generate();
-      data.shapeId = shapeId;
+      localShapeId = UUID.generate();
+      data.shapeId = localShapeId;
     };
 
     var setNewShapeMeta = function (data) {
-      if (!data.shapeId){
-        shapeId = UUID.generate();
+      if (!data.shapeId) {
+        localShapeId = UUID.generate();
       }
       assignDataWithToolbarProperties(data);
-      data.shapeId = shapeId;
+      data.shapeId = localShapeId;
     };
 
-    var assignDataWithToolbarProperties = function(data){
+    var assignDataWithToolbarProperties = function (data) {
       var toolbarProps = ToolbarService.getState();
       toolbarProps.type = toolbarProps.stylus;
       delete toolbarProps.stylus;
@@ -33,11 +34,12 @@ angular.module('nuBoard')
 
     var actionEnd = function () {
       isDraw = false;
-      shapeId = undefined;
+      localShapeId = undefined;
     };
 
     var eventHandlers = {
       'mousedown': function (data) {
+        console.log('mouse down data', data);
         actionStart(data);
         DistributionService.newShape(data)
       },
@@ -46,6 +48,7 @@ angular.module('nuBoard')
       },
       'mousemove': function (data) {
         if (isDraw) {
+          data.shapeId = localShapeId;
           var preparedData = prepareData(data);
           DistributionService.draw(preparedData);
         }
@@ -59,7 +62,6 @@ angular.module('nuBoard')
       var dataCopy = angular.copy(data);
       delete dataCopy.event;
       dataCopy.localOrigin = true;
-      setNewShapeMeta(dataCopy);
       return dataCopy;
     };
 
