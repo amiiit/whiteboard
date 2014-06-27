@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('DistributionService', function (Logger, SurfaceService, SyncService) {
+  .service('DistributionService', function (Logger, SurfaceService, SyncService, UUID) {
 
     this.draw = function (data) {
       if (data.localOrigin){
@@ -12,6 +12,7 @@ angular.module('nuBoard')
 
     this.newShape = function (data) {
       if (data.localOrigin){
+        data.id = UUID.generate();
         SyncService.newShape(data);
       }
       SurfaceService.newShape(data);

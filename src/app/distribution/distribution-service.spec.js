@@ -17,11 +17,16 @@ describe('distribution service', function () {
     draw: fnc
   };
 
+  var UUIDMock = {
+    generate: fnc
+  };
+
   beforeEach(module('nuBoard'));
 
   beforeEach(module(function ($provide) {
     $provide.value('SurfaceService', SurfaceServiceMock);
     $provide.value('SyncService', SyncServiceMock);
+    $provide.value('UUID', UUIDMock);
   }));
 
 
@@ -56,43 +61,59 @@ describe('distribution service', function () {
 
   it('local call redirects to surface service', function () {
 
-     spyOn(SurfaceServiceMock, 'newShape');
-     spyOn(SyncServiceMock, 'newShape');
+    spyOn(SurfaceServiceMock, 'newShape');
+    spyOn(SyncServiceMock, 'newShape');
 
-     service.newShape({
-       type: 'line',
-       localOrigin: true
-     });
+    service.newShape({
+      type: 'line',
+      localOrigin: true
+    });
 
-     expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
-     expect(SyncServiceMock.newShape).toHaveBeenCalled();
-   });
-  
+    expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
+    expect(SyncServiceMock.newShape).toHaveBeenCalled();
+  });
+
   it('local draw to sync and surface', function () {
 
-        spyOn(SurfaceServiceMock, 'draw');
-        spyOn(SyncServiceMock, 'draw');
+    spyOn(SurfaceServiceMock, 'draw');
+    spyOn(SyncServiceMock, 'draw');
 
-        service.draw({
-          type: 'line',
-          localOrigin: true
-        });
+    service.draw({
+      type: 'line',
+      localOrigin: true
+    });
 
-        expect(SurfaceServiceMock.draw).toHaveBeenCalled();
-        expect(SyncServiceMock.draw).toHaveBeenCalled();
-      });
+    expect(SurfaceServiceMock.draw).toHaveBeenCalled();
+    expect(SyncServiceMock.draw).toHaveBeenCalled();
+  });
 
   it('remote draw to surface only', function () {
 
-        spyOn(SurfaceServiceMock, 'draw');
-        spyOn(SyncServiceMock, 'draw');
+    spyOn(SurfaceServiceMock, 'draw');
+    spyOn(SyncServiceMock, 'draw');
 
-        service.draw({
-          type: 'line'
-        });
+    service.draw({
+      type: 'line'
+    });
 
-        expect(SurfaceServiceMock.draw).toHaveBeenCalled();
-        expect(SyncServiceMock.draw).not.toHaveBeenCalled();
-      });
+    expect(SurfaceServiceMock.draw).toHaveBeenCalled();
+    expect(SyncServiceMock.draw).not.toHaveBeenCalled();
+  });
+
+  it('local shape gets UUID', function () {
+    spyOn(UUIDMock, 'generate').and.callFake(function () {
+      var i = 1;
+      return 'fake-id-' + i++;
+    });
+    spyOn(SurfaceServiceMock,'newShape');
+    service.newShape({
+      localOrigin: true,
+      type: 'line',
+      more: 'stuff'
+    });
+
+    expect(UUIDMock.generate).toHaveBeenCalled();
+    expect(SurfaceServiceMock.newShape.calls.mostRecent().args[0].id).toBe('fake-id-1');
+  });
 
 });
