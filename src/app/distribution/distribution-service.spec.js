@@ -157,4 +157,30 @@ describe('distribution service', function () {
 
   });
 
+  it('Sync server get shapeId of local shapes', function () {
+
+    spyOn(SyncServiceMock, 'draw');
+    spyOn(SyncServiceMock, 'newShape');
+
+    var i = 1;
+
+    spyOn(UUIDMock, 'generate').and.callFake(function () {
+      return 'fake-id-' + i++;
+    });
+
+    service.newShape({
+      localOrigin: true,
+      type: 'line',
+      more: 'stuff'
+    });
+
+    service.draw({
+      localOrigin: true,
+      points: 'more points and stuff that doesnt matter here'
+    });
+
+
+    console.log(SyncServiceMock.draw.calls.mostRecent().args)
+  });
+
 });

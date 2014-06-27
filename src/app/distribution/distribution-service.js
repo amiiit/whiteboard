@@ -7,8 +7,8 @@ angular.module('nuBoard')
 
     this.draw = function (data) {
       if (data.localOrigin) {
+        data.shapeId = lastLocalShapeId;
         SyncService.draw(data);
-        data.shapeId = lastLocalShapeId
       }
       SurfaceService.draw(data);
     };
