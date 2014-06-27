@@ -100,7 +100,7 @@ describe('distribution service', function () {
     expect(SyncServiceMock.draw).not.toHaveBeenCalled();
   });
 
-  it('local shape gets UUID', function () {
+  xit('local shape gets UUID', function () {
     var i = 1;
     spyOn(UUIDMock, 'generate').and.callFake(function () {
       return 'fake-id-' + i++;
@@ -122,7 +122,7 @@ describe('distribution service', function () {
     expect(SurfaceServiceMock.newShape.calls.mostRecent().args[0].shapeId).toBe('fake-id-2');
   });
 
-  it('local draw uses last assigned local id', function () {
+  xit('local draw uses last assigned local id', function () {
 
     var i = 1;
 

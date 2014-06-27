@@ -20,16 +20,21 @@ angular.module('nuBoard')
     var setNewShapeMeta = function (data) {
       if (!data.shapeId) {
         localShapeId = UUID.generate();
+        data.shapeId = localShapeId;
       }
       assignDataWithToolbarProperties(data);
-      data.shapeId = localShapeId;
     };
 
     var assignDataWithToolbarProperties = function (data) {
       var toolbarProps = ToolbarService.getState();
       toolbarProps.type = toolbarProps.stylus;
       delete toolbarProps.stylus;
-      return _.assign(data, toolbarProps);
+
+      for (var key in toolbarProps) {
+        if (toolbarProps.hasOwnProperty(key)) {
+          data[key] = toolbarProps[key];
+        }
+      }
     };
 
     var actionEnd = function () {
@@ -39,7 +44,6 @@ angular.module('nuBoard')
 
     var eventHandlers = {
       'mousedown': function (data) {
-        console.log('mouse down data', data);
         actionStart(data);
         DistributionService.newShape(data)
       },

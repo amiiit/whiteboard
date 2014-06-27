@@ -10,29 +10,32 @@ angular.module('nuBoard')
         return new typeToConstructor[type];
       },
       fromTypeAndConfig: function (data) {
-        var type = data.type;
-        delete data.type;
 
-        data.strokeWidth = 5;
-        delete data.width;
+        var workData = angular.copy(data);
 
-        if (!data.points && data.position) {
-          data.points = [data.position.x, data.position.y];
-          delete data.position;
+        var type = workData.type;
+        delete workData.type;
+
+        workData.strokeWidth = 5;
+        delete workData.width;
+
+        if (!workData.points && workData.position) {
+          workData.points = [workData.position.x, workData.position.y];
+          delete workData.position;
         }
 
-        if (data.localOrigin) {
-          delete data.localOrigin;
+        if (workData.localOrigin) {
+          delete workData.localOrigin;
         }
 
-        if (data.shapeId) {
-          delete data.shapeId;
+        if (workData.shapeId) {
+          delete workData.shapeId;
         }
 
-        data.stroke = data.color;
-        delete data.color;
+        workData.stroke = workData.color;
+        delete workData.color;
 
-        return new typeToConstructor[type](data);
+        return new typeToConstructor[type](workData);
 
       },
       stage: function (data) {

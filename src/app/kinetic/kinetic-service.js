@@ -26,6 +26,7 @@ angular.module('nuBoard').service('KineticService', function (KineticShapeFactor
     }
 
     var shape = KineticShapeFactory.fromTypeAndConfig(data);
+
     shapes.put(data.shapeId, shape);
     activeLayer.add(shape);
     activeShape = shape;
