@@ -1,23 +1,20 @@
 'use strict';
 
-angular.module('nuBoard').service('KineticService', function (KineticShapeFactory) {
+angular.module('nuBoard').service('KineticService', function (KineticShapeFactory, KineticShapeCache) {
 
   var activeLayer = null;
   var activeShape;
+  var shapes = KineticShapeCache;
 
   var that = this;
 
   this.buildStage = function (config) {
-    that.stage = new Kinetic.Stage({
-      container: config.container || config.id,
-      width: config.width,
-      height: config.height
-    });
+    that.stage = KineticShapeFactory.stage(config);
   };
 
   this.addLayer = function () {
     that.layers = this.layers || [];
-    that.layers.push(new Kinetic.Layer());
+    that.layers.push(KineticShapeFactory.layer());
     that.stage.add(_.last(this.layers));
     activeLayer = _.last(this.layers);
   };
@@ -29,6 +26,7 @@ angular.module('nuBoard').service('KineticService', function (KineticShapeFactor
     }
 
     var shape = KineticShapeFactory.fromTypeAndConfig(data);
+    shapes.put(data.shapeId, shape);
     activeLayer.add(shape);
     activeShape = shape;
     return shape;

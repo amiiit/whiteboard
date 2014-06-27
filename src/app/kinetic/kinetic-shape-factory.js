@@ -34,7 +34,18 @@ angular.module('nuBoard')
 
         return new typeToConstructor[type](data);
 
+      },
+      stage: function (data) {
+        return new Kinetic.Stage({
+          container: data.container || data.id,
+          width: data.width,
+          height: data.height
+        })
+      },
+      layer: function(){
+        return new Kinetic.Layer();
       }
+
     }
 
   });

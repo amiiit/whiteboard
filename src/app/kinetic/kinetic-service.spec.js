@@ -8,11 +8,22 @@ describe('kinetic service', function () {
   var domElement;
   var service;
 
-  var KineticShapeFactory = {
-    fromTypeAndConfig: fnc
+  var KineticShapeFactoryMock = {
+    fromTypeAndConfig: fnc,
+    stage: fnc,
+    layer: fnc
+  };
+  var KineticShapeCacheMock = {
+    put: fnc,
+    get: fnc
   };
 
   beforeEach(module('nuBoard'));
+
+  beforeEach(module(function ($provide) {
+    $provide.value('KineticShapeCache', KineticShapeCacheMock);
+    $provide.value('KineticShapeFactory', KineticShapeFactoryMock);
+  }));
 
   beforeEach(inject(function (_KineticService_) {
     service = _KineticService_;
@@ -22,6 +33,7 @@ describe('kinetic service', function () {
 
   it('build stage', function () {
 
+    spyOn(KineticShapeFactoryMock, 'stage');
 
     var stageConfig = {
       container: domElement, width: 200, height: 200
@@ -29,14 +41,19 @@ describe('kinetic service', function () {
 
     service.buildStage(stageConfig);
 
-    expect(service.stage instanceof Kinetic.Stage).toBe(true);
+    expect(KineticShapeFactoryMock.stage.calls.mostRecent().args[0]).toBe(stageConfig);
 
   });
 
   it('new shape', function () {
 
-    spyOn(KineticShapeFactory,'fromTypeAndConfig');
-
+    spyOn(KineticShapeFactoryMock, 'fromTypeAndConfig').and.returnValue({dummy: 'shape', shapeId: 'test-1'});
+    spyOn(KineticShapeFactoryMock, 'stage').and.returnValue({
+      add: fnc
+    });
+    spyOn(KineticShapeFactoryMock, 'layer').and.returnValue({
+      add: fnc
+    });
     var stageConfig = {
       container: domElement, width: 200, height: 200
     };
@@ -52,6 +69,69 @@ describe('kinetic service', function () {
       lineJoin: 'round',
       name: 'dummy-shape'
     });
+
+  });
+
+  it('new shapes are put in the cache', function () {
+
+    var dummyShape = {dummy: 'shape', shapeId: 'test-1'};
+    spyOn(KineticShapeFactoryMock, 'fromTypeAndConfig').and.callFake(function (data) {
+      return dummyShape;
+    });
+    spyOn(KineticShapeCacheMock, 'put');
+
+    spyOn(KineticShapeFactoryMock, 'stage').and.returnValue({
+      add: fnc
+    });
+    spyOn(KineticShapeFactoryMock, 'layer').and.returnValue({
+      add: fnc
+    });
+
+    var stageConfig = {
+      container: domElement, width: 200, height: 200
+    };
+
+    service.buildStage(stageConfig);
+
+    service.newShape({
+      shapeId: 'bla-id',
+      type: 'line',
+      points: [10, 10],
+      stroke: 'green',
+      strokeWidth: 5,
+      lineCap: 'round',
+      lineJoin: 'round'
+    });
+
+    expect(KineticShapeCacheMock.put).toHaveBeenCalled();
+    expect(KineticShapeCacheMock.put.calls.mostRecent().args[1]).toBe(dummyShape);
+
+  });
+
+  xit('draw are retrieved from cache', function () {
+
+    var dummyShape = {dummy: 'shape'};
+    spyOn(KineticShapeFactoryMock, 'fromTypeAndConfig').and.returnValue(dummyShape);
+    spyOn(KineticShapeCacheMock, 'put');
+    spyOn(KineticShapeCacheMock, 'get');
+
+    var stageConfig = {
+      container: domElement, width: 200, height: 200
+    };
+
+    service.buildStage(stageConfig);
+
+    service.newShape({
+      shapeId: 'bla-id',
+      type: 'line',
+      points: [10, 10],
+      stroke: 'green',
+      strokeWidth: 5,
+      lineCap: 'round',
+      lineJoin: 'round'
+    });
+
+    expect(KineticShapeCacheMock.get).toHaveBeenCalled();
 
   })
 

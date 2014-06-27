@@ -180,7 +180,6 @@ describe('distribution service', function () {
     });
 
 
-    console.log(SyncServiceMock.draw.calls.mostRecent().args)
   });
 
 });
