@@ -13,6 +13,9 @@ angular.module('nuBoard')
         var type = data.type;
         delete data.type;
 
+        data.strokeWidth = 5;
+        delete data.width;
+
         if (!data.points && data.position) {
           data.points = [data.position.x, data.position.y];
           delete data.position;
@@ -25,6 +28,9 @@ angular.module('nuBoard')
         if (data.shapeId) {
           delete data.shapeId;
         }
+
+        data.stroke = data.color;
+        delete data.color;
 
         return new typeToConstructor[type](data);
 

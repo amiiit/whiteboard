@@ -8,7 +8,7 @@ angular.module('nuBoard').service('KineticService', function (KineticShapeFactor
   var that = this;
 
   this.buildStage = function (config) {
-    this.stage = new Kinetic.Stage({
+    that.stage = new Kinetic.Stage({
       container: config.container || config.id,
       width: config.width,
       height: config.height
@@ -16,16 +16,18 @@ angular.module('nuBoard').service('KineticService', function (KineticShapeFactor
   };
 
   this.addLayer = function () {
-    this.layers = this.layers || [];
-    this.layers.push(new Kinetic.Layer());
-    this.stage.add(_.last(this.layers));
+    that.layers = this.layers || [];
+    that.layers.push(new Kinetic.Layer());
+    that.stage.add(_.last(this.layers));
     activeLayer = _.last(this.layers);
   };
 
   this.newShape = function (data) {
+
     if (!activeLayer) {
       that.addLayer();
     }
+
     var shape = KineticShapeFactory.fromTypeAndConfig(data);
     activeLayer.add(shape);
     activeShape = shape;
@@ -37,11 +39,11 @@ angular.module('nuBoard').service('KineticService', function (KineticShapeFactor
     points.push(data.position.x);
     points.push(data.position.y);
     activeShape.setPoints(points);
-    this.stage.draw();
+    that.stage.draw();
   };
 
   this.getStageContainer = function () {
-    return this.stage.container();
+    return that.stage.container();
   };
 
 });
