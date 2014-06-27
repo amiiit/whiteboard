@@ -44,4 +44,4 @@ angular.module('nuBoard').service('KineticService', function (KineticShapeFactor
     return this.stage.container();
   };
 
-})
+});
