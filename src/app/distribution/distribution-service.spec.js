@@ -100,63 +100,6 @@ describe('distribution service', function () {
     expect(SyncServiceMock.draw).not.toHaveBeenCalled();
   });
 
-  xit('local shape gets UUID', function () {
-    var i = 1;
-    spyOn(UUIDMock, 'generate').and.callFake(function () {
-      return 'fake-id-' + i++;
-    });
-    spyOn(SurfaceServiceMock, 'newShape');
-    service.newShape({
-      localOrigin: true,
-      type: 'line',
-      more: 'stuff'
-    });
-
-    service.newShape({
-      localOrigin: true,
-      type: 'line',
-      more: 'stuff'
-    });
-
-    expect(UUIDMock.generate).toHaveBeenCalled();
-    expect(SurfaceServiceMock.newShape.calls.mostRecent().args[0].shapeId).toBe('fake-id-2');
-  });
-
-  xit('local draw uses last assigned local id', function () {
-
-    var i = 1;
-
-    spyOn(UUIDMock, 'generate').and.callFake(function () {
-      return 'fake-id-' + i++;
-    });
-
-    spyOn(SurfaceServiceMock, 'newShape');
-    spyOn(SurfaceServiceMock, 'draw');
-
-    service.newShape({
-      localOrigin: true,
-      type: 'line',
-      more: 'stuff'
-    });
-
-    service.newShape({
-      localOrigin: true,
-      type: 'line',
-      more: 'stuff'
-    });
-
-    service.draw({
-      localOrigin: true,
-      points: 'more points and stuff that doesnt matter here'
-    });
-
-    expect(UUIDMock.generate).toHaveBeenCalled();
-    expect(SurfaceServiceMock.newShape.calls.mostRecent().args[0].shapeId).toBe('fake-id-2');
-
-    expect(SurfaceServiceMock.draw.calls.mostRecent().args[0].shapeId).toBe('fake-id-2');
-
-  });
-
   it('Sync server get shapeId of local shapes', function () {
 
     spyOn(SyncServiceMock, 'draw');

@@ -25,6 +25,7 @@ angular.module('nuBoard')
         {
           id: 'width',
           options: [
+            {id: '20', value: 20},
             {id: '10', value: 10},
             {id: '5', value: 5},
             {id: '2', value: 2},

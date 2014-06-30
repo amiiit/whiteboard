@@ -16,8 +16,7 @@ angular.module('nuBoard')
         var type = workData.type;
         delete workData.type;
 
-        workData.strokeWidth = 5;
-        delete workData.width;
+        workData.strokeWidth = data.width;
 
         if (!workData.points && workData.position) {
           workData.points = [workData.position.x, workData.position.y];
