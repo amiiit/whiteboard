@@ -7,6 +7,14 @@ angular.module('nuBoard')
       FirebaseService.syncWithBoardId(newBoardId);
     });
 
+    FirebaseService.setHandler('new_shape', function (data) {
+      console.log('sync service new shape');
+    });
+
+    FirebaseService.setHandler('amended_shape', function (data) {
+      console.log('sync service amend shape');
+    });
+
     this.draw = function (data) {
       FirebaseService.draw(data);
     };
