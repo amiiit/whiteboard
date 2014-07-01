@@ -4,7 +4,7 @@ angular.module('nuBoard', [])
 
   .constant('AppConfig', {
     defaultToolset: {
-      stylus: {id: 'pen', value: 'pen'},
+      stylus: {id: 'line', value: 'line'},
       color: {id: 'skyblue', value: 'skyblue'},
       width: {id: '5', value: 5},
       lineCap: {id: 'round', value: 'round'},

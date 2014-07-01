@@ -4,7 +4,7 @@ angular.module('nuBoard')
   .directive('nuSurface', function (Logger, UUID, $timeout, KineticService, SurfaceWatcherService) {
     return {
       restrict: 'E',
-      templateUrl: 'app/surface.tpl.html',
+      templateUrl: 'app/surface/surface.tpl.html',
       replace: true,
       scope: {
         width: '&',
@@ -28,7 +28,7 @@ angular.module('nuBoard')
                 })
             }
           );
-        }
+        };
 
 
         var linkOnDom = function () {
@@ -55,8 +55,7 @@ angular.module('nuBoard')
     };
   }
 )
-  .
-  controller('SurfaceCtrl', function ($scope) {
+  .controller('SurfaceCtrl', function ($scope) {
 
 
     var objects = {};
