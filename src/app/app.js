@@ -13,7 +13,8 @@ angular.module('nuBoard', ['firebase', 'ngRoute'])
     firebase: {
       baseUrl: 'https://fiery-fire-1095.firebaseio.com',
       appNamespace: 'nuBoard'
-    }
+    },
+    syncActive: true
   })
 
   .run(['Logger', function (Logger) {

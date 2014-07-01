@@ -26,6 +26,10 @@ describe('distribution service', function () {
     put: fnc,
     get: fnc
   };
+
+  var AppConfig;
+
+
   beforeEach(module('nuBoard'));
 
   beforeEach(module(function ($provide) {
@@ -36,8 +40,10 @@ describe('distribution service', function () {
   }));
 
 
-  beforeEach(inject(function (_DistributionService_) {
+  beforeEach(inject(function (_DistributionService_, _AppConfig_) {
     service = _DistributionService_;
+    AppConfig = _AppConfig_;
+    AppConfig.syncActive = true;
   }));
 
   it('local call redirects to surface service', function () {

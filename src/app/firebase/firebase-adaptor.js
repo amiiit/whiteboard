@@ -48,7 +48,7 @@ angular.module('nuBoard')
 
     this.newShape = function (data) {
       var child = firebase.$child(data.shapeId);
-      console.log('child', child);
+
       child.$set(prepareDataToSync(data));
     };
 
