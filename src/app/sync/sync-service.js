@@ -2,7 +2,11 @@
 
 angular.module('nuBoard')
   .service('SyncService', function (FirebaseService) {
-    this.draw = function(){};
-    this.newShape = function(){};
+    this.draw = function (data) {
+      FirebaseService.draw(data);
+    };
+    this.newShape = function (data) {
+      FirebaseService.newShape(data);
+    };
   })
 ;

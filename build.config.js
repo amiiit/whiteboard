@@ -62,8 +62,9 @@ module.exports = {
     js: [
       'vendor/angular/angular.js',
       'vendor/kineticjs/kinetic.js',
-      'vendor/lodash/dist/lodash.js'
-
+      'vendor/lodash/dist/lodash.js',
+      'vendor/firebase/firebase.js',
+      'vendor/angularfire/angularfire.js'
     ],
     css: [
       'vendor/fontawesome/css/font-awesome.css',
