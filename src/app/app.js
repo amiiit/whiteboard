@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('nuBoard', ['firebase'])
+angular.module('nuBoard', ['firebase', 'ngRoute'])
 
   .constant('AppConfig', {
     defaultToolset: {
@@ -21,6 +21,28 @@ angular.module('nuBoard', ['firebase'])
     Logger.setLevel(Logger.LOG);
   }])
 
-  .controller('MainCtrl', function ($scope) {
-    $scope.boardId = 'zXzXzXzXz'
+  .config(function ($routeProvider) {
+    $routeProvider
+      .when('/new-board', {
+        controller: 'NewBoardCtrl',
+        template: '<pre>redirect to new board</pre>'
+      })
+      .when('/:boardId', {
+        controller: 'MainCtrl',
+        templateUrl: 'app/app.tpl.html'
+      })
+      .otherwise({
+        redirectTo: '/new-board'
+      })
+  })
+
+  .controller('MainCtrl', function ($scope, $routeParams, $rootScope) {
+    $rootScope.boardId = $routeParams.boardId;
+
+  })
+
+  .controller('NewBoardCtrl', function ($scope, $location, BoardIdService) {
+    var newBoardId = BoardIdService.generate();
+    $location.path('/' + newBoardId);
+
   });
