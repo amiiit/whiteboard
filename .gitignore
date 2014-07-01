@@ -2,7 +2,6 @@ build/
 .idea/
 bower_components/
 node_modules
-vendor
 dist
 .tmp
 .DS_Store
