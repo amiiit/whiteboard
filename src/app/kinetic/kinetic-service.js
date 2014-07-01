@@ -10,6 +10,7 @@ angular.module('nuBoard').service('KineticService', function (KineticShapeFactor
 
   this.buildStage = function (config) {
     that.stage = KineticShapeFactory.stage(config);
+
   };
 
   this.addLayer = function () {
@@ -28,16 +29,16 @@ angular.module('nuBoard').service('KineticService', function (KineticShapeFactor
     var shape = KineticShapeFactory.fromTypeAndConfig(data);
 
     shapes.put(data.shapeId, shape);
+
     activeLayer.add(shape);
-    activeShape = shape;
+
+    that.stage.draw();
     return shape;
   };
 
   this.draw = function (data) {
     var shape = shapes.get(data.shapeId);
-    var points = shape.points();
-    points.push(data.position.x);
-    points.push(data.position.y);
+    var points = data.points;
     shape.setPoints(points);
     that.stage.draw();
   };

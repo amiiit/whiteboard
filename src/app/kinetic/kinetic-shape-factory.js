@@ -11,17 +11,13 @@ angular.module('nuBoard')
       },
       fromTypeAndConfig: function (data) {
 
+
         var workData = angular.copy(data);
 
         var type = workData.type;
         delete workData.type;
 
         workData.strokeWidth = data.width;
-
-        if (!workData.points && workData.position) {
-          workData.points = [workData.position.x, workData.position.y];
-          delete workData.position;
-        }
 
         if (workData.localOrigin) {
           delete workData.localOrigin;

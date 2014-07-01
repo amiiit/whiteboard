@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('nuBoard', [])
+angular.module('nuBoard', ['firebase', 'ngRoute'])
 
   .constant('AppConfig', {
     defaultToolset: {
@@ -9,7 +9,12 @@ angular.module('nuBoard', [])
       width: {id: '5', value: 5},
       lineCap: {id: 'round', value: 'round'},
       lineJoin: {id: 'round', value: 'round'}
-    }
+    },
+    firebase: {
+      baseUrl: 'https://fiery-fire-1095.firebaseio.com',
+      appNamespace: 'nuBoard'
+    },
+    syncActive: true
   })
 
   .run(['Logger', function (Logger) {
@@ -17,6 +22,28 @@ angular.module('nuBoard', [])
     Logger.setLevel(Logger.LOG);
   }])
 
-  .controller('MainCtrl', function ($scope) {
+  .config(function ($routeProvider) {
+    $routeProvider
+      .when('/new-board', {
+        controller: 'NewBoardCtrl',
+        template: '<pre>redirect to new board</pre>'
+      })
+      .when('/:boardId', {
+        controller: 'MainCtrl',
+        templateUrl: 'app/app.tpl.html'
+      })
+      .otherwise({
+        redirectTo: '/new-board'
+      })
+  })
+
+  .controller('MainCtrl', function ($scope, $routeParams, $rootScope) {
+    $rootScope.boardId = $routeParams.boardId;
+
+  })
+
+  .controller('NewBoardCtrl', function ($scope, $location, BoardIdService) {
+    var newBoardId = BoardIdService.generate();
+    $location.path('/' + newBoardId);
 
   });

@@ -5,13 +5,20 @@ describe('kinetic service', function () {
   var fnc = function () {
   };
 
+  var layerStage = function () {
+    return {
+      draw: fnc,
+      add: fnc
+    }
+  };
+
   var domElement;
   var service;
 
   var KineticShapeFactoryMock = {
     fromTypeAndConfig: fnc,
-    stage: fnc,
-    layer: fnc
+    stage: layerStage,
+    layer: layerStage
   };
   var KineticShapeCacheMock = {
     put: fnc,
@@ -48,12 +55,7 @@ describe('kinetic service', function () {
   it('new shape', function () {
 
     spyOn(KineticShapeFactoryMock, 'fromTypeAndConfig').and.returnValue({dummy: 'shape', shapeId: 'test-1'});
-    spyOn(KineticShapeFactoryMock, 'stage').and.returnValue({
-      add: fnc
-    });
-    spyOn(KineticShapeFactoryMock, 'layer').and.returnValue({
-      add: fnc
-    });
+
     var stageConfig = {
       container: domElement, width: 200, height: 200
     };
@@ -80,13 +82,6 @@ describe('kinetic service', function () {
     });
     spyOn(KineticShapeCacheMock, 'put');
 
-    spyOn(KineticShapeFactoryMock, 'stage').and.returnValue({
-      add: fnc
-    });
-    spyOn(KineticShapeFactoryMock, 'layer').and.returnValue({
-      add: fnc
-    });
-
     var stageConfig = {
       container: domElement, width: 200, height: 200
     };
@@ -109,7 +104,7 @@ describe('kinetic service', function () {
 
   });
 
-  it('draw are retrieved from cache', function () {
+  it('draw objects are retrieved from cache', function () {
 
     var dummyShape = {
       dummy: 'shape',

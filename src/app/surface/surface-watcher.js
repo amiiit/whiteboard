@@ -25,6 +25,18 @@ angular.module('nuBoard')
       assignDataWithToolbarProperties(data);
     };
 
+    var positionToPoints = function (data) {
+      var points = data.points || [];
+
+      if (data.position) {
+        points.push(data.position.x);
+        points.push(data.position.y);
+      }
+
+      data.points = points;
+      delete data.position;
+    };
+
     var assignDataWithToolbarProperties = function (data) {
       var toolbarProps = ToolbarService.getState();
       toolbarProps.type = toolbarProps.stylus;
@@ -45,6 +57,7 @@ angular.module('nuBoard')
     var eventHandlers = {
       'mousedown': function (data) {
         actionStart(data);
+        positionToPoints(data);
         DistributionService.newShape(data)
       },
       'mouseup': function (data) {
@@ -63,6 +76,7 @@ angular.module('nuBoard')
     };
 
     var prepareData = function (data) {
+      positionToPoints(data);
       var dataCopy = angular.copy(data);
       delete dataCopy.event;
       dataCopy.localOrigin = true;

@@ -6,6 +6,8 @@
  */
 describe('app', function () {
 
+  var AppConfig;
+
   beforeEach(module('nuBoard'));
 
   it('should have a dummy test', (function () {
@@ -14,9 +16,9 @@ describe('app', function () {
 
   it('config sets a color', function(){
     inject(function(_AppConfig_){
-      AppConfig = _AppConfig_
+      AppConfig = _AppConfig_;
     });
-    expect(!!AppConfig.defaultToolset.color.value).toBe(true)
+    expect(!!AppConfig.defaultToolset.color.value).toBe(true);
     expect(!!AppConfig.defaultToolset.color.id).toBe(true)
   })
 
