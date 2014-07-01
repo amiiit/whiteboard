@@ -18,11 +18,6 @@ angular.module('nuBoard')
 
         workData.strokeWidth = data.width;
 
-        if (!workData.points && workData.position) {
-          workData.points = [workData.position.x, workData.position.y];
-          delete workData.position;
-        }
-
         if (workData.localOrigin) {
           delete workData.localOrigin;
         }

@@ -68,7 +68,7 @@ describe('test surface watcher', function () {
     expect(DistributionServiceMock.newShape.calls.mostRecent().args[0]).toEqual(
       jasmine.objectContaining(
         {
-          position: { x: 50, y: 100 },
+          points: [50, 100],
           localOrigin: true,
           shapeId: 'fake-id-1'
         }
@@ -106,7 +106,7 @@ describe('test surface watcher', function () {
     expect(DistributionServiceMock.newShape.calls.mostRecent().args[0]).toEqual(
       jasmine.objectContaining(
         { bla: 'bla',
-          position: { x: 50, y: 100 },
+          points: [50, 100],
           localOrigin: true,
           shapeId: 'fake-id-1'
         }));
@@ -114,7 +114,7 @@ describe('test surface watcher', function () {
     expect(DistributionServiceMock.draw.calls.mostRecent().args[0]).toEqual(
       jasmine.objectContaining({
         bla: 'bla',
-        position: { x: 51, y: 100 },
+        points: [51, 100],
         localOrigin: true,
         shapeId: 'fake-id-1'
       })

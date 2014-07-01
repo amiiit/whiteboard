@@ -21,12 +21,17 @@ describe('distribution service', function () {
     generate: fnc
   };
 
+  var DistributionShapeCacheMock = {
+    put: fnc,
+    get: fnc
+  };
   beforeEach(module('nuBoard'));
 
   beforeEach(module(function ($provide) {
     $provide.value('SurfaceService', SurfaceServiceMock);
     $provide.value('SyncService', SyncServiceMock);
     $provide.value('UUID', UUIDMock);
+    $provide.value('DistributionShapeCache', DistributionShapeCacheMock);
   }));
 
 
@@ -78,8 +83,13 @@ describe('distribution service', function () {
     spyOn(SurfaceServiceMock, 'draw');
     spyOn(SyncServiceMock, 'draw');
 
+    spyOn(DistributionShapeCacheMock, 'get').and.returnValue({
+      points: [0, 10]
+    });
+
     service.draw({
       type: 'line',
+      points: [10, 10],
       localOrigin: true
     });
 
@@ -92,8 +102,13 @@ describe('distribution service', function () {
     spyOn(SurfaceServiceMock, 'draw');
     spyOn(SyncServiceMock, 'draw');
 
+    spyOn(DistributionShapeCacheMock, 'get').and.returnValue({
+      points: [0, 10]
+    });
+
     service.draw({
-      type: 'line'
+      type: 'line',
+      points: [0, 10]
     });
 
     expect(SurfaceServiceMock.draw).toHaveBeenCalled();
@@ -110,6 +125,11 @@ describe('distribution service', function () {
     spyOn(UUIDMock, 'generate').and.callFake(function () {
       return 'fake-id-' + i++;
     });
+
+    spyOn(DistributionShapeCacheMock, 'get').and.returnValue({
+      points: [0, 10]
+    });
+
 
     service.newShape({
       localOrigin: true,
