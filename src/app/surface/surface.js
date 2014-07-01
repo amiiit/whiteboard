@@ -58,19 +58,4 @@ angular.module('nuBoard')
   .controller('SurfaceCtrl', function ($scope) {
 
 
-    var objects = {};
-
-    this.addLine = function (id, controlData) {
-      objects[id] = $scope.kinetic.line.new(controlData.points);
-      Logger.debug('surfaceDirective :: SurfaceCtrl :: addLine :: objects', objects);
-    };
-
-    this.drawLine = function (id, controlData) {
-      if (!objects[id]) {
-        Logger.log('ERROR :: surfaceDirective :: SurfaceCtrl :: drawLine :: no object with id ' + id + ' available');
-        return;
-      }
-      $scope.kinetic.line.draw(objects[id], controlData.points);
-    };
-  })
-;
+  });
