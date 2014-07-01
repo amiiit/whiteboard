@@ -17,9 +17,7 @@ angular.module('nuBoard')
     this.draw = function (data) {
       var shape = shapes.get(data.shapeId);
 
-      for (var i = 0; i < data.points.length; i++) {
-        shape.points.push(data.points[i]);
-      }
+      shape.points = data.points;
 
       if (data.localOrigin) {
         SyncService.draw(shape);
