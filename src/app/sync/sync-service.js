@@ -8,18 +8,38 @@ angular.module('nuBoard')
     });
 
     FirebaseService.setHandler('new_shape', function (data) {
-      console.log('sync service new shape');
+      angular.forEach(handlers['new_shape'], function (handler) {
+        handler(data);
+      });
     });
 
     FirebaseService.setHandler('amended_shape', function (data) {
-      console.log('sync service amend shape');
+      angular.forEach(handlers['amended_shape'], function (handler) {
+        handler(data);
+      });
     });
 
+    var handlers = {};
+
+    this.setHandler = function (event, handler) {
+      if (!handlers[event]) {
+        handlers[event] = [];
+      }
+      handlers[event].push(handler);
+    };
+
+
+    var prepareDataToSync = function (data) {
+      var result = angular.copy(data);
+      delete result.localOrigin;
+      return result;
+    };
+
     this.draw = function (data) {
-      FirebaseService.draw(data);
+      FirebaseService.draw(prepareDataToSync(data));
     };
     this.newShape = function (data) {
-      FirebaseService.newShape(data);
+      FirebaseService.newShape(prepareDataToSync(data));
     };
   })
 ;

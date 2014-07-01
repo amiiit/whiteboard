@@ -11,6 +11,7 @@ angular.module('nuBoard')
       },
       fromTypeAndConfig: function (data) {
 
+
         var workData = angular.copy(data);
 
         var type = workData.type;

@@ -14,7 +14,8 @@ describe('distribution service', function () {
 
   var SyncServiceMock = {
     newShape: fnc,
-    draw: fnc
+    draw: fnc,
+    setHandler: fnc
   };
 
   var UUIDMock = {

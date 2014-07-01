@@ -27,9 +27,12 @@ angular.module('nuBoard').service('KineticService', function (KineticShapeFactor
 
     var shape = KineticShapeFactory.fromTypeAndConfig(data);
 
+    console.log('got new shape', shape);
+    console.log('points', shape.points());
+
     shapes.put(data.shapeId, shape);
     activeLayer.add(shape);
-    activeShape = shape;
+    that.stage.draw();
     return shape;
   };
 
