@@ -1,0 +1,51 @@
+
+.toolbar {
+  background: #000;
+}
+.tool-option {
+  height: 25px;
+  color: #fff;
+  padding-top: 13px;
+  font-size: 1.3em;
+  text-align: center;
+  transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+/* Safari */
+}
+.tool-option:hover {
+  background: #808080;
+}
+
+.toolbar {
+  background: #000;
+}
+.tool-option {
+  height: 25px;
+  color: #fff;
+  padding-top: 13px;
+  font-size: 1.3em;
+  text-align: center;
+  transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+/* Safari */
+}
+.tool-option:hover {
+  background: #808080;
+}
+html,
+body {
+  height: 100%;
+  margin: 0px;
+  background-color: #e4e0e2;
+}
+.toolbar {
+  width: 40px;
+  height: 100%;
+  position: fixed;
+  z-index: 5;
+}
+#main-surface {
+  position: relative;
+  left: 40px;
+  z-index: 1;
+}
