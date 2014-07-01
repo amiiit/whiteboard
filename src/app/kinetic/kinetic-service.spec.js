@@ -109,7 +109,7 @@ describe('kinetic service', function () {
 
   });
 
-  it('draw are retrieved from cache', function () {
+  it('draw objects are retrieved from cache', function () {
 
     var dummyShape = {
       dummy: 'shape',
