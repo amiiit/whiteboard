@@ -74,5 +74,5 @@ module.exports = {
     assets: [
       'vendor/fontawesome/fonts/*'
     ]
-  },
+  }
 };
