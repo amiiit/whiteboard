@@ -35,6 +35,12 @@ angular.module('nuBoard')
     };
 
     this.newShape = function (data) {
+      console.log('new shape', data.shapeId, data.localOrigin == true);
+      if (!data.points) {
+        console.log('data no points', data.shapeId);
+        return;
+      }
+
       shapes.put(data.shapeId, data);
       if (data.localOrigin && syncActive) {
         localShapeIds.push(data.shapeId);
