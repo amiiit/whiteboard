@@ -42,16 +42,12 @@ angular.module('nuBoard')
     };
 
     this.draw = function (data) {
-      console.log('draw to firebase');
       var child = firebase.$child(data.shapeId);
       child.$set(prepareDataToSync(data));
     };
 
     this.newShape = function (data) {
-      console.log('new shape to firebase');
-
       var child = firebase.$child(data.shapeId);
-
       child.$set(prepareDataToSync(data));
     };
 

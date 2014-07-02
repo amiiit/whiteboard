@@ -51,7 +51,8 @@ describe('distribution service', function () {
     spyOn(SurfaceServiceMock, 'newShape');
 
     service.newShape({
-      localOrigin: true
+      localOrigin: true,
+      points: []
     });
 
     expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
@@ -64,7 +65,8 @@ describe('distribution service', function () {
 
     service.newShape({
       type: 'line',
-      localOrigin: false
+      localOrigin: false,
+      points: []
     });
 
     expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
@@ -78,7 +80,8 @@ describe('distribution service', function () {
 
     service.newShape({
       type: 'line',
-      localOrigin: true
+      localOrigin: true,
+      points: []
     });
 
     expect(SurfaceServiceMock.newShape).toHaveBeenCalled();
