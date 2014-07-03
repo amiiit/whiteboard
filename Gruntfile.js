@@ -34,7 +34,7 @@ module.exports = function (grunt) {
           hostname: 'localhost',
           livereload: 35729
         }
-      },
+      }
     },
     index: {
 
@@ -54,6 +54,12 @@ module.exports = function (grunt) {
           '<%= vendor_files.css %>'
         ]
       }
+    },
+    'gh-pages': {
+      options: {
+        base: 'build'
+      },
+      src: ['**']
     },
     open: {
       server: {
