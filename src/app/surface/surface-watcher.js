@@ -33,7 +33,7 @@ angular.module('nuBoard')
         };
 
         var positionToPoint = function (position) {
-          return [position.x, position.y];
+          return [position.layerX, position.layerY];
         };
 
         var assignDataWithToolbarProperties = function (data) {

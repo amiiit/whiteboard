@@ -6,61 +6,85 @@ angular.module('nuBoard')
     return {
       restrict: 'A',
       replace: false,
-      scope: {
-        config: '=',
-        name: '@name',
-        shapes: '&'
-      },
-      controller: 'KineticCtrl'
+      controller: 'KineticCtrl',
+      link: function ($scope, $element) {
+        $scope.stageContainerId = $element.attr('id');
+      }
     };
   })
 
-  .controller('KineticCtrl', function ($scope, $element, KineticShapeFactory, KineticShapeCache) {
+  .controller('KineticCtrl', function ($scope, KineticShapeFactory, KineticShapeCache, $timeout) {
     var activeLayer = null;
     var activeShape;
-    var shapes = KineticShapeCache;
+    $scope.kineticShapes = KineticShapeCache;
 
-    var that = this;
-
-    $scope.buildStage = function (config) {
-      $scope.stage = KineticShapeFactory.stage(config);
-
+    var buildStage = function () {
+      $scope.stage = KineticShapeFactory.stage({
+        container: $scope.stageContainerId,
+        width: $scope.width(),
+        height: $scope.height()
+      });
     };
 
-    $scope.addLayer = function () {
+    var bindKinetic = function(){
+      buildStage();
+      addLayer();
+    };
+
+    $timeout(bindKinetic);
+
+    var addLayer = function () {
+
+      if (!$scope.stage) {
+        buildStage();
+      }
+
       $scope.layers = $scope.layers || [];
       $scope.layers.push(KineticShapeFactory.layer());
       $scope.stage.add(_.last($scope.layers));
-      activeLayer = _.last(this.layers);
+      activeLayer = _.last($scope.layers);
     };
 
-    $scope.newShape = function (data) {
+    var shapeChanged = function (shapeId) {
+      var shapeData = $scope.shapes[shapeId];
+      var kineticShape = $scope.kineticShapes.get(shapeId);
+      if (!kineticShape) {
+        newShape(shapeData);
+      } else {
+        extendShape(kineticShape, shapeData);
+      }
+
+      $scope.stage.draw();
+
+    };
+
+    var extendShape = function (kineticShape, shapeData) {
+      var points = shapeData.points;
+      kineticShape.setPoints(points);
+    };
+
+    var newShape = function (data) {
 
       if (!activeLayer) {
-        $scope.addLayer();
+        addLayer();
       }
 
       var shape = KineticShapeFactory.fromTypeAndConfig(data);
 
-      shapes.put(data.shapeId, shape);
+      $scope.kineticShapes.put(data.shapeId, shape);
 
       activeLayer.add(shape);
 
-      $scope.stage.draw();
       return shape;
-    };
-
-    $scope.draw = function (data) {
-      var shape = shapes.get(data.shapeId);
-      var points = data.points;
-      shape.setPoints(points);
-      $scope.stage.draw();
     };
 
     $scope.getStageContainer = function () {
       return $scope.stage.container();
     };
 
+    $scope.$on('shapechange', function (event, shapeId) {
+      shapeChanged(shapeId);
+    });
 
   })
 

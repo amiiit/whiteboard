@@ -14,24 +14,6 @@ angular.module('nuBoard')
       },
       link: function ($scope, element, attrs) {
 
-        var linkOnDom = function () {
-
-          KineticService.buildStage({
-            width: $scope.width(),
-            height: $scope.height(),
-            id: $scope.surfaceId
-          });
-
-          KineticService.addLayer();
-
-          registerEventsWithSurfaceWatcher();
-
-        };
-
-        var unregisterWatch = $scope.$watch('surfaceId', function () {
-//          linkOnDom();
-          unregisterWatch();
-        });
 
       },
       controller: 'SurfaceCtrl'
@@ -41,8 +23,6 @@ angular.module('nuBoard')
   .controller('SurfaceCtrl', function ($scope) {
 
     $scope.shapes = {};
-    $scope.$on('shapechange', function (event,shapeId) {
-      console.log('shapes change', shapeId);
-    });
+
 
   });
