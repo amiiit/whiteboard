@@ -5,30 +5,80 @@ angular.module('nuBoard')
   .directive('nuWatchSurface', function ($timeout, DistributionService, UUID, ToolbarService) {
     return {
       link: function ($scope, $element) {
-        console.log('link element', $element);
+
+        var isDraw = false;
+        var localShapeId;
+
+        var informScopeOfChange = function () {
+          $scope.$apply();
+          $scope.$emit('shapechange', localShapeId);
+        };
+
+        var actionStart = function (eventData) {
+
+          if (!eventData) {
+            return;
+          }
+          isDraw = true;
+
+          var actionData = {
+            shapeId: UUID.generate(),
+            points: positionToPoint(eventData)
+          };
+
+          assignDataWithToolbarProperties(actionData);
+          localShapeId = actionData.shapeId;
+          $scope.shapes[actionData.shapeId] = actionData;
+          informScopeOfChange();
+        };
+
+        var positionToPoint = function (position) {
+          return [position.x, position.y];
+        };
+
+        var assignDataWithToolbarProperties = function (data) {
+          var toolbarProps = ToolbarService.getState();
+          toolbarProps.type = toolbarProps.stylus;
+          delete toolbarProps.stylus;
+
+          for (var key in toolbarProps) {
+            if (toolbarProps.hasOwnProperty(key)) {
+              data[key] = toolbarProps[key];
+            }
+          }
+        };
+
+        var actionEnd = function () {
+          isDraw = false;
+          localShapeId = undefined;
+        };
+
+        var actionProceed = function (eventData) {
+          var shape = $scope.shapes[localShapeId];
+          if (!shape) {
+            console.warn('no shape found to continue', localShapeId);
+            return;
+          }
+          var point = positionToPoint(eventData);
+          shape.points.push(point[0]);
+          shape.points.push(point[1]);
+          informScopeOfChange();
+        };
+
         var eventHandlers = {
           'mousedown': function (data) {
-            console.log('mousedown', data);
-//            actionStart(data);
-//            positionToPoints(data);
-//            DistributionService.newShape(data)
+            actionStart(data);
           },
           'mouseup': function (data) {
-            console.log('mouseup', data);
-//            actionEnd(data);
+            actionEnd(data);
           },
           'mousemove': function (data) {
-            console.log('mousemove', data);
-
-//            if (isDraw) {
-//              data.shapeId = localShapeId;
-//              var preparedData = prepareData(data);
-//              DistributionService.draw(preparedData);
-//            }
+            if (isDraw) {
+              actionProceed(data);
+            }
           },
           'mouseout': function (data) {
-            console.log('mouseout', data);
-//            actionEnd(data);
+            actionEnd(data);
           }
         };
 
@@ -39,73 +89,6 @@ angular.module('nuBoard')
       },
       controller: function ($scope) {
 
-        $timeout(function () {
-          var isDraw = false;
-          var localShapeId;
-
-          var actionStart = function (data) {
-            setNewShapeMeta(data);
-            isDraw = true;
-            localShapeId = UUID.generate();
-            data.shapeId = localShapeId;
-          };
-
-          var setNewShapeMeta = function (data) {
-            if (!data.shapeId) {
-              localShapeId = UUID.generate();
-              data.shapeId = localShapeId;
-            }
-            assignDataWithToolbarProperties(data);
-          };
-
-          var positionToPoints = function (data) {
-            var points = data.points || [];
-
-            if (data.position) {
-              points.push(data.position.x);
-              points.push(data.position.y);
-            }
-
-            data.points = points;
-            delete data.position;
-          };
-
-          var assignDataWithToolbarProperties = function (data) {
-            var toolbarProps = ToolbarService.getState();
-            toolbarProps.type = toolbarProps.stylus;
-            delete toolbarProps.stylus;
-
-            for (var key in toolbarProps) {
-              if (toolbarProps.hasOwnProperty(key)) {
-                data[key] = toolbarProps[key];
-              }
-            }
-          };
-
-          var actionEnd = function () {
-            isDraw = false;
-            localShapeId = undefined;
-          };
-
-
-          var prepareData = function (data) {
-            positionToPoints(data);
-            var dataCopy = angular.copy(data);
-            delete dataCopy.event;
-            dataCopy.localOrigin = true;
-            return dataCopy;
-          };
-
-          $scope.reportEvent = function (data) {
-            var handler = eventHandlers[data.event];
-            if (handler) {
-              var preparedData = prepareData(data);
-              handler(preparedData);
-            } else {
-              console.log('event not supported', data.event);
-            }
-          }
-        });
       }
     }
   })

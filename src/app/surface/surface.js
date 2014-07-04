@@ -9,27 +9,10 @@ angular.module('nuBoard')
       scope: {
         width: '&',
         height: '&',
-        surfaceId: '@'
+        surfaceId: '@',
+        shapes: '='
       },
       link: function ($scope, element, attrs) {
-
-        var registerEventsWithSurfaceWatcher = function () {
-          angular.forEach(
-            SurfaceWatcherService.getSupportedEvents(),
-            function (supportedEvent) {
-              KineticService.getStageContainer().addEventListener(supportedEvent,
-                function () {
-                  SurfaceWatcherService.reportEvent(
-                    {
-                      event: supportedEvent,
-                      position: KineticService.stage.getPointerPosition()
-                    }
-                  )
-                })
-            }
-          );
-        };
-
 
         var linkOnDom = function () {
 
@@ -57,5 +40,9 @@ angular.module('nuBoard')
 )
   .controller('SurfaceCtrl', function ($scope) {
 
+    $scope.shapes = {};
+    $scope.$on('shapechange', function (event,shapeId) {
+      console.log('shapes change', shapeId);
+    });
 
   });
