@@ -2,7 +2,7 @@
 
 angular.module('nuBoard')
 
-  .directive('nuWatchBoard', function ($timeout, DistributionService, UUID, ToolbarService) {
+  .directive('nuWatchSurface', function ($timeout, DistributionService, UUID, ToolbarService) {
     return {
       link: function ($scope, $element) {
         console.log('link element', $element);
