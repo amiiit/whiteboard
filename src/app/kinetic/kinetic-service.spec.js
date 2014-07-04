@@ -38,7 +38,7 @@ describe('kinetic service', function () {
 
   }));
 
-  it('build stage', function () {
+  xit('build stage', function () {
 
     spyOn(KineticShapeFactoryMock, 'stage');
 
@@ -52,7 +52,7 @@ describe('kinetic service', function () {
 
   });
 
-  it('new shape', function () {
+  xit('new shape', function () {
 
     spyOn(KineticShapeFactoryMock, 'fromTypeAndConfig').and.returnValue({dummy: 'shape', shapeId: 'test-1'});
 
@@ -74,7 +74,7 @@ describe('kinetic service', function () {
 
   });
 
-  it('new shapes are put in the cache', function () {
+  xit('new shapes are put in the cache', function () {
 
     var dummyShape = {dummy: 'shape', shapeId: 'test-1'};
     spyOn(KineticShapeFactoryMock, 'fromTypeAndConfig').and.callFake(function (data) {
@@ -104,7 +104,7 @@ describe('kinetic service', function () {
 
   });
 
-  it('draw objects are retrieved from cache', function () {
+  xit('draw objects are retrieved from cache', function () {
 
     var dummyShape = {
       dummy: 'shape',

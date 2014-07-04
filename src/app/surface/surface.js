@@ -46,7 +46,7 @@ angular.module('nuBoard')
         };
 
         var unregisterWatch = $scope.$watch('surfaceId', function () {
-          linkOnDom();
+//          linkOnDom();
           unregisterWatch();
         });
 

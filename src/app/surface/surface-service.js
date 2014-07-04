@@ -4,11 +4,13 @@ angular.module('nuBoard')
 
 
     this.draw = function (data) {
-      KineticService.draw(data);
+      console.log('surface service draw');
+//      KineticService.draw(data);
     };
 
     this.newShape = function (data) {
-      KineticService.newShape(data);
+      console.log('surface service new shape');
+//      KineticService.newShape(data);
     };
 
   });
