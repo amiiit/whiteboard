@@ -22,7 +22,6 @@ angular.module('nuBoard')
 )
   .controller('SurfaceCtrl', function ($scope) {
 
-    $scope.shapes = {};
 
 
   });

@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('DistributionService', function (Logger, SurfaceService, SyncService, DistributionShapeCache, AppConfig) {
+  .service('RouterService', function (Logger, SurfaceService, SyncService, RouterShapeCache, AppConfig) {
 
     var syncActive = AppConfig.syncActive;
-    var shapes = DistributionShapeCache;
+    var shapes = RouterShapeCache;
     var localShapeIds = [];
     var that = this;
+
 
     SyncService.setHandler('new_shape', function (data) {
       that.newShape(data);
