@@ -5,6 +5,7 @@ angular.module('nuBoard')
 
     var firebase;
     var rootInstanceId;
+    var routerReport;
 
     var syncWithRootInstanceId = function (_rootInstanceId) {
       rootInstanceId = _rootInstanceId;
@@ -15,13 +16,20 @@ angular.module('nuBoard')
       ));
 
       firebase.$on('child_added', function (a) {
-        console.log('firebase child_added', a);
+        reportChildToRouter(a);
       });
 
       firebase.$on('child_changed', function (a) {
-        console.log('firebase child_changed', a);
+        reportChildToRouter(a);
       });
 
+    };
+
+    var reportChildToRouter = function (child) {
+      RouterService.report({
+        message: child,
+        sourceId: 'sync-service'
+      })
     };
 
     var persist = function (data) {
@@ -29,13 +37,11 @@ angular.module('nuBoard')
       child.$set(data);
     };
 
-
     this.init = function () {
-      RouterService.register({
+      routerReport = RouterService.register({
         instanceId: 'sync-service',
         callback: function (data) {
           persist(data);
-          console.log('send to persistence', data, $rootScope.boardId);
         }
       });
     };
