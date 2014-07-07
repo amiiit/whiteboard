@@ -48,4 +48,6 @@ body {
   position: relative;
   left: 40px;
   z-index: 1;
+  width: 2000px;
+  height: 2000px;
 }

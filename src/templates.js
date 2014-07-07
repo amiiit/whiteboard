@@ -3,12 +3,14 @@ angular.module('nuBoard').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('app/app.tpl.html',
     "<nu-toolbar></nu-toolbar>\n" +
-    "<nu-surface width=2000 height=2000 surface-id='main-surface'></nu-surface>"
+    "<nu-surface width=2000 height=2000 surface-id='main-surface' shapes=\"shapes\" shapes-log=\"log\"></nu-surface>\n"
   );
 
 
   $templateCache.put('app/surface/surface.tpl.html',
-    "<div id=\"{{ surfaceId }}\" class=\"surface\" nu-kinetic config=\"config\" name=\"kinetic\"></div>\n"
+    "<div id=\"main-surface\" class=\"surface\" config=\"config\" name=\"kinetic\" shapes=\"shapes\" nu-kinetic nu-watch-surface>\n" +
+    "</div>\n" +
+    "\n"
   );
 
 
