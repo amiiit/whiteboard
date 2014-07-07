@@ -16,7 +16,8 @@ angular.module('nuBoard')
     RouterService.register({
       instanceId: $scope.sourceId,
       callback: function (data) {
-        console.log('incoming data from router', data);
+        console.log('pushing to log', $scope.log);
+        $scope.log.push(data);
       }
     });
 
