@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('RouterService', function (AppConfig) {
+  .service('RouterService', function (AppConfig, $q) {
 
     var registeredInstances = {};
     var syncActive = AppConfig.syncActive;
@@ -13,7 +13,9 @@ angular.module('nuBoard')
     var broadcastExcept = function (message, sourceIdToSkip) {
       _.forEach(Object.keys(registeredInstances), function (instanceId) {
         if (instanceId !== sourceIdToSkip) {
+//          (function () {
           registeredInstances[instanceId].callback(message);
+//          })();
         }
       })
     };

@@ -46,6 +46,7 @@ angular.module('nuBoard')
     };
 
     var shapeChanged = function (shape) {
+      console.log('shape changed');
       var shapeData = shape;
       var kineticShape = $scope.kineticShapes.get(shape.id);
       if (!kineticShape) {
