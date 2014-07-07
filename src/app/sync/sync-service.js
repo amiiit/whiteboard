@@ -1,7 +1,17 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('SyncService', function (FirebaseService, $rootScope) {
+  .service('SyncService', function (FirebaseService, $rootScope, RouterService) {
+
+    console.log('sync service');
+    this.init = function () {
+      RouterService.register({
+        instanceId: 'sync-service',
+        callback: function (data) {
+          //process new data
+        }
+      });
+    };
 
     $rootScope.$watch('boardId', function (newBoardId) {
       FirebaseService.syncWithBoardId(newBoardId);

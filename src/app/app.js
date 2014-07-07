@@ -37,7 +37,8 @@ angular.module('nuBoard', ['firebase', 'ngRoute'])
       })
   })
 
-  .controller('MainCtrl', function ($scope, $routeParams, $rootScope) {
+  .controller('MainCtrl', function ($scope, $routeParams, $rootScope, SyncService) {
+    SyncService.init();
     $rootScope.boardId = $routeParams.boardId;
     $scope.shapes = {}; //todo: move this to surface
   })
