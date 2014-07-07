@@ -4,7 +4,6 @@ angular.module('nuBoard')
   .service('RouterService', function (AppConfig, $q) {
 
     var registeredInstances = {};
-    var syncActive = AppConfig.syncActive;
 
     this.report = function (data) {
       broadcastExcept(data.message, data.sourceId);
@@ -13,9 +12,9 @@ angular.module('nuBoard')
     var broadcastExcept = function (message, sourceIdToSkip) {
       _.forEach(Object.keys(registeredInstances), function (instanceId) {
         if (instanceId !== sourceIdToSkip) {
-//          (function () {
+          (function () {
           registeredInstances[instanceId].callback(message);
-//          })();
+          })();
         }
       })
     };

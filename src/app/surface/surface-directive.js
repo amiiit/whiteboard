@@ -29,6 +29,9 @@ angular.module('nuBoard')
         $scope.shapesLog = [];
       }
       $scope.shapesLog.push(shape);
+      if ($scope.shapesLog.length > 100){
+        $scope.shapesLog = [];
+      }
 
     });
 
