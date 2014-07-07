@@ -7,7 +7,7 @@ angular.module('nuBoard')
       RouterService.register({
         instanceId: 'sync-service',
         callback: function (data) {
-//          FirebaseService.persist(data);
+          FirebaseService.persist(data);
           console.log('send to persistence', data, $rootScope.boardId);
         }
       });

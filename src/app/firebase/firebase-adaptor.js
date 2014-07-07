@@ -15,18 +15,8 @@ angular.module('nuBoard')
       ));
     };
 
-
-
-    this.draw = function (data) {
-      var child = firebase.$child(data.shapeId);
-      child.$set(prepareDataToSync(data));
+    this.persist = function(data){
+      var child = firebase.$child(data.id);
+      child.$set(data);
     };
-
-    this.newShape = function (data) {
-      var child = firebase.$child(data.shapeId);
-      child.$set(prepareDataToSync(data));
-    };
-
-
-  })
-;
+  });
