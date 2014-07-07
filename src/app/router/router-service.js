@@ -13,6 +13,7 @@ angular.module('nuBoard')
     var broadcastExcept = function (message, sourceIdToSkip) {
       _.forEach(Object.keys(registeredInstances), function (instanceId) {
         if (instanceId !== sourceIdToSkip) {
+          console.log('reporting to ', instanceId);
           registeredInstances[instanceId].callback(message);
         }
       })

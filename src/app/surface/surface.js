@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .directive('nuSurface', function (Logger, UUID, $timeout, KineticService, SurfaceWatcherService) {
+  .directive('nuSurface', function () {
     return {
       restrict: 'E',
       templateUrl: 'app/surface/surface.tpl.html',
