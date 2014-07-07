@@ -33,6 +33,9 @@ angular.module('nuBoard')
     };
 
     var persist = function (data) {
+      if (!data.id){
+        console.error('persisting data not containing id', data);
+      }
       var child = firebase.$child(data.id);
       child.$set(data);
     };

@@ -7,6 +7,7 @@ angular.module('nuBoard')
     var syncActive = AppConfig.syncActive;
 
     this.report = function (data) {
+      console.log('incoming data from', data.sourceId, data.message);
       broadcastExcept(data.message, data.sourceId);
     };
 

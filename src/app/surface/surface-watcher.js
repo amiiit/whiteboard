@@ -9,13 +9,20 @@ angular.module('nuBoard')
         var isDraw = false;
         var localShapeId;
 
-        var informScopeOfChange = function () {
-          $scope.$apply();
-          $scope.$emit('shapechange', localShapeId);
+        var reportAction = function (action) {
+
+          if (!action.id) {
+            action.id = action.shapeId;
+            delete action.shapeId;
+          }
+
+          RouterService.report({
+            sourceId: 'surface-watcher',
+            message: action
+          })
         };
 
         var actionStart = function (eventData) {
-
           if (!eventData) {
             return;
           }
@@ -29,7 +36,7 @@ angular.module('nuBoard')
           assignDataWithToolbarProperties(actionData);
           localShapeId = actionData.shapeId;
           $scope.shapes[actionData.shapeId] = actionData;
-          informScopeOfChange();
+          reportAction(actionData);
         };
 
         var positionToPoint = function (position) {
@@ -54,15 +61,15 @@ angular.module('nuBoard')
         };
 
         var actionProceed = function (eventData) {
-          var shape = $scope.shapes[localShapeId];
-          if (!shape) {
+          var action = $scope.shapes[localShapeId];
+          if (!action) {
             console.warn('no shape found to continue', localShapeId);
             return;
           }
           var point = positionToPoint(eventData);
-          shape.points.push(point[0]);
-          shape.points.push(point[1]);
-          informScopeOfChange();
+          action.points.push(point[0]);
+          action.points.push(point[1]);
+          reportAction(action);
         };
 
         var eventHandlers = {
