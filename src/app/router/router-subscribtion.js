@@ -11,9 +11,14 @@ angular.module('nuBoard')
     }
   })
   .controller('RouterCtrl', function ($scope, RouterService) {
-//    $scope.$watch('routerData', function (a, b, c) {
-//
-//    }, true);
+
+    RouterService.register({
+      instanceId: $scope.sourceId,
+      callback: function (data) {
+        console.log('incoming data from router', data);
+      }
+    });
+
     $scope.$watch('log', function (newLog, oldLog) {
       var lastObject = _.last(newLog);
       if (!lastObject) {
@@ -21,9 +26,9 @@ angular.module('nuBoard')
       }
       RouterService.report({
         sourceId: $scope.sourceId,
-        changedObjectId: lastObject.shapeId, //todo: generalize this,
-        changedObject: lastObject
+        message: lastObject
       });
     }, true);
-  })
-;
+
+
+  });
