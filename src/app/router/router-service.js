@@ -7,13 +7,13 @@ angular.module('nuBoard')
     var syncActive = AppConfig.syncActive;
 
     this.report = function (data) {
-      broadcastExcept(data, data.sourceId);
+      broadcastExcept(data.message, data.sourceId);
     };
 
-    var broadcastExcept = function (data, sourceIdToSkip) {
+    var broadcastExcept = function (message, sourceIdToSkip) {
       _.forEach(Object.keys(registeredInstances), function (instanceId) {
         if (instanceId !== sourceIdToSkip) {
-          registeredInstances[instanceId].callback(data);
+          registeredInstances[instanceId].callback(message);
         }
       })
     };
