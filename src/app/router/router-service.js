@@ -8,6 +8,9 @@ angular.module('nuBoard')
     var localShapeIds = [];
     var that = this;
 
+    this.report = function(data){
+      console.log('got report', data);
+    };
 
     SyncService.setHandler('new_shape', function (data) {
       that.newShape(data);

@@ -10,7 +10,8 @@ angular.module('nuBoard')
         width: '&',
         height: '&',
         surfaceId: '@',
-        shapes: '='
+        shapes: '=',
+        shapesLog: '='
       },
       link: function ($scope, element, attrs) {
 
@@ -22,6 +23,15 @@ angular.module('nuBoard')
 )
   .controller('SurfaceCtrl', function ($scope) {
 
+    $scope.shapesLog = [];
+
+    $scope.$on('shapechange', function (event, shapeId) {
+      if (!$scope.shapesLog) {
+        $scope.shapesLog = [];
+      }
+      $scope.shapesLog.push($scope.shapes[shapeId]);
+
+    });
 
 
   });

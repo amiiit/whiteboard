@@ -4,17 +4,26 @@ angular.module('nuBoard')
       controller: 'RouterCtrl',
       restrict: 'E',
       scope: {
-        routerData: '='
+        routerData: '=',
+        log: '=',
+        sourceId: '@'
       }
     }
   })
-  .controller('RouterCtrl', function ($scope) {
-    console.log('router controller', $scope.routerData);
-    $scope.$watch('routerData', function (a,b,c) {
-      console.log('$scope.routerData', $scope.routerData);
-      console.log('a',a);
-      console.log('b',b);
-      console.log('c',c);
+  .controller('RouterCtrl', function ($scope, RouterService) {
+//    $scope.$watch('routerData', function (a, b, c) {
+//
+//    }, true);
+    $scope.$watch('log', function (newLog, oldLog) {
+      var lastObject = _.last(newLog);
+      if (!lastObject) {
+        return
+      }
+      RouterService.report({
+        sourceId: $scope.sourceId,
+        changedObjectId: lastObject.shapeId, //todo: generalize this,
+        changedObject: lastObject
+      });
     }, true);
   })
 ;
