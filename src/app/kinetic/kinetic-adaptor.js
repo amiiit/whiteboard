@@ -45,9 +45,9 @@ angular.module('nuBoard')
       activeLayer = _.last($scope.layers);
     };
 
-    var shapeChanged = function (shapeId) {
-      var shapeData = $scope.shapes[shapeId];
-      var kineticShape = $scope.kineticShapes.get(shapeId);
+    var shapeChanged = function (shape) {
+      var shapeData = shape;
+      var kineticShape = $scope.kineticShapes.get(shape.id);
       if (!kineticShape) {
         newShape(shapeData);
       } else {

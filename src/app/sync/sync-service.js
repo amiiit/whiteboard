@@ -27,7 +27,7 @@ angular.module('nuBoard')
 
     var reportChildToRouter = function (child) {
       RouterService.report({
-        message: child.snapshot || child,
+        message: child.snapshot.value,
         sourceId: 'sync-service'
       })
     };

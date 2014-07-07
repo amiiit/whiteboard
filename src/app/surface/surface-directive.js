@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .directive('nuSurface', function () {
+  .directive('nuSurface', function (SurfaceService) {
     return {
       restrict: 'E',
       templateUrl: 'app/surface/surface.tpl.html',
@@ -14,8 +14,7 @@ angular.module('nuBoard')
         shapesLog: '='
       },
       link: function ($scope, element, attrs) {
-
-
+        SurfaceService.shareScope($scope);
       },
       controller: 'SurfaceCtrl'
     };
@@ -25,11 +24,11 @@ angular.module('nuBoard')
 
     $scope.shapesLog = [];
 
-    $scope.$on('shapechange', function (event, shapeId) {
+    $scope.$on('shapechange', function (event, shape) {
       if (!$scope.shapesLog) {
         $scope.shapesLog = [];
       }
-      $scope.shapesLog.push($scope.shapes[shapeId]);
+      $scope.shapesLog.push(shape);
 
     });
 
