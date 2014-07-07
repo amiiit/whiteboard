@@ -20,18 +20,23 @@ angular.module('nuBoard')
       }
     });
 
+    var replaceIdAttributeIfApplicable = function (objectIdAttribute, object) {
+      if (objectIdAttribute) {
+        var objectId = object[objectIdAttribute];
+        if (objectId) {
+          object.id = objectId;
+          delete object[objectIdAttribute];
+        }
+      }
+    };
+
     $scope.$watch('log', function (newLog, oldLog) {
       var lastObject = _.last(newLog);
       if (!lastObject) {
         return
       }
-      if ($scope.objectIdAttribute) {
-        var objectId = lastObject[$scope.objectIdAttribute];
-        if (objectId) {
-          lastObject.id = objectId;
-          delete lastObject[$scope.objectIdAttribute];
-        }
-      }
+      replaceIdAttributeIfApplicable($scope.objectIdAttribute, lastObject);
+
       RouterService.report({
         sourceId: $scope.sourceId,
         message: lastObject
