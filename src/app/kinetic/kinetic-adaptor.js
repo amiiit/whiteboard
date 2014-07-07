@@ -26,15 +26,18 @@ angular.module('nuBoard')
       });
     };
 
-    var bindKinetic = function(){
+    var bindKinetic = function () {
       buildStage();
       addLayer();
     };
 
     $timeout(bindKinetic);
 
-    var addLayer = function () {
+    var drawStage = function () {
+      $scope.stage.draw();
+    };
 
+    var addLayer = function () {
       if (!$scope.stage) {
         buildStage();
       }
@@ -46,7 +49,6 @@ angular.module('nuBoard')
     };
 
     var shapeChanged = function (shape) {
-      console.log('shape changed');
       var shapeData = shape;
       var kineticShape = $scope.kineticShapes.get(shape.id);
       if (!kineticShape) {
@@ -55,7 +57,7 @@ angular.module('nuBoard')
         extendShape(kineticShape, shapeData);
       }
 
-      $scope.stage.draw();
+      drawStage();
 
     };
 
@@ -65,14 +67,13 @@ angular.module('nuBoard')
     };
 
     var newShape = function (data) {
-
       if (!activeLayer) {
         addLayer();
       }
 
       var shape = KineticShapeFactory.fromTypeAndConfig(data);
 
-      $scope.kineticShapes.put(data.shapeId, shape);
+      $scope.kineticShapes.put(data.id, shape);
 
       activeLayer.add(shape);
 
