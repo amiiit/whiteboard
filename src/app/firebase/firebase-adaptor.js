@@ -4,42 +4,18 @@ angular.module('nuBoard')
   .service('FirebaseService', function (AppConfig, $firebase) {
 
     var firebase;
-    var boardId;
+    var rootInstanceId;
 
-    this.syncWithBoardId = function (_boardId) {
-      boardId = _boardId;
+    this.syncWithRootInstanceId = function (_rootInstanceId) {
+      rootInstanceId = _rootInstanceId;
       firebase = $firebase(new Firebase(
           AppConfig.firebase.baseUrl + '/'
           + AppConfig.firebase.appNamespace + '/'
-          + _boardId
+          + _rootInstanceId
       ));
-
-      firebase.$on('child_added', function (a) {
-        angular.forEach(handlers['new_shape'], function (handler) {
-          handler(a.snapshot.value);
-        });
-      });
-
-      firebase.$on('child_changed', function (a) {
-        angular.forEach(handlers['amended_shape'], function (handler) {
-          handler(a.snapshot.value);
-        });
-      });
-
     };
 
-    var handlers = {};
 
-    this.setHandler = function (event, handler) {
-      if (!handlers[event]) {
-        handlers[event] = [];
-      }
-      handlers[event].push(handler);
-    };
-
-    var prepareDataToSync = function (data) {
-      return angular.copy(data);
-    };
 
     this.draw = function (data) {
       var child = firebase.$child(data.shapeId);

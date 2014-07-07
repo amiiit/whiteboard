@@ -6,7 +6,8 @@ angular.module('nuBoard')
       scope: {
         routerData: '=',
         log: '=',
-        sourceId: '@'
+        sourceId: '@',
+        objectIdAttribute: '@'
       }
     }
   })
@@ -23,6 +24,13 @@ angular.module('nuBoard')
       var lastObject = _.last(newLog);
       if (!lastObject) {
         return
+      }
+      if ($scope.objectIdAttribute) {
+        var objectId = lastObject[$scope.objectIdAttribute];
+        if (objectId) {
+          lastObject.id = objectId;
+          delete lastObject[$scope.objectIdAttribute];
+        }
       }
       RouterService.report({
         sourceId: $scope.sourceId,
