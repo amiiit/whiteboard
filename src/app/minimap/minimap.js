@@ -10,8 +10,18 @@ angular.module('nuBoard')
       replace: true
     }
   })
-  .controller('MinimapCtrl', function ($scope) {
+  .controller('MinimapCtrl', function ($scope, RouterService) {
     console.log('minimap controller');
     $scope.width = 150;
     $scope.height = 150;
+
+    $scope.zoomScale = 0.075;
+
+    RouterService.register({
+      instanceId: 'minimap',
+      callback: function(action){
+        $scope.$emit('shapechange', action);
+      }
+    })
+
   });

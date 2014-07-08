@@ -16,7 +16,6 @@ angular.module('nuBoard')
   .controller('KineticCtrl', function ($scope, KineticShapeFactory, KineticShapeCache, $timeout) {
     var activeLayer = null;
     var activeShape;
-    $scope.kineticShapes = KineticShapeCache;
 
     var buildStage = function () {
       $scope.stage = KineticShapeFactory.stage({
@@ -24,9 +23,15 @@ angular.module('nuBoard')
         width: $scope.width instanceof Function ? $scope.width() : $scope.width,
         height: $scope.height instanceof Function ? $scope.height() : $scope.height
       });
+
+      if ($scope.zoomScale) {
+        console.log('setting scale', $scope.zoomScale);
+        $scope.stage.setScale({x: $scope.zoomScale, y: $scope.zoomScale});
+      }
     };
 
     var bindKinetic = function () {
+      $scope.kineticShapes = KineticShapeCache.getCache($scope.stageContainerId);
       buildStage();
       addLayer();
     };
@@ -51,6 +56,7 @@ angular.module('nuBoard')
     var shapeChanged = function (shape) {
       var shapeData = shape;
       var kineticShape = $scope.kineticShapes.get(shape.id);
+
       if (!kineticShape) {
         newShape(shapeData);
       } else {
@@ -67,7 +73,10 @@ angular.module('nuBoard')
     };
 
     var newShape = function (data) {
+      console.log('new shape');
       if (!activeLayer) {
+        console.log('new layer');
+
         addLayer();
       }
 
@@ -84,8 +93,8 @@ angular.module('nuBoard')
       return $scope.stage.container();
     };
 
-    $scope.$on('shapechange', function (event, shapeId) {
-      shapeChanged(shapeId);
+    $scope.$on('shapechange', function (event, shape) {
+      shapeChanged(shape);
     });
 
   })
