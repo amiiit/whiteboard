@@ -21,8 +21,8 @@ angular.module('nuBoard')
     var buildStage = function () {
       $scope.stage = KineticShapeFactory.stage({
         container: $scope.stageContainerId,
-        width: $scope.width(),
-        height: $scope.height()
+        width: $scope.width instanceof Function ? $scope.width() : $scope.width,
+        height: $scope.height instanceof Function ? $scope.height() : $scope.height
       });
     };
 
