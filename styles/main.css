@@ -1,3 +1,14 @@
+#minimap {
+  background: #ffc;
+  position: fixed;
+  left: 46px;
+  bottom: 5px;
+  height: 150px;
+  width: 150px;
+  opacity: 0.7;
+  z-index: 60;
+}
+
 
 .toolbar {
   background: #000;

@@ -3,7 +3,15 @@ angular.module('nuBoard').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('app/app.tpl.html',
     "<nu-toolbar></nu-toolbar>\n" +
-    "<nu-surface width=2000 height=2000 surface-id='main-surface' shapes=\"shapes\" shapes-log=\"log\"></nu-surface>\n"
+    "<nu-surface width=2000 height=2000 surface-id='main-surface' shapes=\"shapes\" shapes-log=\"log\"></nu-surface>\n" +
+    "<nu-minimap></nu-minimap>"
+  );
+
+
+  $templateCache.put('app/minimap/minimap.tpl.html',
+    "<div id=\"minimap\"nu-kinetic>\n" +
+    "\n" +
+    "</div>"
   );
 
 
