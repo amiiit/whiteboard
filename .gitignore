@@ -10,3 +10,4 @@ dist
 .bower
 *.iml
 *.log
+.grunt/

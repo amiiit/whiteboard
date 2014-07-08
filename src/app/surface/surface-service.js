@@ -1,14 +1,23 @@
 angular.module('nuBoard')
-  .service('SurfaceService', function (KineticService) {
+  .service('SurfaceService', function (RouterService) {
 
+    var shapes = {};
+    var scope;
 
-
-    this.draw = function (data) {
-      KineticService.draw(data);
+    this.init = function () {
+      RouterService.register({
+        instanceId: 'surface-service',
+        callback: function (data) {
+          shapes[data.id] = data;
+          scope.shapesLog.push(data);
+          scope.$emit('shapechange', data);
+          scope.$apply();
+        }
+      });
     };
 
-    this.newShape = function (data) {
-      KineticService.newShape(data);
+    this.shareScope = function ($scope) {
+      scope = $scope;
     };
 
   });

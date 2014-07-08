@@ -41,7 +41,7 @@ describe('test surface watcher', function () {
   }));
 
 
-  it('supported events', function () {
+  xit('supported events', function () {
     var supportedEvents = service.getSupportedEvents();
     expect(supportedEvents).toContain('mousedown');
     expect(supportedEvents).toContain('mouseup');
@@ -49,7 +49,7 @@ describe('test surface watcher', function () {
     expect(supportedEvents).toContain('mouseout');
   });
 
-  it('reporting mousedown event', function () {
+  xit('reporting mousedown event', function () {
 
     spyOn(DistributionServiceMock, 'newShape');
     spyOn(ToolbarServiceMock, 'getState').and.returnValue({stylus: 'line', color: 'green'});
@@ -75,7 +75,7 @@ describe('test surface watcher', function () {
       ));
   });
 
-  it('mousemove after mousedown', function () {
+  xit('mousemove after mousedown', function () {
 
     spyOn(ToolbarServiceMock, 'getState').and.returnValue({stylus: 'line', color: 'green'});
     spyOn(DistributionServiceMock, 'newShape');
@@ -123,7 +123,7 @@ describe('test surface watcher', function () {
 
   });
 
-  it('each mouse down new action-id', function () {
+  xit('each mouse down new action-id', function () {
 
     spyOn(DistributionServiceMock, 'newShape');
     spyOn(ToolbarServiceMock, 'getState').and.returnValue({stylus: 'line', color: 'green'});
@@ -159,7 +159,7 @@ describe('test surface watcher', function () {
   });
 
 
-  it('watcher fetches toolbar state for new shape', function () {
+  xit('watcher fetches toolbar state for new shape', function () {
 
 
     spyOn(ToolbarServiceMock, 'getState').and.returnValue({stylus: 'line', color: 'green'});
@@ -184,7 +184,7 @@ describe('test surface watcher', function () {
 
   });
 
-  it('shape meta data', function () {
+  xit('shape meta data', function () {
 
     spyOn(DistributionServiceMock, 'newShape');
 

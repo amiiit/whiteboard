@@ -1,4 +1,8 @@
 angular.module('nuBoard')
   .factory('KineticShapeCache', function ($cacheFactory) {
-    return $cacheFactory('kinetic-shape-cache');
+    return {
+      getCache: function (name) {
+        return $cacheFactory('kinetic-shape-cache-' + name);
+      }
+    }
   });

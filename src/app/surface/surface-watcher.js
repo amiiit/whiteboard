@@ -1,98 +1,106 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('SurfaceWatcherService', function (DistributionService, UUID, ToolbarService) {
 
-    var isDraw = false;
-    var localShapeId;
+  .directive('nuWatchSurface', function ($timeout, RouterService, UUID, ToolbarService) {
+    return {
+      link: function ($scope, $element) {
 
-    this.getSupportedEvents = function () {
-      return Object.keys(eventHandlers);
-    };
+        var isDraw = false;
+        var localShapeId;
 
-    var actionStart = function (data) {
-      setNewShapeMeta(data);
-      isDraw = true;
-      localShapeId = UUID.generate();
-      data.shapeId = localShapeId;
-    };
+        var reportAction = function (action) {
 
-    var setNewShapeMeta = function (data) {
-      if (!data.shapeId) {
-        localShapeId = UUID.generate();
-        data.shapeId = localShapeId;
-      }
-      assignDataWithToolbarProperties(data);
-    };
+          if (!action.id) {
+            action.id = action.shapeId;
+            delete action.shapeId;
+          }
 
-    var positionToPoints = function (data) {
-      var points = data.points || [];
+          RouterService.report({
+            sourceId: 'surface-watcher',
+            message: action
+          })
+        };
 
-      if (data.position) {
-        points.push(data.position.x);
-        points.push(data.position.y);
-      }
+        var actionStart = function (eventData) {
+          if (!eventData) {
+            return;
+          }
+          isDraw = true;
 
-      data.points = points;
-      delete data.position;
-    };
+          var actionData = {
+            shapeId: UUID.generate(),
+            points: positionToPoint(eventData)
+          };
 
-    var assignDataWithToolbarProperties = function (data) {
-      var toolbarProps = ToolbarService.getState();
-      toolbarProps.type = toolbarProps.stylus;
-      delete toolbarProps.stylus;
+          assignDataWithToolbarProperties(actionData);
+          localShapeId = actionData.shapeId;
+          $scope.shapes[actionData.shapeId] = actionData;
+          reportAction(actionData);
+        };
 
-      for (var key in toolbarProps) {
-        if (toolbarProps.hasOwnProperty(key)) {
-          data[key] = toolbarProps[key];
-        }
-      }
-    };
+        var positionToPoint = function (position) {
+          return [position.layerX, position.layerY];
+        };
 
-    var actionEnd = function () {
-      isDraw = false;
-      localShapeId = undefined;
-    };
+        var assignDataWithToolbarProperties = function (data) {
+          var toolbarProps = ToolbarService.getState();
+          toolbarProps.type = toolbarProps.stylus;
+          delete toolbarProps.stylus;
 
-    var eventHandlers = {
-      'mousedown': function (data) {
-        actionStart(data);
-        positionToPoints(data);
-        DistributionService.newShape(data)
+          for (var key in toolbarProps) {
+            if (toolbarProps.hasOwnProperty(key)) {
+              data[key] = toolbarProps[key];
+            }
+          }
+        };
+
+        var actionEnd = function () {
+          isDraw = false;
+          localShapeId = undefined;
+        };
+
+        var actionProceed = function (eventData) {
+          var action = $scope.shapes[localShapeId];
+          if (!action) {
+            console.warn('no shape found to continue', localShapeId);
+            return;
+          }
+          var point = positionToPoint(eventData);
+          action.points.push(point[0]);
+          action.points.push(point[1]);
+          reportAction(action);
+        };
+
+        var eventHandlers = {
+          'mousedown': function (data) {
+            actionStart(data);
+          },
+          'mouseup': function (data) {
+            actionEnd(data);
+          },
+          'mousemove': function (data) {
+            if (isDraw) {
+              actionProceed(data);
+            }
+          },
+          'mouseout': function (data) {
+            actionEnd(data);
+          }
+        };
+
+        _.each(Object.keys(eventHandlers), function (eventName) {
+          $element.on(eventName, eventHandlers[eventName])
+        });
+
       },
-      'mouseup': function (data) {
-        actionEnd(data);
-      },
-      'mousemove': function (data) {
-        if (isDraw) {
-          data.shapeId = localShapeId;
-          var preparedData = prepareData(data);
-          DistributionService.draw(preparedData);
-        }
-      },
-      'mouseout': function (data) {
-        actionEnd(data);
+      controller: function ($scope) {
+
       }
-    };
-
-    var prepareData = function (data) {
-      positionToPoints(data);
-      var dataCopy = angular.copy(data);
-      delete dataCopy.event;
-      dataCopy.localOrigin = true;
-      return dataCopy;
-    };
-
-    this.reportEvent = function (data) {
-      var handler = eventHandlers[data.event];
-      if (handler) {
-        var preparedData = prepareData(data);
-        handler(preparedData);
-      } else {
-        console.log('event not supported', data.event);
-      }
-
     }
+  })
+
+  .service('SurfaceWatcherService', function () {
 
 
   })
