@@ -11,7 +11,8 @@ angular.module('nuBoard')
         height: '&',
         surfaceId: '@',
         shapes: '=',
-        shapesLog: '='
+        shapesLog: '=',
+        relativeFocus: '='
       },
       link: function ($scope, element, attrs) {
         SurfaceService.shareScope($scope);
@@ -29,11 +30,13 @@ angular.module('nuBoard')
         $scope.shapesLog = [];
       }
       $scope.shapesLog.push(shape);
-      if ($scope.shapesLog.length > 100){
+      if ($scope.shapesLog.length > 100) {
         $scope.shapesLog = [];
       }
 
     });
 
-
+    $scope.$watch('relativeFocus', function (focus) {
+      console.log('relative focus', focus);
+    })
   });

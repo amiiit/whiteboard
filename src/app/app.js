@@ -45,6 +45,9 @@ angular.module('nuBoard', ['firebase', 'ngRoute'])
     SurfaceService.init();
     $rootScope.boardId = $routeParams.boardId;
     $scope.shapes = {}; //todo: move this to surface
+    $scope.focus = {x: 0.5, y: 0.5};
+    $scope.surfaceWidth = 2000;
+    $scope.surfaceHeight = 2000;
   })
 
   .controller('NewBoardCtrl', function ($scope, $location, BoardIdService) {
