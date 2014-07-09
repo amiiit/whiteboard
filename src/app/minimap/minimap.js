@@ -3,6 +3,7 @@ angular.module('nuBoard')
     return {
       restrict: 'E',
       link: function ($scope, $element) {
+
         $element.on('mousedown', function (event) {
           var relativeX = event.offsetX / $scope.width;
           var relativeY = event.offsetY / $scope.height;
