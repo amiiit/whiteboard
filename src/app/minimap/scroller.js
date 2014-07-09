@@ -51,16 +51,22 @@ angular.module('nuBoard')
     $scope.updateViewportMark = function (currentScrollPosition) {
 
       var viewport = BoardUtils.viewport();
+      var surfaceDimensions = {width: $scope.width(), height: $scope.height()};
 
-      var pointA = currentScrollPosition;
-      var pointB = {
-        x: currentScrollPosition.x + viewport.width,
-        y: currentScrollPosition.y + viewport.height
+
+      var relativePointA = {
+        x: currentScrollPosition.x / surfaceDimensions.width,
+        y: currentScrollPosition.y / surfaceDimensions.height
+      };
+
+      var relativePointB = {
+        x: (currentScrollPosition.x + viewport.width) / surfaceDimensions.width,
+        y: (currentScrollPosition.y + viewport.height) / surfaceDimensions.height
       };
 
       $scope.currentViewport = {
-        upperLeft: pointA,
-        lowerRight: pointB
+        upperLeft: relativePointA,
+        lowerRight: relativePointB
       };
     };
   })

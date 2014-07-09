@@ -38,7 +38,35 @@ angular.module('nuBoard')
       console.log('$scope.relativeFocus', $scope.relativeFocus);
     };
 
-    $scope.$watch('currentViewport', function (viewPort) {
-       console.log('new viewport', viewPort);
+    $scope.$watch('currentViewport', function (relativeViewport) {
+
+      if (!relativeViewport || !relativeViewport.upperLeft) {
+        return;
+      }
+
+      console.log('currentViewport', relativeViewport);
+
+      var relativeToAbsolute = function (relativePoint) {
+        return {
+          x: relativePoint.x * $scope.width,
+          y: relativePoint.y * $scope.height
+        }
+      };
+
+      var absoluteUpperLeft = relativeToAbsolute(relativeViewport.upperLeft);
+      var absoluteLowerRight = relativeToAbsolute(relativeViewport.lowerRight);
+
+      $scope.frameMeasurments = {
+        position: {
+          left: absoluteUpperLeft.x,
+          top: absoluteUpperLeft.y
+        },
+        dimension: {
+          width: absoluteLowerRight.x - absoluteUpperLeft.x,
+          height: absoluteLowerRight.y - absoluteUpperLeft.y
+        }
+      };
+
+      console.log('frameMeasurments', $scope.frameMeasurments);
     });
   });
