@@ -33,6 +33,8 @@ angular.module('nuBoard')
             points: positionToPoint(eventData)
           };
 
+          console.log('action start on point', actionData.points);
+
           assignDataWithToolbarProperties(actionData);
           localShapeId = actionData.shapeId;
           $scope.shapes[actionData.shapeId] = actionData;

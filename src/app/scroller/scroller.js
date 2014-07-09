@@ -21,12 +21,13 @@ angular.module('nuBoard')
 
       var viewport = BoardUtils.viewport();
 
+      var surfaceDimensions = {width: $scope.width(), height: $scope.height()};
       console.log('viewport', viewport);
       console.log('focus', focus);
 
       var pointToCenter = {
-        x: viewport.width * focus.x,
-        y: viewport.height * focus.y
+        x: surfaceDimensions.width * focus.x,
+        y: surfaceDimensions.height * focus.y
       };
 
       console.log('pointToCenter', pointToCenter);
