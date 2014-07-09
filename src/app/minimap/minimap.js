@@ -14,7 +14,8 @@ angular.module('nuBoard')
       scope: {
         relativeFocus: '=',
         width: '=',
-        height: '='
+        height: '=',
+        currentViewport: '='
       },
       templateUrl: 'app/minimap/minimap.tpl.html',
       controller: 'MinimapCtrl',
@@ -35,5 +36,9 @@ angular.module('nuBoard')
     $scope.setFocus = function (focus) {
       $scope.relativeFocus = focus;
       console.log('$scope.relativeFocus', $scope.relativeFocus);
-    }
+    };
+
+    $scope.$watch('currentViewport', function (viewPort) {
+       console.log('new viewport', viewPort);
+    });
   });
