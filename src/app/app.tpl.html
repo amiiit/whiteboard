@@ -1,6 +1,15 @@
 <nu-toolbar></nu-toolbar>
-<nu-surface width="surfaceWidth" height="surfaceHeight" surface-id='main-surface' shapes="shapes" shapes-log="log"
-            relative-focus="focus"></nu-surface>
-<nu-minimap width=150 height=150 relative-focus="focus" current-viewport="currentViewport"></nu-minimap>
+<nu-surface width="surfaceWidth" height="surfaceHeight"
+            surface-id='main-surface' shapes="shapes"
+            shapes-log="log" relative-focus="focus"
+            visible-dimensions="surfaceVisibleDimensions"
+            position-offset="surfacePositionOffset"
+  ></nu-surface>
+<nu-minimap width=200 height=200
+            relative-focus="focus" current-viewport="currentViewport"
+            origin-visible-dimensions="surfaceVisibleDimensions"
+  ></nu-minimap>
 <nu-window-scroller width="surfaceWidth" height="surfaceHeight" relative-focus="focus"
-                    current-viewport="currentViewport"></nu-window-scroller>
+                    current-viewport="currentViewport"
+                    target-offset="surfacePositionOffset"
+  ></nu-window-scroller>

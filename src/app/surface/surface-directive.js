@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .directive('nuSurface', function (SurfaceService, $window) {
+  .directive('nuSurface', function (SurfaceService, $window, BoardUtils) {
     return {
       restrict: 'E',
       templateUrl: 'app/surface/surface.tpl.html',
@@ -13,17 +13,37 @@ angular.module('nuBoard')
         shapes: '=',
         shapesLog: '=',
         relativeFocus: '=',
-        visibleMeasurements: '='
+        visibleDimensions: '=',
+        positionOffset: '='
       },
       link: function ($scope, element, attrs) {
 
         SurfaceService.shareScope($scope);
 
-        angular.element($window).on('resize', function(){
-          console.log('resize: element', element);
-          console.log('offsetLeft', element[0].offsetLeft);
-          console.log('offsetTop', element[0].offsetTop);
+        var setPositionOffset = function () {
+          $scope.positionOffset = {
+            left: element[0].offsetLeft,
+            top: element[0].offsetTop
+          };
+          console.log('setting offset', $scope.positionOffset);
+        };
+
+        angular.element($window).on('resize', function () {
+
+          var viewport = BoardUtils.viewport();
+          $scope.$apply(function () {
+
+            $scope.visibleDimensions = {
+              width: viewport.width - element[0].offsetLeft,
+              height: viewport.height - element[0].offsetTop
+            };
+
+            setPositionOffset();
+
+          });
+
         });
+        setPositionOffset();
 
 
       },

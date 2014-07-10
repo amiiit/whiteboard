@@ -16,7 +16,8 @@ angular.module('nuBoard')
         relativeFocus: '=',
         width: '=',
         height: '=',
-        currentViewport: '='
+        currentViewport: '=',
+        originVisibleDimensions: '='
       },
       templateUrl: 'app/minimap/minimap.tpl.html',
       controller: 'MinimapCtrl',

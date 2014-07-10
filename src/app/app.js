@@ -48,6 +48,8 @@ angular.module('nuBoard', ['firebase', 'ngRoute'])
     $scope.focus = {x: 0.5, y: 0.5};
     $scope.surfaceWidth = 2000;
     $scope.surfaceHeight = 2000;
+    $scope.originVisibleDimensions = {};
+    $scope.surfacePositionOffset = {left: 0, top: 0};
   })
 
   .controller('NewBoardCtrl', function ($scope, $location, BoardIdService) {
