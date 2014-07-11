@@ -4,7 +4,9 @@ angular.module('nuBoard')
       restrict: 'E',
       link: function ($scope, $element) {
 
-        $element.on('mousedown', function (event) {
+        var isClicked = false;
+
+        var processFocusing = function (event) {
           var relativeX = event.offsetX / $scope.width();
           var relativeY = event.offsetY / $scope.height();
           console.log('surfaceVisibleMeasurements', $scope.surfaceVisibleMeasurements);
@@ -14,6 +16,21 @@ angular.module('nuBoard')
               y: relativeY - $scope.surfaceVisibleMeasurements.height / 2
             });
           });
+        };
+
+        $element.on('mousedown', function (event) {
+          isClicked = true;
+          processFocusing(event);
+        });
+
+        $element.on('mousemove', function (event) {
+          if (isClicked) {
+            processFocusing(event)
+          }
+        });
+
+        $element.on('mouseup mouseout', function (event) {
+          isClicked = false;
         });
       },
       scope: {
