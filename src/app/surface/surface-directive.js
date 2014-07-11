@@ -55,6 +55,17 @@ angular.module('nuBoard')
 
         setVisibleMeasurements();
 
+
+        $scope.$watch('relativeFocus', function (focus) {
+          var ownWidth = $scope.width();
+          var ownHeight = $scope.height();
+          var scrollTo = {
+            x: focus.x * ownWidth,
+            y: focus.y * ownHeight
+          };
+          angular.element($window)[0].scrollTo(scrollTo.x, scrollTo.y);
+        });
+
       },
       controller: 'SurfaceCtrl'
     };
@@ -74,8 +85,4 @@ angular.module('nuBoard')
       }
 
     });
-
-    $scope.$watch('relativeFocus', function (focus) {
-      console.log('relativeFocus changed, need to recalculate visible measurements', focus);
-    })
   });

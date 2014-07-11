@@ -5,8 +5,8 @@ angular.module('nuBoard')
       link: function ($scope, $element) {
 
         $element.on('mousedown', function (event) {
-          var relativeX = event.offsetX / $scope.width;
-          var relativeY = event.offsetY / $scope.height;
+          var relativeX = event.offsetX / $scope.width();
+          var relativeY = event.offsetY / $scope.height();
           $scope.$apply(function () {
             $scope.setFocus({x: relativeX, y: relativeY});
           });
@@ -35,7 +35,6 @@ angular.module('nuBoard')
 
     $scope.setFocus = function (focus) {
       $scope.relativeFocus = focus;
-      console.log('$scope.relativeFocus', $scope.relativeFocus);
     };
 
     $scope.$watch('surfaceVisibleMeasurements', function (measurements) {
