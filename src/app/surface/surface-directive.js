@@ -13,38 +13,53 @@ angular.module('nuBoard')
         shapes: '=',
         shapesLog: '=',
         relativeFocus: '=',
-        visibleDimensions: '=',
-        positionOffset: '='
+        visibleMeasurements: '='
       },
       link: function ($scope, element, attrs) {
 
         SurfaceService.shareScope($scope);
 
-        var setPositionOffset = function () {
-          $scope.positionOffset = {
+        var setVisibleMeasurements = function () {
+          var surfaceOffset = {
             left: element[0].offsetLeft,
             top: element[0].offsetTop
           };
-          console.log('setting offset', $scope.positionOffset);
-        };
 
-        angular.element($window).on('resize', function () {
+          var windowOffset = {
+            x: window.pageXOffset,
+            y: window.pageYOffset
+          };
+
+
+          console.log('surfaceOffset', surfaceOffset);
+          console.log('windowOffset', windowOffset);
 
           var viewport = BoardUtils.viewport();
+
+          console.log('viewport', viewport);
+
+          var absoluteMeasurements = {
+            pointA: {
+              x: windowOffset.x, y: windowOffset.y
+            },
+            pointB: {
+              x: windowOffset.x + viewport.width - surfaceOffset.left,
+              y: windowOffset.y + viewport.height - surfaceOffset.top
+            }
+
+          };
+
+          console.log('absoluteMeasurements.a', absoluteMeasurements.pointA);
+          console.log('absoluteMeasurements.b', absoluteMeasurements.pointB);
+        };
+
+        angular.element($window).on('resize scroll', function () {
           $scope.$apply(function () {
-
-            $scope.visibleDimensions = {
-              width: viewport.width - element[0].offsetLeft,
-              height: viewport.height - element[0].offsetTop
-            };
-
-            setPositionOffset();
-
+            setVisibleMeasurements();
           });
-
         });
-        setPositionOffset();
 
+        setVisibleMeasurements();
 
       },
       controller: 'SurfaceCtrl'
