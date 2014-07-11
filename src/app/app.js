@@ -50,6 +50,7 @@ angular.module('nuBoard', ['firebase', 'ngRoute'])
     $scope.surfaceHeight = 2000;
     $scope.minimapWidth = 200;
     $scope.minimapHeight = 200;
+    $scope.minimapZoomScale = 0.1;
     $scope.surfacePositionOffset = {};
   })
 

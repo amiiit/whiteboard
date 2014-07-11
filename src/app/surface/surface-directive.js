@@ -79,6 +79,6 @@ angular.module('nuBoard')
     });
 
     $scope.$watch('relativeFocus', function (focus) {
-      console.log('relative focus', focus);
+      console.log('relativeFocus changed, need to recalculate visible measurements', focus);
     })
   });

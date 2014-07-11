@@ -16,7 +16,8 @@ angular.module('nuBoard')
         relativeFocus: '=',
         width: '=',
         height: '=',
-        currentViewport: '='
+        currentViewport: '=',
+        zoomScale: '='
       },
       templateUrl: 'app/minimap/minimap.tpl.html',
       controller: 'MinimapCtrl',
@@ -24,8 +25,6 @@ angular.module('nuBoard')
     }
   })
   .controller('MinimapCtrl', function ($scope, RouterService) {
-
-    $scope.zoomScale = 0.075;
 
     RouterService.register({
       instanceId: 'minimap',
