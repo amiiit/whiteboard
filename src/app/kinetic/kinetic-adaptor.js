@@ -9,11 +9,12 @@ angular.module('nuBoard')
       controller: 'KineticCtrl',
       link: function ($scope, $element) {
         $scope.stageContainerId = $element.attr('id');
+        console.log('nuKinetic link fn called');
       }
     };
   })
 
-  .controller('KineticCtrl', function ($scope, KineticShapeFactory, KineticShapeCache, $timeout) {
+  .controller('KineticCtrl', function ($scope, KineticShapeFactory, KineticShapeCache, KineticSmoothie, $timeout) {
     var activeLayer = null;
     var activeShape;
 
@@ -69,6 +70,7 @@ angular.module('nuBoard')
 
     var extendShape = function (kineticShape, shapeData) {
       var points = shapeData.points;
+      points = KineticSmoothie.interpolate(points);
       kineticShape.setPoints(points);
     };
 
@@ -93,8 +95,16 @@ angular.module('nuBoard')
       return $scope.stage.container();
     };
 
+    var lastChangePoints = [];
+
     $scope.$on('shapechange', function (event, shape) {
-      shapeChanged(shape);
+      if (lastChangePoints != shape.points) {
+        //console.debug('shapechange fired', lastChangePoints, shape.points);
+        shapeChanged(shape);
+        lastChangePoints = shape.points;
+      } else {
+        //console.log('shapechange event fired without changes on shape points');
+      }
     });
 
   })
