@@ -3,15 +3,21 @@ angular.module('nuBoard').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('app/app.tpl.html',
     "<nu-toolbar></nu-toolbar>\n" +
-    "<nu-surface width=2000 height=2000 surface-id='main-surface' shapes=\"shapes\" shapes-log=\"log\"></nu-surface>\n" +
-    "<nu-minimap></nu-minimap>"
+    "<nu-surface width=\"surfaceWidth\" height=\"surfaceHeight\" surface-id='main-surface' shapes=\"shapes\" shapes-log=\"log\"\n" +
+    "            relative-focus=\"focus\"></nu-surface>\n" +
+    "<nu-minimap width=150 height=150 relative-focus=\"focus\" current-viewport=\"currentViewport\"></nu-minimap>\n" +
+    "<nu-window-scroller width=\"surfaceWidth\" height=\"surfaceHeight\" relative-focus=\"focus\"\n" +
+    "                    current-viewport=\"currentViewport\"></nu-window-scroller>"
   );
 
 
   $templateCache.put('app/minimap/minimap.tpl.html',
-    "<div id=\"minimap\"nu-kinetic>\n" +
-    "\n" +
-    "</div>"
+    "<div id=\"minimap-container\">\n" +
+    "  <div id=\"minimap\" nu-kinetic>\n" +
+    "  </div>\n" +
+    "  <div id=\"minimap-frame\"\n" +
+    "       style=\"    top: {{frameMeasurments.position.top}}px;    left: {{frameMeasurments.position.left}}px;    width: {{frameMeasurments.dimension.width}}px;    height: {{frameMeasurments.dimension.height}}px;  \"></div>\n" +
+    "</div>\n"
   );
 
 

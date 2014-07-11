@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .directive('nuSurface', function (SurfaceService) {
+  .directive('nuSurface', function (SurfaceService, $window) {
     return {
       restrict: 'E',
       templateUrl: 'app/surface/surface.tpl.html',
@@ -11,10 +11,21 @@ angular.module('nuBoard')
         height: '&',
         surfaceId: '@',
         shapes: '=',
-        shapesLog: '='
+        shapesLog: '=',
+        relativeFocus: '=',
+        visibleMeasurements: '='
       },
       link: function ($scope, element, attrs) {
+
         SurfaceService.shareScope($scope);
+
+        angular.element($window).on('resize', function(){
+          console.log('resize: element', element);
+          console.log('offsetLeft', element[0].offsetLeft);
+          console.log('offsetTop', element[0].offsetTop);
+        });
+
+
       },
       controller: 'SurfaceCtrl'
     };
@@ -29,11 +40,13 @@ angular.module('nuBoard')
         $scope.shapesLog = [];
       }
       $scope.shapesLog.push(shape);
-      if ($scope.shapesLog.length > 100){
+      if ($scope.shapesLog.length > 100) {
         $scope.shapesLog = [];
       }
 
     });
 
-
+    $scope.$watch('relativeFocus', function (focus) {
+      console.log('relative focus', focus);
+    })
   });
