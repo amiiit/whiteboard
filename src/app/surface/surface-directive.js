@@ -20,6 +20,7 @@ angular.module('nuBoard')
         SurfaceService.shareScope($scope);
 
         var setVisibleMeasurements = function () {
+
           var surfaceOffset = {
             left: element[0].offsetLeft,
             top: element[0].offsetTop
@@ -31,26 +32,22 @@ angular.module('nuBoard')
           };
 
 
-          console.log('surfaceOffset', surfaceOffset);
-          console.log('windowOffset', windowOffset);
-
           var viewport = BoardUtils.viewport();
+          var ownWidth = $scope.width();
+          var ownHeight = $scope.height();
 
-          console.log('viewport', viewport);
-
-          var absoluteMeasurements = {
+          $scope.visibleMeasurements = {
             pointA: {
-              x: windowOffset.x, y: windowOffset.y
+              x: windowOffset.x / ownWidth, y: windowOffset.y / ownHeight
             },
             pointB: {
-              x: windowOffset.x + viewport.width - surfaceOffset.left,
-              y: windowOffset.y + viewport.height - surfaceOffset.top
+              x: (windowOffset.x + viewport.width - surfaceOffset.left) / ownWidth,
+              y: (windowOffset.y + viewport.height - surfaceOffset.top) / ownHeight
             }
-
           };
 
-          console.log('absoluteMeasurements.a', absoluteMeasurements.pointA);
-          console.log('absoluteMeasurements.b', absoluteMeasurements.pointB);
+          console.log('visibleMeasurements.a', $scope.visibleMeasurements.pointA);
+          console.log('visibleMeasurements.b', $scope.visibleMeasurements.pointB);
         };
 
         angular.element($window).on('resize scroll', function () {
