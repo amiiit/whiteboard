@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .directive('nuSurface', function (SurfaceService, $window) {
+  .directive('nuSurface', function (SurfaceService, $window, BoardUtils) {
     return {
       restrict: 'E',
       templateUrl: 'app/surface/surface.tpl.html',
@@ -19,12 +19,54 @@ angular.module('nuBoard')
 
         SurfaceService.shareScope($scope);
 
-        angular.element($window).on('resize', function(){
-          console.log('resize: element', element);
-          console.log('offsetLeft', element[0].offsetLeft);
-          console.log('offsetTop', element[0].offsetTop);
+        var setVisibleMeasurements = function () {
+
+          var surfaceOffset = {
+            left: element[0].offsetLeft,
+            top: element[0].offsetTop
+          };
+
+          var windowOffset = {
+            x: window.pageXOffset,
+            y: window.pageYOffset
+          };
+
+
+          var viewport = BoardUtils.viewport();
+          var ownWidth = $scope.width();
+          var ownHeight = $scope.height();
+
+          $scope.visibleMeasurements = {
+            pointA: {
+              x: windowOffset.x / ownWidth, y: windowOffset.y / ownHeight
+            },
+            pointB: {
+              x: (windowOffset.x + viewport.width - surfaceOffset.left) / ownWidth,
+              y: (windowOffset.y + viewport.height - surfaceOffset.top) / ownHeight
+            },
+            width: (viewport.width - surfaceOffset.left) / ownWidth,
+            height: (viewport.height - surfaceOffset.top) / ownHeight
+          };
+        };
+
+        angular.element($window).on('resize scroll', function () {
+          $scope.$apply(function () {
+            setVisibleMeasurements();
+          });
         });
 
+        setVisibleMeasurements();
+
+
+        $scope.$watch('relativeFocus', function (focus) {
+          var ownWidth = $scope.width();
+          var ownHeight = $scope.height();
+          var scrollTo = {
+            x: focus.x * ownWidth,
+            y: focus.y * ownHeight
+          };
+          angular.element($window)[0].scrollTo(scrollTo.x, scrollTo.y);
+        });
 
       },
       controller: 'SurfaceCtrl'
@@ -45,8 +87,4 @@ angular.module('nuBoard')
       }
 
     });
-
-    $scope.$watch('relativeFocus', function (focus) {
-      console.log('relative focus', focus);
-    })
   });

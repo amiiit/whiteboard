@@ -3,11 +3,17 @@ angular.module('nuBoard').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('app/app.tpl.html',
     "<nu-toolbar></nu-toolbar>\n" +
-    "<nu-surface width=\"surfaceWidth\" height=\"surfaceHeight\" surface-id='main-surface' shapes=\"shapes\" shapes-log=\"log\"\n" +
-    "            relative-focus=\"focus\"></nu-surface>\n" +
-    "<nu-minimap width=150 height=150 relative-focus=\"focus\" current-viewport=\"currentViewport\"></nu-minimap>\n" +
-    "<nu-window-scroller width=\"surfaceWidth\" height=\"surfaceHeight\" relative-focus=\"focus\"\n" +
-    "                    current-viewport=\"currentViewport\"></nu-window-scroller>"
+    "<nu-surface width=\"surfaceWidth\" height=\"surfaceHeight\"\n" +
+    "            surface-id='main-surface' shapes=\"shapes\"\n" +
+    "            shapes-log=\"log\"\n" +
+    "            relative-focus=\"focus\"\n" +
+    "            visible-measurements=\"surfaceVisibleMeasurements\"\n" +
+    "  ></nu-surface>\n" +
+    "<nu-minimap width=\"minimapWidth\" height=\"minimapHeight\"\n" +
+    "            relative-focus=\"focus\"\n" +
+    "            surface-visible-measurements=\"surfaceVisibleMeasurements\"\n" +
+    "            zoom-scale=\"minimapZoomScale\"\n" +
+    "  ></nu-minimap>"
   );
 
 
@@ -16,13 +22,13 @@ angular.module('nuBoard').run(['$templateCache', function($templateCache) {
     "  <div id=\"minimap\" nu-kinetic>\n" +
     "  </div>\n" +
     "  <div id=\"minimap-frame\"\n" +
-    "       style=\"    top: {{frameMeasurments.position.top}}px;    left: {{frameMeasurments.position.left}}px;    width: {{frameMeasurments.dimension.width}}px;    height: {{frameMeasurments.dimension.height}}px;  \"></div>\n" +
+    "       style=\"    top: {{frameMeasurments.position.top}}px;    left: {{frameMeasurments.position.left}}px;    width: {{frameMeasurments.dimension.width}}px;    height: {{frameMeasurments.dimension.height}}px;  pointer-events: none\"></div>\n" +
     "</div>\n"
   );
 
 
   $templateCache.put('app/surface/surface.tpl.html',
-    "<div id=\"main-surface\" class=\"surface\" config=\"config\" name=\"kinetic\" shapes=\"shapes\" nu-kinetic nu-watch-surface>\n" +
+    "<div id=\"main-surface\" class=\"surface\" config=\"config\" name=\"kinetic\" shapes=\"shapes\" nu-kinetic nu-watch-surface nu-window-scroller>\n" +
     "</div>\n" +
     "\n"
   );

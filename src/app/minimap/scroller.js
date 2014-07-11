@@ -8,7 +8,8 @@ angular.module('nuBoard')
         width: '&',
         height: '&',
         relativeFocus: '=',
-        currentViewport: '='
+        currentViewport: '=',
+        targetOffset: '='
       },
       controller: 'ScrollerCtrl',
       link: function ($scope) {
@@ -64,10 +65,11 @@ angular.module('nuBoard')
       };
 
       var relativePointB = {
-        x: (currentScrollPosition.x + viewport.width ) / surfaceDimensions.width,
-        y: (currentScrollPosition.y + viewport.height ) / surfaceDimensions.height
+        x: (currentScrollPosition.x + viewport.width - $scope.targetOffset.left) / surfaceDimensions.width,
+        y: (currentScrollPosition.y + viewport.height - $scope.targetOffset.top) / surfaceDimensions.height
       };
 
+      console.log('current offset:', $scope.targetOffset);
       $scope.currentViewport = {
         upperLeft: relativePointA,
         lowerRight: relativePointB

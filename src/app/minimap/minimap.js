@@ -4,19 +4,41 @@ angular.module('nuBoard')
       restrict: 'E',
       link: function ($scope, $element) {
 
-        $element.on('mousedown', function (event) {
-          var relativeX = event.offsetX / $scope.width;
-          var relativeY = event.offsetY / $scope.height;
+        var isClicked = false;
+
+        var processFocusing = function (event) {
+          var relativeX = event.offsetX / $scope.width();
+          var relativeY = event.offsetY / $scope.height();
+          console.log('surfaceVisibleMeasurements', $scope.surfaceVisibleMeasurements);
           $scope.$apply(function () {
-            $scope.setFocus({x: relativeX, y: relativeY});
+            $scope.setFocus({
+              x: relativeX - $scope.surfaceVisibleMeasurements.width / 2,
+              y: relativeY - $scope.surfaceVisibleMeasurements.height / 2
+            });
           });
+        };
+
+        $element.on('mousedown', function (event) {
+          isClicked = true;
+          processFocusing(event);
+        });
+
+        $element.on('mousemove', function (event) {
+          if (isClicked) {
+            processFocusing(event)
+          }
+        });
+
+        $element.on('mouseup mouseout', function (event) {
+          isClicked = false;
         });
       },
       scope: {
         relativeFocus: '=',
-        width: '=',
-        height: '=',
-        currentViewport: '='
+        width: '&',
+        height: '&',
+        zoomScale: '=',
+        surfaceVisibleMeasurements: '='
       },
       templateUrl: 'app/minimap/minimap.tpl.html',
       controller: 'MinimapCtrl',
@@ -24,8 +46,6 @@ angular.module('nuBoard')
     }
   })
   .controller('MinimapCtrl', function ($scope, RouterService) {
-
-    $scope.zoomScale = 0.075;
 
     RouterService.register({
       instanceId: 'minimap',
@@ -36,38 +56,34 @@ angular.module('nuBoard')
 
     $scope.setFocus = function (focus) {
       $scope.relativeFocus = focus;
-      console.log('$scope.relativeFocus', $scope.relativeFocus);
     };
 
-    $scope.$watch('currentViewport', function (relativeViewport) {
+    $scope.$watch('surfaceVisibleMeasurements', function (measurements) {
 
-      if (!relativeViewport || !relativeViewport.upperLeft) {
-        return;
-      }
+      var ownWidth = $scope.width();
+      var ownHeight = $scope.height();
 
-      console.log('currentViewport', relativeViewport);
+      var pa = measurements.pointA;
+      var pb = measurements.pointB;
 
-      var relativeToAbsolute = function (relativePoint) {
-        return {
-          x: relativePoint.x * $scope.width,
-          y: relativePoint.y * $scope.height
-        }
-      };
+      console.log('pa', pa);
+      console.log('pb', pb);
 
-      var absoluteUpperLeft = relativeToAbsolute(relativeViewport.upperLeft);
-      var absoluteLowerRight = relativeToAbsolute(relativeViewport.lowerRight);
+      console.log('ownWidth', ownWidth);
+      console.log('ownHeight', ownHeight);
 
       $scope.frameMeasurments = {
         position: {
-          left: absoluteUpperLeft.x,
-          top: absoluteUpperLeft.y
+          top: pa.y * ownHeight,
+          left: pa.x * ownWidth
         },
         dimension: {
-          width: absoluteLowerRight.x - absoluteUpperLeft.x,
-          height: absoluteLowerRight.y - absoluteUpperLeft.y
+          width: (pb.x - pa.x) * ownWidth,
+          height: (pb.y - pa.y) * ownHeight
         }
       };
 
-      console.log('frameMeasurments', $scope.frameMeasurments);
-    });
+      console.log('frame position', $scope.frameMeasurments.position);
+
+    })
   });
