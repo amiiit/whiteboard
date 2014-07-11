@@ -45,9 +45,6 @@ angular.module('nuBoard')
               y: (windowOffset.y + viewport.height - surfaceOffset.top) / ownHeight
             }
           };
-
-          console.log('visibleMeasurements.a', $scope.visibleMeasurements.pointA);
-          console.log('visibleMeasurements.b', $scope.visibleMeasurements.pointB);
         };
 
         angular.element($window).on('resize scroll', function () {
