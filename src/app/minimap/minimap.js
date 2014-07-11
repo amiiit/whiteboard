@@ -7,8 +7,12 @@ angular.module('nuBoard')
         $element.on('mousedown', function (event) {
           var relativeX = event.offsetX / $scope.width();
           var relativeY = event.offsetY / $scope.height();
+          console.log('surfaceVisibleMeasurements', $scope.surfaceVisibleMeasurements);
           $scope.$apply(function () {
-            $scope.setFocus({x: relativeX, y: relativeY});
+            $scope.setFocus({
+              x: relativeX - $scope.surfaceVisibleMeasurements.width / 2,
+              y: relativeY - $scope.surfaceVisibleMeasurements.height / 2
+            });
           });
         });
       },
@@ -48,8 +52,8 @@ angular.module('nuBoard')
       console.log('pa', pa);
       console.log('pb', pb);
 
-      console.log('ownWidth',ownWidth);
-      console.log('ownHeight',ownHeight);
+      console.log('ownWidth', ownWidth);
+      console.log('ownHeight', ownHeight);
 
       $scope.frameMeasurments = {
         position: {

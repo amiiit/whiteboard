@@ -43,7 +43,9 @@ angular.module('nuBoard')
             pointB: {
               x: (windowOffset.x + viewport.width - surfaceOffset.left) / ownWidth,
               y: (windowOffset.y + viewport.height - surfaceOffset.top) / ownHeight
-            }
+            },
+            width: (viewport.width - surfaceOffset.left) / ownWidth,
+            height: (viewport.height - surfaceOffset.top) / ownHeight
           };
         };
 
