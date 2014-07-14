@@ -51,11 +51,7 @@ angular.module('nuBoard')
 
     $scope.updateViewportMark = function (currentScrollPosition) {
 
-      console.log('1currentScrollPosition', currentScrollPosition);
-
       var viewport = BoardUtils.viewport();
-
-      console.log('viewport', viewport);
 
       var surfaceDimensions = {width: $scope.width(), height: $scope.height()};
 
@@ -69,7 +65,6 @@ angular.module('nuBoard')
         y: (currentScrollPosition.y + viewport.height - $scope.targetOffset.top) / surfaceDimensions.height
       };
 
-      console.log('current offset:', $scope.targetOffset);
       $scope.currentViewport = {
         upperLeft: relativePointA,
         lowerRight: relativePointB
