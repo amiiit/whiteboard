@@ -11,8 +11,8 @@ angular.module('nuBoard')
           var relativeY = event.offsetY / $scope.height();
           $scope.$apply(function () {
             $scope.setFocus({
-              x: relativeX - $scope.surfaceVisibleMeasurements.width / 2,
-              y: relativeY - $scope.surfaceVisibleMeasurements.height / 2
+              x: relativeX,
+              y: relativeY
             });
           });
         };
