@@ -9,11 +9,10 @@ angular.module('nuBoard')
         var processFocusing = function (event) {
           var relativeX = event.offsetX / $scope.width();
           var relativeY = event.offsetY / $scope.height();
-          console.log('surfaceVisibleMeasurements', $scope.surfaceVisibleMeasurements);
           $scope.$apply(function () {
             $scope.setFocus({
-              x: relativeX - $scope.surfaceVisibleMeasurements.width / 2,
-              y: relativeY - $scope.surfaceVisibleMeasurements.height / 2
+              x: relativeX,
+              y: relativeY
             });
           });
         };
@@ -66,12 +65,6 @@ angular.module('nuBoard')
       var pa = measurements.pointA;
       var pb = measurements.pointB;
 
-      console.log('pa', pa);
-      console.log('pb', pb);
-
-      console.log('ownWidth', ownWidth);
-      console.log('ownHeight', ownHeight);
-
       $scope.frameMeasurments = {
         position: {
           top: pa.y * ownHeight,
@@ -82,8 +75,6 @@ angular.module('nuBoard')
           height: (pb.y - pa.y) * ownHeight
         }
       };
-
-      console.log('frame position', $scope.frameMeasurments.position);
 
     })
   });

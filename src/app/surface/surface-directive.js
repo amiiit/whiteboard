@@ -61,10 +61,19 @@ angular.module('nuBoard')
         $scope.$watch('relativeFocus', function (focus) {
           var ownWidth = $scope.width();
           var ownHeight = $scope.height();
-          var scrollTo = {
-            x: focus.x * ownWidth,
-            y: focus.y * ownHeight
+          var visibleWidth = $scope.visibleMeasurements.width;
+          var visibleHeight = $scope.visibleMeasurements.height;
+
+          var scrollToRelative = {
+            x: focus.x - visibleWidth / 2,
+            y: focus.y - visibleHeight / 2
           };
+
+          var scrollTo = {
+            x: scrollToRelative.x * ownWidth,
+            y: scrollToRelative.y * ownHeight
+          };
+
           angular.element($window)[0].scrollTo(scrollTo.x, scrollTo.y);
         });
 
