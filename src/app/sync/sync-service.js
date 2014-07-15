@@ -33,7 +33,7 @@ angular.module('nuBoard')
     };
 
     var persist = function (data) {
-      if (!data.id){
+      if (!data.id) {
         console.error('persisting data not containing id', data);
       }
       var child = firebase.$child(data.id);
@@ -47,11 +47,10 @@ angular.module('nuBoard')
           persist(data);
         }
       });
+      $rootScope.$watch('boardId', function (newBoardId) {
+        syncWithRootInstanceId(newBoardId);
+      });
     };
-
-    $rootScope.$watch('boardId', function (newBoardId) {
-      syncWithRootInstanceId(newBoardId);
-    });
 
 
   });
