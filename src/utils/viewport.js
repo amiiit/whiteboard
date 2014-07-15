@@ -1,8 +1,8 @@
 angular.module('nuBoard')
-  .service('BoardUtils', function () {
+  .service('Viewport', function () {
 
     //http://andylangton.co.uk/blog/development/get-viewport-size-width-and-height-javascript
-    this.viewport = function () {
+    this.dimensions = function () {
       var e = window
         , a = 'inner';
       if (!( 'innerWidth' in window )) {
