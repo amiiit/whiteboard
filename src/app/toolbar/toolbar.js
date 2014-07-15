@@ -19,6 +19,7 @@ angular.module('nuBoard')
             {id: 'green', logoId: 'circle', value: 'green'},
             {id: 'skyblue', logoId: 'circle', value: 'skyblue'},
             {id: 'red', logoId: 'circle', value: 'red'},
+            {id: 'yellow', logoId: 'circle', value: 'yellow'},
             {id: 'white', logoId: 'circle', value: 'white'}
           ]
         },

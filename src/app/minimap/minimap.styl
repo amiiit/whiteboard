@@ -1,9 +1,16 @@
-#minimap
-  background: #ffffcc
+#minimap-container
   position: fixed;
+  z-index: 2
   left: 46px;
   bottom: 5px;
-  height: 150px
-  width: 150px
-  opacity: 0.7
-  z-index: 60
+
+  #minimap
+    background: #ffffcc
+    position: relative
+    opacity: 0.7
+
+  #minimap-frame
+    position: absolute
+    border-style solid
+    border-color black
+    border-width 1px

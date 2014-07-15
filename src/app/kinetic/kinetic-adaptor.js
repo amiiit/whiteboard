@@ -25,7 +25,6 @@ angular.module('nuBoard')
       });
 
       if ($scope.zoomScale) {
-        console.log('setting scale', $scope.zoomScale);
         $scope.stage.setScale({x: $scope.zoomScale, y: $scope.zoomScale});
       }
     };
@@ -73,10 +72,7 @@ angular.module('nuBoard')
     };
 
     var newShape = function (data) {
-      console.log('new shape');
       if (!activeLayer) {
-        console.log('new layer');
-
         addLayer();
       }
 
