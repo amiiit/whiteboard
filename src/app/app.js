@@ -12,7 +12,8 @@ angular.module('nuBoard', ['firebase', 'ngRoute'])
     },
     firebase: {
       baseUrl: 'https://fiery-fire-1095.firebaseio.com',
-      appNamespace: 'nuBoard'
+      appNamespace: 'nuBoard',
+      upstreamMinIntervalMilliseconds: 200
     },
     syncActive: true
   })

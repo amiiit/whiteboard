@@ -32,13 +32,26 @@ angular.module('nuBoard')
       })
     };
 
+    var buffer = {};
+
     var persist = function (data) {
       if (!data.id) {
         console.error('persisting data not containing id', data);
       }
-      var child = firebase.$child(data.id);
-      child.$set(data);
+
+      buffer[data.id] = data;
+
+      upstreamData();
+
     };
+
+    var upstreamData = _.throttle(function () {
+      _.forEach(buffer, function (value, key) {
+        console.log('syncing', key, new Date());
+        var child = firebase.$child(key);
+        child.$set(value);
+      });
+    }, AppConfig.firebase.upstreamMinIntervalMilliseconds);
 
     this.init = function () {
       routerReport = RouterService.register({
