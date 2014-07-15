@@ -1,3 +1,12 @@
 <nu-toolbar></nu-toolbar>
-<nu-surface width=2000 height=2000 surface-id='main-surface' shapes="shapes" shapes-log="log"></nu-surface>
-<nu-minimap></nu-minimap>
+<nu-surface width="surfaceWidth" height="surfaceHeight"
+            surface-id='main-surface' shapes="shapes"
+            shapes-log="log"
+            relative-focus="focus"
+            visible-measurements="surfaceVisibleMeasurements"
+  ></nu-surface>
+<nu-minimap width="minimapWidth" height="minimapHeight"
+            relative-focus="focus"
+            surface-visible-measurements="surfaceVisibleMeasurements"
+            zoom-scale="minimapZoomScale"
+  ></nu-minimap>

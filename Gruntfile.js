@@ -304,6 +304,12 @@ module.exports = function (grunt) {
     'watch'
   ]);
 
+  grunt.registerTask('surf', function () {
+    grunt.log.ok("I hope you enjoy surfing. Now I'm going to run the 'serve' task");
+    grunt.task.run(['serve']);
+  });
+
+
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
