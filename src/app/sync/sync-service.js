@@ -47,7 +47,6 @@ angular.module('nuBoard')
 
     var upstreamData = _.throttle(function () {
       _.forEach(buffer, function (value, key) {
-        console.log('syncing', key, new Date());
         var child = firebase.$child(key);
         child.$set(value);
       });
