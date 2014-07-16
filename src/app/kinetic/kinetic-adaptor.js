@@ -14,9 +14,8 @@ angular.module('nuBoard')
     };
   })
 
-  .controller('KineticCtrl', function ($scope, KineticShapeFactory, KineticShapeCache, KineticSmoothie, $timeout) {
+  .controller('KineticCtrl', function ($scope, KineticShapeFactory, KineticShapeCache, $timeout, AppConfig, KineticSmoothie) {
     var activeLayer = null;
-    var activeShape;
 
     var buildStage = function () {
       $scope.stage = KineticShapeFactory.stage({
@@ -34,12 +33,18 @@ angular.module('nuBoard')
       $scope.kineticShapes = KineticShapeCache.getCache($scope.stageContainerId);
       buildStage();
       addLayer();
+      drawStage();
     };
 
     $timeout(bindKinetic);
 
     var drawStage = function () {
-      $scope.stage.draw();
+      var stage = $scope.stage;
+      stage.draw();
+    };
+
+    var drawLayerForShape = function (shape) {
+      shape.parent.draw();
     };
 
     var addLayer = function () {
@@ -58,13 +63,12 @@ angular.module('nuBoard')
       var kineticShape = $scope.kineticShapes.get(shape.id);
 
       if (!kineticShape) {
-        newShape(shapeData);
+        kineticShape = newShape(shapeData);
       } else {
         extendShape(kineticShape, shapeData);
       }
 
-      drawStage();
-
+      drawLayerForShape(kineticShape);
     };
 
     var extendShape = function (kineticShape, shapeData) {
@@ -73,9 +77,37 @@ angular.module('nuBoard')
       kineticShape.setPoints(points);
     };
 
+    var isTooManyShapesInActiveLayer = function () {
+      return activeLayer.children.length > AppConfig.kinetic.maxShapesInActiveLayer;
+    };
+
+    var mergeBackgroundLayers = function () {
+      var allShapes = [];
+      _.forEach($scope.layers, function (layer) {
+        if (layer !== activeLayer) {
+          allShapes.push(layer.children.toArray());
+          layer.destroy();
+        }
+      });
+
+      var newBackgroundLayer = KineticShapeFactory.layer();
+      _.forEach(_.flatten(allShapes), function (shape) {
+        newBackgroundLayer.add(shape);
+      });
+      $scope.stage.add(newBackgroundLayer);
+      newBackgroundLayer.moveToBottom();
+      $scope.layers = [newBackgroundLayer, activeLayer];
+
+      console.log('layers after merge', $scope.layers);
+
+
+      drawStage();
+    };
+
     var newShape = function (data) {
-      if (!activeLayer) {
+      if (!activeLayer || isTooManyShapesInActiveLayer()) {
         addLayer();
+        mergeBackgroundLayers();
       }
 
       var shape = KineticShapeFactory.fromTypeAndConfig(data);
