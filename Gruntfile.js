@@ -217,7 +217,9 @@ module.exports = function (grunt) {
       },
       scripts: {
         files: ['<%= app_files.js %>', '<%= app_files.jsunit%>'],
-        tasks: ['copy:build_appjs', 'karma:unit:run']
+        tasks: ['copy:build_appjs'
+//          , 'karma:unit:run'
+        ]
       },
       templates: {
         files: '<%= app_files.atpl %>',
@@ -299,7 +301,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', [
     'build',
-    'unit-test',
+//    'unit-test',
     'connect:server',
     'watch'
   ]);
