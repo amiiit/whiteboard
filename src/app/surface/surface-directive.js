@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nuBoard')
-  .directive('nuSurface', function (SurfaceService, $window, BoardUtils) {
+  .directive('nuSurface', function (SurfaceService, $window, Viewport) {
     return {
       restrict: 'E',
       templateUrl: 'app/surface/surface.tpl.html',
@@ -32,7 +32,7 @@ angular.module('nuBoard')
           };
 
 
-          var viewport = BoardUtils.viewport();
+          var viewport = Viewport.dimensions();
           var ownWidth = $scope.width();
           var ownHeight = $scope.height();
 

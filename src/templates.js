@@ -28,7 +28,7 @@ angular.module('nuBoard').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('app/surface/surface.tpl.html',
-    "<div id=\"main-surface\" class=\"surface\" config=\"config\" name=\"kinetic\" shapes=\"shapes\" nu-kinetic nu-watch-surface nu-window-scroller>\n" +
+    "<div id=\"main-surface\" class=\"surface\" config=\"config\" name=\"kinetic\" shapes=\"shapes\" nu-kinetic nu-watch-surface>\n" +
     "</div>\n" +
     "\n"
   );
