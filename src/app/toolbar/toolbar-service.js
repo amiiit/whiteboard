@@ -6,6 +6,8 @@ angular.module('nuBoard')
     var state = AppConfig.defaultToolset;
 
     this.getState = function () {
+
+      //todo: improve this since it's getting called often
       var result = {};
       angular.forEach(state, function (value, key) {
         if (value.value) {
