@@ -14,11 +14,16 @@ angular.module('nuBoard')
       controller: 'FollowActionCtrl'
     }
   })
-  .controller('FollowActionCtrl', function (RouterService, $scope, UserService) {
+  .controller('FollowActionCtrl', function (RouterService, $scope, UserService, ToolbarService) {
 
     console.log('FollowActionCtrl');
 
     var ownUserId = UserService.id();
+
+    var isFollowActive = function () {
+      console.log('isFollowActive', ToolbarService.getState().followAction);
+      return ToolbarService.getState().followAction
+    };
 
 
     var setFocus = function (focusPoint) {
@@ -46,7 +51,7 @@ angular.module('nuBoard')
 
     var handleIncomingAction = function (action) {
       var focusPoint = lastRelativeActionPoint(action);
-      if (!isVisible(focusPoint)){
+      if (!isVisible(focusPoint)) {
         setFocus(focusPoint);
       }
     };
@@ -54,7 +59,7 @@ angular.module('nuBoard')
     RouterService.register({
       instanceId: 'follow-action',
       callback: function (action) {
-        if (action.sourceId != ownUserId) {
+        if (isFollowActive() && action.sourceId != ownUserId) {
           handleIncomingAction(action);
         }
       }

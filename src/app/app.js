@@ -8,7 +8,8 @@ angular.module('nuBoard', ['firebase', 'ngRoute'])
       color: {id: 'skyblue', value: 'skyblue'},
       width: {id: '5', value: 5},
       lineCap: {id: 'round', value: 'round'},
-      lineJoin: {id: 'round', value: 'round'}
+      lineJoin: {id: 'round', value: 'round'},
+      followAction: {active: true}
     },
     firebase: {
       baseUrl: 'https://fiery-fire-1095.firebaseio.com',

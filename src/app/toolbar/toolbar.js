@@ -8,6 +8,9 @@ angular.module('nuBoard')
     $scope.menu = {
       tools: [
         {
+          id: 'followAction'
+        },
+        {
           id: 'stylus',
           options: [
             {id: 'line', logoId: 'pencil'}
@@ -39,6 +42,7 @@ angular.module('nuBoard')
     $scope.$watch('menu', function () {
         ToolbarService.updateState(angular.copy($scope.menu));
         $scope.selected = ToolbarService.getState();
+        console.log('updated state', $scope.selected.followAction);
       }, true
     );
 
@@ -47,6 +51,10 @@ angular.module('nuBoard')
         delete anyOption.selected
       });
       option.selected = true;
+    };
+
+    $scope.toggleTool = function (tool) {
+      tool.active = !tool.active;
     };
   })
 
