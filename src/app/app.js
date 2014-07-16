@@ -16,7 +16,7 @@ angular.module('nuBoard', ['firebase', 'ngRoute'])
       upstreamMinIntervalMilliseconds: 200
     },
     kinetic: {
-      maxShapesInActiveLayer: 20
+      maxShapesInActiveLayer: 30
     },
     syncActive: true
   })

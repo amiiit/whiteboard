@@ -76,12 +76,36 @@ angular.module('nuBoard')
     };
 
     var isTooManyShapesInActiveLayer = function () {
-      return activeLayer.length > AppConfig.kinetic.maxShapesInActiveLayer;
+      return activeLayer.children.length > AppConfig.kinetic.maxShapesInActiveLayer;
+    };
+
+    var mergeBackgroundLayers = function () {
+      var allShapes = [];
+      _.forEach($scope.layers, function (layer) {
+        if (layer !== activeLayer) {
+          allShapes.push(layer.children.toArray());
+          layer.destroy();
+        }
+      });
+
+      var newBackgroundLayer = KineticShapeFactory.layer();
+      _.forEach(_.flatten(allShapes), function(shape){
+        newBackgroundLayer.add(shape);
+      });
+      $scope.stage.add(newBackgroundLayer);
+      newBackgroundLayer.moveToBottom();
+      $scope.layers = [newBackgroundLayer, activeLayer];
+
+      console.log('layers after merge', $scope.layers);
+
+
+      drawStage();
     };
 
     var newShape = function (data) {
       if (!activeLayer || isTooManyShapesInActiveLayer()) {
         addLayer();
+        mergeBackgroundLayers();
       }
 
       var shape = KineticShapeFactory.fromTypeAndConfig(data);
