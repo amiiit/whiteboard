@@ -32,7 +32,7 @@ angular.module('nuBoard')
       $scope.kineticShapes = KineticShapeCache.getCache($scope.stageContainerId);
       buildStage();
       addLayer();
-      drawStage();
+      drawStage();  //draw the stage
     };
 
     $timeout(bindKinetic);
