@@ -49,7 +49,8 @@ angular.module('nuBoard')
       _.forEach(buffer, function (value, key) {
         var child = firebase.$child(key);
         child.$set(value);
-      });
+        });
+      buffer = {};
     }, AppConfig.firebase.upstreamMinIntervalMilliseconds);
 
     this.init = function () {
