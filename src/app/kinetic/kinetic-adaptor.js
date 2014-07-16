@@ -13,7 +13,7 @@ angular.module('nuBoard')
     };
   })
 
-  .controller('KineticCtrl', function ($scope, KineticShapeFactory, KineticShapeCache, $timeout) {
+  .controller('KineticCtrl', function ($scope, KineticShapeFactory, KineticShapeCache, $timeout, AppConfig) {
     var activeLayer = null;
 
     var buildStage = function () {
@@ -61,6 +61,7 @@ angular.module('nuBoard')
         extendShape(kineticShape, shapeData);
       }
 
+      //todo: draw layer for shape
       drawStage();
 
     };
@@ -70,9 +71,15 @@ angular.module('nuBoard')
       kineticShape.setPoints(points);
     };
 
+    var isTooManyShapesInActiveLayer = function () {
+      return activeLayer.getChildren().toArray().length > AppConfig.kinetic.maxShapesInActiveLayer;
+    };
+
     var newShape = function (data) {
-      if (!activeLayer) {
+      //check if activeLayer is full and add new layer accordingly
+      if (!activeLayer || isTooManyShapesInActiveLayer()) {
         addLayer();
+        console.log('adding layer');
       }
 
       var shape = KineticShapeFactory.fromTypeAndConfig(data);
