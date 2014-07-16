@@ -32,12 +32,18 @@ angular.module('nuBoard')
       $scope.kineticShapes = KineticShapeCache.getCache($scope.stageContainerId);
       buildStage();
       addLayer();
+      drawStage();
     };
 
     $timeout(bindKinetic);
 
     var drawStage = function () {
-      $scope.stage.draw();
+      var stage = $scope.stage;
+      stage.draw();
+    };
+
+    var drawLayerForShape = function (shape) {
+      shape.parent.draw();
     };
 
     var addLayer = function () {
@@ -56,14 +62,12 @@ angular.module('nuBoard')
       var kineticShape = $scope.kineticShapes.get(shape.id);
 
       if (!kineticShape) {
-        newShape(shapeData);
+        kineticShape = newShape(shapeData);
       } else {
         extendShape(kineticShape, shapeData);
       }
 
-      //todo: draw layer for shape
-      drawStage();
-
+      drawLayerForShape(kineticShape);
     };
 
     var extendShape = function (kineticShape, shapeData) {
@@ -72,14 +76,12 @@ angular.module('nuBoard')
     };
 
     var isTooManyShapesInActiveLayer = function () {
-      return activeLayer.getChildren().toArray().length > AppConfig.kinetic.maxShapesInActiveLayer;
+      return activeLayer.length > AppConfig.kinetic.maxShapesInActiveLayer;
     };
 
     var newShape = function (data) {
-      //check if activeLayer is full and add new layer accordingly
       if (!activeLayer || isTooManyShapesInActiveLayer()) {
         addLayer();
-        console.log('adding layer');
       }
 
       var shape = KineticShapeFactory.fromTypeAndConfig(data);
