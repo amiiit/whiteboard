@@ -72,9 +72,6 @@ angular.module('nuBoard')
 
     var extendShape = function (kineticShape, shapeData) {
       var points = shapeData.points;
-      if (points.length % 50 == 0) {
-        console.log('points.length', shapeData.points.length);
-      }
       kineticShape.setPoints(points);
     };
 
