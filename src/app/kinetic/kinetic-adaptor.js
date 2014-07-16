@@ -23,6 +23,8 @@ angular.module('nuBoard')
         height: $scope.height instanceof Function ? $scope.height() : $scope.height
       });
 
+      window._stage = $scope.stage;
+
       if ($scope.zoomScale) {
         $scope.stage.setScale({x: $scope.zoomScale, y: $scope.zoomScale});
       }
@@ -67,6 +69,7 @@ angular.module('nuBoard')
         extendShape(kineticShape, shapeData);
       }
 
+//      drawStage();
       drawShape(kineticShape);
     };
 

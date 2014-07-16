@@ -2,7 +2,7 @@
 
 angular.module('nuBoard')
 
-  .directive('nuWatchSurface', function ($timeout, RouterService, UUID, ToolbarService) {
+  .directive('nuWatchSurface', function ($timeout, RouterService, UUID, ToolbarService, UserService) {
     return {
       link: function ($scope, $element) {
 
@@ -30,6 +30,7 @@ angular.module('nuBoard')
 
           var actionData = {
             shapeId: UUID.generate(),
+            sourceId: UserService.id(),
             points: positionToPoint(eventData)
           };
 
@@ -101,7 +102,8 @@ angular.module('nuBoard')
     }
   })
 
-  .service('SurfaceWatcherService', function () {
+  .
+  service('SurfaceWatcherService', function () {
 
 
   })

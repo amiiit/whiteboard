@@ -38,13 +38,14 @@ angular.module('nuBoard', ['firebase', 'ngRoute'])
       })
   })
 
-  .controller('MainCtrl', function ($scope, $routeParams, $rootScope, SyncService, AppConfig, SurfaceService) {
+  .controller('MainCtrl', function ($scope, $routeParams, $rootScope, SyncService, AppConfig, SurfaceService, UserService) {
 
     if (AppConfig.syncActive) {
       SyncService.init();
     }
     SurfaceService.init();
     $rootScope.boardId = $routeParams.boardId;
+    $rootScope.userId = UserService.id();
     $scope.shapes = {}; //todo: move this to surface
     $scope.focus = {x: 0.5, y: 0.5};
     $scope.surfaceWidth = 2000;
@@ -55,8 +56,8 @@ angular.module('nuBoard', ['firebase', 'ngRoute'])
     $scope.surfacePositionOffset = {};
   })
 
-  .controller('NewBoardCtrl', function ($scope, $location, BoardIdService) {
-    var newBoardId = BoardIdService.generate();
+  .controller('NewBoardCtrl', function ($scope, $location, ShortIdGenerator) {
+    var newBoardId = ShortIdGenerator.generate();
     $location.path('/' + newBoardId);
 
   });
