@@ -42,8 +42,8 @@ angular.module('nuBoard')
       stage.draw();
     };
 
-    var drawLayerForShape = function (shape) {
-      shape.parent.draw();
+    var drawShape = function (shape) {
+      shape.draw();
     };
 
     var addLayer = function () {
@@ -67,7 +67,7 @@ angular.module('nuBoard')
         extendShape(kineticShape, shapeData);
       }
 
-      drawLayerForShape(kineticShape);
+      drawShape(kineticShape);
     };
 
     var extendShape = function (kineticShape, shapeData) {
@@ -76,7 +76,7 @@ angular.module('nuBoard')
     };
 
     var isTooManyShapesInActiveLayer = function () {
-      return activeLayer.children.length > AppConfig.kinetic.maxShapesInActiveLayer;
+      return false; //activeLayer.children.length > AppConfig.kinetic.maxShapesInActiveLayer;
     };
 
     var mergeBackgroundLayers = function () {
