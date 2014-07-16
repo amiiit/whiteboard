@@ -72,40 +72,15 @@ angular.module('nuBoard')
 
     var extendShape = function (kineticShape, shapeData) {
       var points = shapeData.points;
+      if (points.length % 50 == 0) {
+        console.log('points.length', shapeData.points.length);
+      }
       kineticShape.setPoints(points);
     };
 
-    var isTooManyShapesInActiveLayer = function () {
-      return false; //activeLayer.children.length > AppConfig.kinetic.maxShapesInActiveLayer;
-    };
-
-    var mergeBackgroundLayers = function () {
-      var allShapes = [];
-      _.forEach($scope.layers, function (layer) {
-        if (layer !== activeLayer) {
-          allShapes.push(layer.children.toArray());
-          layer.destroy();
-        }
-      });
-
-      var newBackgroundLayer = KineticShapeFactory.layer();
-      _.forEach(_.flatten(allShapes), function(shape){
-        newBackgroundLayer.add(shape);
-      });
-      $scope.stage.add(newBackgroundLayer);
-      newBackgroundLayer.moveToBottom();
-      $scope.layers = [newBackgroundLayer, activeLayer];
-
-      console.log('layers after merge', $scope.layers);
-
-
-      drawStage();
-    };
-
     var newShape = function (data) {
-      if (!activeLayer || isTooManyShapesInActiveLayer()) {
+      if (!activeLayer) {
         addLayer();
-        mergeBackgroundLayers();
       }
 
       var shape = KineticShapeFactory.fromTypeAndConfig(data);
