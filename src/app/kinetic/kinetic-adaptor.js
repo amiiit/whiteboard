@@ -15,7 +15,6 @@ angular.module('nuBoard')
 
   .controller('KineticCtrl', function ($scope, KineticShapeFactory, KineticShapeCache, $timeout) {
     var activeLayer = null;
-    var activeShape;
 
     var buildStage = function () {
       $scope.stage = KineticShapeFactory.stage({
