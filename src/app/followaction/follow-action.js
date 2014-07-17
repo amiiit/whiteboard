@@ -16,12 +16,9 @@ angular.module('nuBoard')
   })
   .controller('FollowActionCtrl', function (RouterService, $scope, UserService, ToolbarService) {
 
-    console.log('FollowActionCtrl');
-
     var ownUserId = UserService.id();
 
     var isFollowActive = function () {
-      console.log('isFollowActive', ToolbarService.getState().followAction);
       return ToolbarService.getState().followAction
     };
 

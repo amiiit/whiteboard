@@ -8,7 +8,8 @@ angular.module('nuBoard')
     $scope.menu = {
       tools: [
         {
-          id: 'followAction'
+          id: 'followAction',
+          active: true
         },
         {
           id: 'stylus',
@@ -42,7 +43,6 @@ angular.module('nuBoard')
     $scope.$watch('menu', function () {
         ToolbarService.updateState(angular.copy($scope.menu));
         $scope.selected = ToolbarService.getState();
-        console.log('updated state', $scope.selected.followAction);
       }, true
     );
 

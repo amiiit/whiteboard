@@ -22,7 +22,6 @@ angular.module('nuBoard')
     };
 
     this.updateState = function (menu) {
-      console.log('updating state menu', menu);
       angular.forEach(menu.tools, function (menuTool) {
         if (menuTool.options) {
           angular.forEach(menuTool.options, function (toolOption) {
