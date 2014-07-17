@@ -1,5 +1,5 @@
 angular.module('nuBoard')
-  .service('BoardIdService', function (UUID) {
+  .service('ShortIdGenerator', function (UUID) {
 
     this.generate = function () {
       return UUID.generate().replace(/\-/g,'').substring(0,6);

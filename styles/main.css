@@ -22,13 +22,16 @@
 }
 .tool-option {
   height: 25px;
-  color: #fff;
+  color: #d3d3d3;
   padding-top: 13px;
   font-size: 1.3em;
   text-align: center;
   transition: all 0.1s;
   -webkit-transition: all 0.1s;
 /* Safari */
+}
+.tool-option.active {
+  color: #fff;
 }
 .tool-option:hover {
   background: #808080;
@@ -39,13 +42,16 @@
 }
 .tool-option {
   height: 25px;
-  color: #fff;
+  color: #d3d3d3;
   padding-top: 13px;
   font-size: 1.3em;
   text-align: center;
   transition: all 0.1s;
   -webkit-transition: all 0.1s;
 /* Safari */
+}
+.tool-option.active {
+  color: #fff;
 }
 .tool-option:hover {
   background: #808080;

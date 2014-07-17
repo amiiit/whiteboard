@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('nuBoard')
-  .service('SyncService', function ($rootScope, RouterService, $firebase, AppConfig) {
+  .service('SyncService', function ($rootScope, RouterService, $firebase, AppConfig, ShortIdGenerator) {
 
     var firebase;
     var rootInstanceId;
     var routerReport;
+    var syncInstanceId = ShortIdGenerator.generate();
+
 
     var syncWithRootInstanceId = function (_rootInstanceId) {
       rootInstanceId = _rootInstanceId;
@@ -26,10 +28,15 @@ angular.module('nuBoard')
     };
 
     var reportChildToRouter = function (child) {
-      RouterService.report({
-        message: child.snapshot.value,
-        sourceId: 'sync-service'
-      })
+      var message = child.snapshot.value;
+      var originSyncInstance = message._syncInstanceId;
+      delete message._syncInstanceId;
+      if (originSyncInstance != syncInstanceId) {
+        RouterService.report({
+          message: message,
+          sourceId: 'sync-service'
+        })
+      }
     };
 
     var buffer = {};
@@ -47,9 +54,12 @@ angular.module('nuBoard')
 
     var upstreamData = _.throttle(function () {
       _.forEach(buffer, function (value, key) {
+        if (!value._syncInstanceId) {
+          value._syncInstanceId = syncInstanceId;
+        }
         var child = firebase.$child(key);
         child.$set(value);
-        });
+      });
       buffer = {};
     }, AppConfig.firebase.upstreamMinIntervalMilliseconds);
 

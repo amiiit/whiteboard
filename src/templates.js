@@ -9,11 +9,16 @@ angular.module('nuBoard').run(['$templateCache', function($templateCache) {
     "            relative-focus=\"focus\"\n" +
     "            visible-measurements=\"surfaceVisibleMeasurements\"\n" +
     "  ></nu-surface>\n" +
+    "<nu-follow-action relative-focus=\"focus\"\n" +
+    "                  surface-width=\"surfaceWidth\"\n" +
+    "                  surface-height=\"surfaceHeight\"\n" +
+    "                  surface-visible-measurements=\"surfaceVisibleMeasurements\"\n" +
+    "  ></nu-follow-action>\n" +
     "<nu-minimap width=\"minimapWidth\" height=\"minimapHeight\"\n" +
     "            relative-focus=\"focus\"\n" +
     "            surface-visible-measurements=\"surfaceVisibleMeasurements\"\n" +
     "            zoom-scale=\"minimapZoomScale\"\n" +
-    "  ></nu-minimap>"
+    "  ></nu-minimap>\n"
   );
 
 
@@ -36,51 +41,65 @@ angular.module('nuBoard').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('app/toolbar/toolbar.tpl.html',
     "<div class=\"toolbar\">\n" +
-    "    <div class=\"tools\">\n" +
+    "  <div class=\"tools\">\n" +
+    "\n" +
+    "    <div\n" +
+    "      ng-repeat=\"tool in menu.tools\"\n" +
+    "      class=\"tool {{tool.id}}\"\n" +
+    "      >\n" +
+    "\n" +
+    "      <div\n" +
+    "        ng-if=\"tool.id === 'followAction'\"\n" +
+    "        title=\"follow actions of a collaborator (currently {{tool.active? 'on' : 'off'}})\"\n" +
+    "        >\n" +
     "        <div\n" +
-    "                ng-repeat=\"tool in menu.tools\"\n" +
-    "                class=\"tool {{tool.id}}\"\n" +
-    "                >\n" +
-    "\n" +
-    "            <div ng-if=\"tool.id === 'stylus'\">\n" +
-    "                <div\n" +
-    "                        ng-repeat=\"option in tool.options\"\n" +
-    "                        ng-click=\"pickTool(tool, option)\"\n" +
-    "                        class=\"tool-option\"\n" +
-    "                        style=\"color: {{selected.color}}\"\n" +
-    "                        >\n" +
-    "                    <i ng-if=\"option.logoId\" class=\"fa fa-{{option.logoId}}\"></i>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "\n" +
-    "            <div ng-if=\"tool.id === 'color'\">\n" +
-    "                <div\n" +
-    "                        ng-repeat=\"option in tool.options\"\n" +
-    "                        ng-click=\"pickTool(tool, option)\"\n" +
-    "                        class=\"tool-option color\"\n" +
-    "                        style=\"color: {{option.value}}\"\n" +
-    "                        >\n" +
-    "                    <i class=\"fa fa-tint\"></i>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "\n" +
-    "            <div ng-if=\"tool.id === 'width'\">\n" +
-    "                <div\n" +
-    "                        ng-repeat=\"option in tool.options\"\n" +
-    "                        ng-click=\"pickTool(tool, option)\"\n" +
-    "                        class=\"tool-option width\"\n" +
-    "                        style=\"\n" +
-    "                            font-size: {{option.value}}px;\n" +
-    "                            color: {{selected.color}}\n" +
-    "                            \"\n" +
-    "                        >\n" +
-    "                    <i class=\"fa fa-circle\"></i>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "\n" +
-    "\n" +
+    "          ng-click=\"toggleTool(tool)\"\n" +
+    "          class=\"tool-option follow-action\"\n" +
+    "          ng-class=\"{active : tool.active}\"\n" +
+    "          >\n" +
+    "          <i class=\"fa fa-dot-circle-o\"></i>\n" +
     "        </div>\n" +
+    "      </div>\n" +
+    "\n" +
+    "      <div ng-if=\"tool.id === 'stylus'\">\n" +
+    "        <div\n" +
+    "          ng-repeat=\"option in tool.options\"\n" +
+    "          ng-click=\"pickTool(tool, option)\"\n" +
+    "          class=\"tool-option\"\n" +
+    "          style=\"color: {{selected.color}}\"\n" +
+    "          >\n" +
+    "          <i ng-if=\"option.logoId\" class=\"fa fa-{{option.logoId}}\"></i>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "\n" +
+    "      <div ng-if=\"tool.id === 'color'\">\n" +
+    "        <div\n" +
+    "          ng-repeat=\"option in tool.options\"\n" +
+    "          ng-click=\"pickTool(tool, option)\"\n" +
+    "          class=\"tool-option color\"\n" +
+    "          style=\"color: {{option.value}}\"\n" +
+    "          >\n" +
+    "          <i class=\"fa fa-tint\"></i>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "\n" +
+    "      <div ng-if=\"tool.id === 'width'\">\n" +
+    "        <div\n" +
+    "          ng-repeat=\"option in tool.options\"\n" +
+    "          ng-click=\"pickTool(tool, option)\"\n" +
+    "          class=\"tool-option width\"\n" +
+    "          style=\"\n" +
+    "                                     font-size: {{option.value}}px;\n" +
+    "                                     color: {{selected.color}}\n" +
+    "                                     \"\n" +
+    "          >\n" +
+    "          <i class=\"fa fa-circle\"></i>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "\n" +
+    "\n" +
     "    </div>\n" +
+    "  </div>\n" +
     "</div>\n"
   );
 

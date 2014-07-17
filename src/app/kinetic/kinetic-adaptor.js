@@ -23,6 +23,8 @@ angular.module('nuBoard')
         height: $scope.height instanceof Function ? $scope.height() : $scope.height
       });
 
+      window._stage = $scope.stage;
+
       if ($scope.zoomScale) {
         $scope.stage.setScale({x: $scope.zoomScale, y: $scope.zoomScale});
       }
@@ -32,7 +34,7 @@ angular.module('nuBoard')
       $scope.kineticShapes = KineticShapeCache.getCache($scope.stageContainerId);
       buildStage();
       addLayer();
-      drawStage();  //draw the stage
+      drawStage();
     };
 
     $timeout(bindKinetic);
@@ -42,8 +44,8 @@ angular.module('nuBoard')
       stage.draw();
     };
 
-    var drawLayerForShape = function (shape) {
-      shape.parent.draw();
+    var drawShape = function (shape) {
+      shape.draw();
     };
 
     var addLayer = function () {
@@ -67,7 +69,8 @@ angular.module('nuBoard')
         extendShape(kineticShape, shapeData);
       }
 
-      drawLayerForShape(kineticShape);
+//      drawStage();
+      drawShape(kineticShape);
     };
 
     var extendShape = function (kineticShape, shapeData) {
@@ -75,37 +78,9 @@ angular.module('nuBoard')
       kineticShape.setPoints(points);
     };
 
-    var isTooManyShapesInActiveLayer = function () {
-      return activeLayer.children.length > AppConfig.kinetic.maxShapesInActiveLayer;
-    };
-
-    var mergeBackgroundLayers = function () {
-      var allShapes = [];
-      _.forEach($scope.layers, function (layer) {
-        if (layer !== activeLayer) {
-          allShapes.push(layer.children.toArray());
-          layer.destroy();
-        }
-      });
-
-      var newBackgroundLayer = KineticShapeFactory.layer();
-      _.forEach(_.flatten(allShapes), function(shape){
-        newBackgroundLayer.add(shape);
-      });
-      $scope.stage.add(newBackgroundLayer);
-      newBackgroundLayer.moveToBottom();
-      $scope.layers = [newBackgroundLayer, activeLayer];
-
-      console.log('layers after merge', $scope.layers);
-
-
-      drawStage();
-    };
-
     var newShape = function (data) {
-      if (!activeLayer || isTooManyShapesInActiveLayer()) {
+      if (!activeLayer) {
         addLayer();
-        mergeBackgroundLayers();
       }
 
       var shape = KineticShapeFactory.fromTypeAndConfig(data);
