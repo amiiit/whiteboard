@@ -1,6 +1,8 @@
 whiteboard
 ==========
 
+Try it out: http://amiiit.github.io/whiteboard
+
 
 ## Quick Start
 
