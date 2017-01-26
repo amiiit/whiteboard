@@ -12,7 +12,7 @@ This will create your own personal whiteboard that is instantly ready to share w
 If case you want to build whiteboard locally and tweak and to your needs
 
 ```sh
-$ git clone git@github.com:nubo/whiteboard.git
+$ git clone git@github.com:amiiit/whiteboard.git
 $ cd whiteboard
 $ sudo npm -g install grunt-cli karma bower
 $ npm install
